@@ -2,6 +2,7 @@ import {useLoaderData, Link} from '@remix-run/react';
 import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import ProductGridItem from '~/components/ProductGridItem';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -65,7 +66,7 @@ export default function Collection() {
         resourcesClassName="products-grid"
       >
         {({node: product, index}) => (
-          <ProductItem
+          <ProductGridItem
             key={product.id}
             product={product}
             loading={index < 8 ? 'eager' : undefined}
@@ -73,38 +74,6 @@ export default function Collection() {
         )}
       </PaginatedResourceSection>
     </div>
-  );
-}
-
-/**
- * @param {{
- *   product: ProductItemFragment;
- *   loading?: 'eager' | 'lazy';
- * }}
- */
-function ProductItem({product, loading}) {
-  const variantUrl = useVariantUrl(product.handle);
-  return (
-    <Link
-      className="product-item"
-      key={product.id}
-      prefetch="intent"
-      to={variantUrl}
-    >
-      {product.featuredImage && (
-        <Image
-          alt={product.featuredImage.altText || product.title}
-          aspectRatio="1/1"
-          data={product.featuredImage}
-          loading={loading}
-          sizes="(min-width: 45em) 400px, 100vw"
-        />
-      )}
-      <h4>{product.title}</h4>
-      <small>
-        <Money data={product.priceRange.minVariantPrice} />
-      </small>
-    </Link>
   );
 }
 
@@ -123,6 +92,14 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
       url
       width
       height
+    }images(first: 2) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
     }
     priceRange {
       minVariantPrice {
