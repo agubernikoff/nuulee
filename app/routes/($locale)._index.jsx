@@ -64,32 +64,21 @@ export default function Homepage() {
   const data = useLoaderData();
   return (
     <div className="home">
-      <FeaturedCollection collection={data.featuredCollection} />
+      <Hero />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
 }
 
-/**
- * @param {{
- *   collection: FeaturedCollectionFragment;
- * }}
- */
-function FeaturedCollection({collection}) {
-  if (!collection) return null;
-  const image = collection?.image;
+function Hero() {
+  //import video files from sanity
   return (
-    <Link
-      className="featured-collection"
-      to={`/collections/${collection.handle}`}
-    >
-      {image && (
-        <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
-        </div>
-      )}
-      <h1>{collection.title}</h1>
-    </Link>
+    <div className="hero-container">
+      <p>
+        shop our latest signature styles—permanent fixtures of the nüülee
+        cashmere wardrobe.
+      </p>
+    </div>
   );
 }
 
@@ -105,7 +94,7 @@ function RecommendedProducts({products}) {
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
-            <div className="recommended-products-grid">
+            <div className="products-grid">
               {response
                 ? response.products.nodes.map((product, index) => (
                     <ProductGridItem
