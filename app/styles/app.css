@@ -376,6 +376,18 @@ button.reset:hover:not(:has(> *)) {
   height: auto;
 }
 
+.collection-links-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8rem;
+}
+.collection-links-container a {
+  width: 45%;
+}
+.collection-links-container img {
+  height: auto;
+}
+
 /*
 * --------------------------------------------------
 * routes/collections._index.tsx
@@ -409,7 +421,7 @@ button.reset:hover:not(:has(> *)) {
   display: grid;
   grid-gap: 10px;
   row-gap: 50px;
-  grid-template-columns: repeat(auto-fit, minmax(var(--grid-item-width), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--grid-item-width), 1fr));
   margin: auto;
   margin-bottom: 8rem;
 }

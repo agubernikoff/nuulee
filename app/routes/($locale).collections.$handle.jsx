@@ -115,6 +115,15 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
     id
     handle
     title
+    images(first: 2) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
+    }
     featuredImage {
       id
       altText

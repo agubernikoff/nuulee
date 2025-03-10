@@ -29,13 +29,17 @@ export async function loader(args) {
  * @param {LoaderFunctionArgs}
  */
 async function loadCriticalData({context}) {
-  const [{collections}] = await Promise.all([
+  const [{collections}, men, women] = await Promise.all([
     context.storefront.query(FEATURED_COLLECTION_QUERY),
     // Add other queries here, so that they are loaded in parallel
+    context.storefront.query(MENS_COLLECTION_QUERY),
+    context.storefront.query(WOMENS_COLLECTION_QUERY),
   ]);
 
   return {
     featuredCollection: collections.nodes[0],
+    menCollection: men.collection,
+    womenCollection: women.collection,
   };
 }
 
@@ -66,6 +70,9 @@ export default function Homepage() {
     <div className="home">
       <Hero />
       <RecommendedProducts products={data.recommendedProducts} />
+      <CollectionLinks
+        collections={[data.menCollection, data.womenCollection]}
+      />
     </div>
   );
 }
@@ -113,6 +120,24 @@ function RecommendedProducts({products}) {
   );
 }
 
+function CollectionLinks({collections}) {
+  return (
+    <div className="collection-links-container">
+      {collections.map((col) => (
+        <Link prefetch="intent" to={`/collections/${col.handle}`}>
+          <Image
+            alt={col.image.altText || `shop ${col.handle}`}
+            aspectRatio="361/482"
+            data={col.image}
+            // sizes="(min-width: 45em) 400px, 100vw"
+          />
+          <p>{`shop ${col.handle}`}</p>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 const FEATURED_COLLECTION_QUERY = `#graphql
   fragment FeaturedCollection on Collection {
     id
@@ -134,6 +159,44 @@ const FEATURED_COLLECTION_QUERY = `#graphql
       }
     }
   }
+`;
+
+const MENS_COLLECTION_QUERY = `#graphql
+  query Collection($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+      collection(handle: "men") {
+        id
+        handle
+        title
+        description
+        image {
+          id
+          url
+          altText
+          width
+          height
+        }
+      }
+    }
+`;
+
+const WOMENS_COLLECTION_QUERY = `#graphql
+  query Collection($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+      collection(handle: "women") {
+        id
+        handle
+        title
+        description
+        image {
+          id
+          url
+          altText
+          width
+          height
+        }
+      }
+    }
 `;
 
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql

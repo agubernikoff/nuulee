@@ -5,7 +5,7 @@ import {Image, Money} from '@shopify/hydrogen';
 import {motion, AnimatePresence} from 'motion/react';
 
 function ProductGridItem({product, loading}) {
-  const [image, setImage] = useState(product.images.nodes[0]);
+  const [image, setImage] = useState(product?.images?.nodes[0]);
   const [hovered, setHovered] = useState(false);
   const variantUrl = useVariantUrl(product.handle);
   console.log(product);
@@ -26,14 +26,14 @@ function ProductGridItem({product, loading}) {
     >
       <AnimatePresence mode="popLayout">
         <motion.div
-          key={image.id}
+          key={image?.id}
           initial={{opacity: 1}}
           animate={{opacity: 1}}
           exit={{opacity: 0}}
           transition={{duration: 1}}
         >
           <Image
-            alt={image.altText || product.title}
+            alt={image?.altText || product.title}
             aspectRatio="361/482"
             data={image}
             loading={loading}
