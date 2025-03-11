@@ -24,7 +24,9 @@ img {
   src: url('../assets/fonts/medium.woff2') format('woff2'),
     url('../assets/fonts/medium.woff') format('woff');
 }
-
+body {
+  font-family: 'regular';
+}
 /*
 * --------------------------------------------------
 * Non anchor links
@@ -179,6 +181,7 @@ button.reset:hover:not(:has(> *)) {
   position: sticky;
   top: 0;
   z-index: 1;
+  justify-content: space-between;
 }
 
 .header-menu-mobile-toggle {
@@ -199,7 +202,6 @@ button.reset:hover:not(:has(> *)) {
   @media (min-width: 45em) {
     display: flex;
     grid-gap: 1rem;
-    margin-left: 3rem;
   }
 }
 
@@ -211,7 +213,6 @@ button.reset:hover:not(:has(> *)) {
   align-items: center;
   display: flex;
   grid-gap: 1rem;
-  margin-left: auto;
 }
 
 /*
