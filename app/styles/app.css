@@ -53,6 +53,11 @@ aside {
   top: 0;
   transition: transform 200ms ease-in-out;
 }
+aside#submenu {
+  right: auto;
+  top: var(--header-height);
+  box-shadow: none;
+}
 
 aside header {
   align-items: center;
@@ -61,6 +66,9 @@ aside header {
   height: var(--header-height);
   justify-content: space-between;
   padding: 0 20px;
+}
+aside#submenu header {
+  display: none;
 }
 
 aside header h3 {
@@ -109,10 +117,14 @@ aside li {
   position: fixed;
   right: 0;
   top: 0;
-  transition: opacity 400ms ease-in-out;
-  transition: opacity 400ms;
+  transition: all 400ms ease-in-out;
+  transition: all 400ms;
   visibility: hidden;
   z-index: 10;
+}
+
+.overlay:has(> aside#submenu) {
+  top: var(--header-height);
 }
 
 .overlay .close-outside {
@@ -124,6 +136,10 @@ aside li {
   position: absolute;
   top: 0;
   width: calc(100% - var(--aside-width));
+}
+.overlay:has(> aside#submenu) .close-outside {
+  left: auto;
+  right: 0;
 }
 
 .overlay .light {
@@ -145,6 +161,9 @@ aside li {
 /* reveal aside */
 .overlay.expanded aside {
   transform: translateX(calc(var(--aside-width) * -1));
+}
+.overlay.expanded aside#submenu {
+  transform: translateX(0);
 }
 
 button.reset {
@@ -182,6 +201,7 @@ button.reset:hover:not(:has(> *)) {
   top: 0;
   z-index: 1;
   justify-content: space-between;
+  font-size: 12px;
 }
 
 .header-menu-mobile-toggle {
@@ -207,12 +227,23 @@ button.reset:hover:not(:has(> *)) {
 
 .header-menu-item {
   cursor: pointer;
+  font-size: 12px;
+}
+.header-menu-item:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--color-grey) !important;
 }
 
 .header-ctas {
   align-items: center;
   display: flex;
   grid-gap: 1rem;
+}
+.header-ctas > button,
+.header-ctas > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*

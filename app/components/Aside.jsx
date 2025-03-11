@@ -15,8 +15,8 @@ import {createContext, useContext, useEffect, useState} from 'react';
  *   heading: React.ReactNode;
  * }}
  */
-export function Aside({children, heading, type}) {
-  const {type: activeType, close} = useAside();
+export function Aside({children, heading, type, id, closeOnMouseLeave}) {
+  const {type: activeType, subType, close} = useAside();
   const expanded = type === activeType;
 
   useEffect(() => {
@@ -43,7 +43,10 @@ export function Aside({children, heading, type}) {
       role="dialog"
     >
       <button className="close-outside" onClick={close} />
-      <aside>
+      <aside
+        id={heading || id}
+        onMouseLeave={closeOnMouseLeave ? () => close() : null}
+      >
         <header>
           <h3>{heading}</h3>
           <button className="close reset" onClick={close} aria-label="Close">
@@ -60,12 +63,17 @@ const AsideContext = createContext(null);
 
 Aside.Provider = function AsideProvider({children}) {
   const [type, setType] = useState('closed');
+  const [subType, setSubType] = useState('');
 
   return (
     <AsideContext.Provider
       value={{
         type,
-        open: setType,
+        subType,
+        open: (type, subType) => {
+          setType(type);
+          setSubType(subType);
+        },
         close: () => setType('closed'),
       }}
     >

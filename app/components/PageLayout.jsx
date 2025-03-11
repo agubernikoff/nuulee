@@ -9,6 +9,7 @@ import {
   SearchFormPredictive,
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
+import {useAside} from './Aside';
 
 /**
  * @param {PageLayoutProps}
@@ -26,6 +27,7 @@ export function PageLayout({
       <CartAside cart={cart} />
       <SearchAside />
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
+      <SubMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       {header && (
         <Header
           header={header}
@@ -41,6 +43,28 @@ export function PageLayout({
         publicStoreDomain={publicStoreDomain}
       />
     </Aside.Provider>
+  );
+}
+
+function SubMenuAside({header, publicStoreDomain}) {
+  const {subType} = useAside();
+  return (
+    header.menu &&
+    header.shop.primaryDomain?.url && (
+      <Aside type="submenu" id="submenu" closeOnMouseLeave={true}>
+        <HeaderMenu
+          menu={{
+            id: header.menu.id,
+            items:
+              header?.menu?.items.find((item) => item.title === subType)
+                ?.items || [],
+          }}
+          viewport="mobile"
+          primaryDomainUrl={header.shop.primaryDomain.url}
+          publicStoreDomain={publicStoreDomain}
+        />
+      </Aside>
+    )
   );
 }
 

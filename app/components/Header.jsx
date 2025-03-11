@@ -40,11 +40,11 @@ export function HeaderMenu({
   publicStoreDomain,
 }) {
   const className = `header-menu-${viewport}`;
-  const {close} = useAside();
+  const {close, open} = useAside();
 
   return (
     <nav className={className} role="navigation">
-      {viewport === 'mobile' && (
+      {/* {viewport === 'mobile' && (
         <NavLink
           end
           onClick={close}
@@ -54,7 +54,7 @@ export function HeaderMenu({
         >
           Home
         </NavLink>
-      )}
+      )} */}
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
         if (!item.url) return null;
 
@@ -70,10 +70,19 @@ export function HeaderMenu({
             className="header-menu-item"
             end
             key={item.id}
-            onClick={close}
+            onClick={(e) => {
+              if (item.items && item.items.length > 0) e.preventDefault();
+              else close();
+            }}
             prefetch="intent"
             style={activeLinkStyle}
             to={url}
+            onMouseEnter={() => {
+              if (item.items && item.items.length > 0 && viewport !== 'mobile')
+                open('submenu', item.title);
+              else if (item.items && viewport !== 'mobile') close();
+            }}
+            onMouseLeave={() => {}}
           >
             {item.title.toLowerCase()}
           </NavLink>
@@ -112,7 +121,10 @@ function HeaderMenuMobileToggle() {
 function SubscribeToggle() {
   const {open} = useAside();
   return (
-    <button className="reset" onClick={() => open('subscribe')}>
+    <button
+      className="header-menu-item reset"
+      onClick={() => open('subscribe')}
+    >
       subscribe
     </button>
   );
@@ -121,7 +133,7 @@ function SubscribeToggle() {
 function LocationToggle() {
   const {open} = useAside();
   return (
-    <button className="reset" onClick={() => open('location')}>
+    <button className="reset header-menu-item" onClick={() => open('location')}>
       <svg
         width="17"
         height="16"
@@ -145,7 +157,7 @@ function LocationToggle() {
 function SearchToggle() {
   const {open} = useAside();
   return (
-    <button className="reset" onClick={() => open('search')}>
+    <button className="reset header-menu-item" onClick={() => open('search')}>
       <svg
         width="19"
         height="16"
