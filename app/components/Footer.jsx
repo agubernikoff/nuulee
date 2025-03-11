@@ -7,19 +7,7 @@ import {Await, NavLink} from '@remix-run/react';
 export function Footer({footer: footerPromise, header, publicStoreDomain}) {
   return (
     <Suspense>
-      <Await resolve={footerPromise}>
-        {(footer) => (
-          <footer className="footer">
-            {footer?.menu && header.shop.primaryDomain?.url && (
-              <FooterMenu
-                menu={footer.menu}
-                primaryDomainUrl={header.shop.primaryDomain.url}
-                publicStoreDomain={publicStoreDomain}
-              />
-            )}
-          </footer>
-        )}
-      </Await>
+      <Await resolve={footerPromise}>{(footer) => <FooterMenu />}</Await>
     </Suspense>
   );
 }
@@ -31,36 +19,49 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
  *   publicStoreDomain: string;
  * }}
  */
-function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
+function FooterMenu() {
   return (
-    <nav className="footer-menu" role="navigation">
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
-        if (!item.url) return null;
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        const isExternal = !url.startsWith('/');
-        return isExternal ? (
-          <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
-            {item.title}
+    <footer className="footer">
+      <div className="footer-links">
+        <div className="footer-column">
+          <p className="footer-heading">brand</p>
+          <a href="#">instagram</a>
+          <a href="#">showroom</a>
+          <a href="#">subscribe</a>
+          <a href="#">sustainability</a>
+        </div>
+
+        <div className="footer-column">
+          <p className="footer-heading">support</p>
+          <a href="#">faq</a>
+          <a href="#">contact us</a>
+          <a href="#">returns & exchanges</a>
+          <a href="#">care guide</a>
+        </div>
+
+        <div className="footer-column">
+          <p className="footer-heading">legal</p>
+          <a href="#">terms & conditions</a>
+          <a href="#">privacy policy</a>
+          <a href="#">cookies</a>
+          <a href="#">accessibility</a>
+        </div>
+      </div>
+
+      <div className="footer-info">
+        <p className="footer-heading">
+          © nüülee new york 2025, all rights reserved / site credit
+        </p>
+        <p>
+          sustainability is at the heart of what we do. we prioritize{' '}
+          <a href="#" className="footer-link-underline">
+            ethical practices
           </a>
-        ) : (
-          <NavLink
-            end
-            key={item.id}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
-      })}
-    </nav>
+          , from responsibly sourcing our cashmere from nomadic herders to
+          crafting timeless pieces designed to last.
+        </p>
+      </div>
+    </footer>
   );
 }
 
