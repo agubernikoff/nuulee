@@ -13,6 +13,18 @@ img {
   border-radius: 4px;
 }
 
+@font-face {
+  font-family: 'Regular';
+  src: url('../assets/fonts/regular.woff2') format('woff2'),
+    url('../assets/fonts/regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Medium';
+  src: url('../assets/fonts/medium.woff2') format('woff2'),
+    url('../assets/fonts/medium.woff') format('woff');
+}
+
 /*
 * --------------------------------------------------
 * Non anchor links
