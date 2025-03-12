@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {Await, Link} from '@remix-run/react';
 import {Suspense, useId} from 'react';
 import {Aside} from '~/components/Aside';
@@ -28,6 +29,7 @@ export function PageLayout({
       <SearchAside />
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       <SubMenuAside header={header} publicStoreDomain={publicStoreDomain} />
+      <SubscribeAside />
       {header && (
         <Header
           header={header}
@@ -51,7 +53,7 @@ function SubMenuAside({header, publicStoreDomain}) {
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
-      <Aside type="submenu" id="submenu" closeOnMouseLeave={true}>
+      <Aside type="submenu" closeOnMouseLeave={true}>
         <HeaderMenu
           menu={{
             id: header.menu.id,
@@ -68,6 +70,63 @@ function SubMenuAside({header, publicStoreDomain}) {
   );
 }
 
+function SubscribeAside() {
+  return (
+    <Aside
+      type="subscribe"
+      heading="subscribe to newsletter"
+      closeOnMouseLeave={true}
+    >
+      <SubscribeForm />
+    </Aside>
+  );
+}
+function SubscribeForm() {
+  const [email, setEmail] = useState();
+  const [gender, setGender] = useState();
+  return (
+    <div>
+      <p>
+        subscribe to receive all the information by email on our latest
+        collections, products, and projects.
+      </p>
+      <div className="checkbox-container">
+        <div>
+          <input
+            type="checkbox"
+            name="gender"
+            value="womens"
+            checked={gender === 'womens'}
+            onChange={(e) => setGender(e.target.value)}
+          />
+          <label for="subscribeNews">womens</label>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            name="gender"
+            value="mens"
+            checked={gender === 'mens'}
+            onChange={(e) => setGender(e.target.value)}
+          />
+          <label for="subscribeNews">mens</label>
+        </div>
+      </div>
+      <div className="email-input-container">
+        <input
+          placeholder="enter email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        ></input>
+        <button className="reset">submit</button>
+      </div>
+      <p className="subscribe-subtext">
+        by subscribing to our newsletter, you agree to receive promotional
+        content from nüülee in accordance with our <a>privacy policy.</a>
+      </p>
+    </div>
+  );
+}
 /**
  * @param {{cart: PageLayoutProps['cart']}}
  */

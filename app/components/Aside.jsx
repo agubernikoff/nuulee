@@ -43,12 +43,9 @@ export function Aside({children, heading, type, id, closeOnMouseLeave}) {
       role="dialog"
     >
       <button className="close-outside" onClick={close} />
-      <aside
-        id={heading || id}
-        onMouseLeave={closeOnMouseLeave ? () => close() : null}
-      >
+      <aside id={type} onMouseLeave={closeOnMouseLeave ? () => close() : null}>
         <header>
-          <h3>{heading}</h3>
+          <p>{heading}</p>
           <button className="close reset" onClick={close} aria-label="Close">
             &times;
           </button>

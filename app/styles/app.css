@@ -7,6 +7,9 @@
   --color-dark: #000;
   --color-light: #fff;
   --color-grey: #e2e2e2;
+  --color-hover: #acacac;
+  --color-section-backgrounds: #a2a2a2;
+  --color-stroke-color: #e7e7e7;
 }
 
 img {
@@ -58,10 +61,15 @@ aside#submenu {
   top: var(--header-height);
   box-shadow: none;
 }
+aside#subscribe {
+  top: var(--header-height);
+  right: 0;
+  box-shadow: none;
+  height: auto;
+}
 
 aside header {
   align-items: center;
-  border-bottom: 1px solid var(--color-dark);
   display: flex;
   height: var(--header-height);
   justify-content: space-between;
@@ -70,8 +78,13 @@ aside header {
 aside#submenu header {
   display: none;
 }
+aside#subscribe header {
+  height: auto;
+  margin-top: 1rem;
+  padding-inline: 2rem;
+}
 
-aside header h3 {
+aside header p {
   margin: 0;
 }
 
@@ -94,6 +107,9 @@ aside header h2 {
 
 aside main {
   margin: 1rem;
+}
+aside#subscribe main {
+  margin: 2rem;
 }
 
 aside p {
@@ -123,7 +139,8 @@ aside li {
   z-index: 10;
 }
 
-.overlay:has(> aside#submenu) {
+.overlay:has(> aside#submenu),
+.overlay:has(> aside#subscribe) {
   top: var(--header-height);
 }
 
@@ -162,8 +179,62 @@ aside li {
 .overlay.expanded aside {
   transform: translateX(calc(var(--aside-width) * -1));
 }
-.overlay.expanded aside#submenu {
+.overlay.expanded aside#submenu,
+.overlay.expanded aside#subscribe {
   transform: translateX(0);
+}
+.checkbox-container {
+  display: flex;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: center;
+}
+input[type='checkbox'] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 9px;
+  height: 9px;
+  border: 1px solid black;
+  cursor: pointer;
+  margin-right: 8px;
+  vertical-align: middle;
+  padding: 0;
+  border-radius: 0;
+  margin: 0;
+  margin-right: 7px;
+}
+input[type='checkbox']:checked {
+  background-color: black;
+  border-color: black;
+}
+
+.email-input-container {
+  border-bottom: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+}
+.email-input-container input {
+  border: none;
+  margin: 0;
+  margin-left: -10px;
+  padding: 0;
+  padding-left: 10px;
+  width: 100%;
+}
+.email-input-container input:focus-visible {
+  outline: none;
+}
+.email-input-container input::placeholder,
+.subscribe-subtext,
+.subscribe-subtext > a {
+  color: var(--color-hover);
+}
+.email-input-container button {
+  padding: 0;
+}
+
+.subscribe-subtext > a {
+  text-decoration: underline;
 }
 
 button.reset {

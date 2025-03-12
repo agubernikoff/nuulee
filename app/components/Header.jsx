@@ -123,7 +123,7 @@ function SubscribeToggle() {
   return (
     <button
       className="header-menu-item reset"
-      onClick={() => open('subscribe')}
+      onMouseEnter={() => open('subscribe')}
     >
       subscribe
     </button>
