@@ -75,7 +75,7 @@ function SubscribeAside() {
     <Aside
       type="subscribe"
       heading="subscribe to newsletter"
-      // closeOnMouseLeave={true}
+      closeOnMouseLeave={true}
     >
       <SubscribeForm />
     </Aside>
