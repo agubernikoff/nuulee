@@ -60,6 +60,7 @@ aside {
 aside * {
   font-size: 12px;
 }
+
 aside#submenu {
   right: auto;
   top: var(--header-height);
@@ -76,6 +77,13 @@ aside#location {
   min-width: var(--aside-width-small);
   max-width: var(--aside-width-small);
 }
+aside#location {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: auto;
+}
+
 aside header {
   align-items: center;
   display: flex;
@@ -86,10 +94,14 @@ aside header {
 aside#submenu header {
   display: none;
 }
-aside#subscribe header {
+aside#subscribe header,
+aside#location header {
   height: auto;
   margin-top: 1rem;
-  padding-inline: 2rem 1rem;
+  padding-inline: 2rem;
+}
+aside#subscribe header {
+  padding-right: 1rem;
 }
 
 aside header p {
@@ -120,6 +132,9 @@ aside main {
 aside#subscribe main {
   margin: 1rem 2rem 2rem;
   padding-right: 5rem;
+}
+aside#location main {
+  margin: 1rem 2rem 2rem;
 }
 
 aside p {
@@ -167,6 +182,10 @@ aside li {
 .overlay:has(> aside#submenu) .close-outside {
   left: auto;
   right: 0;
+}
+.overlay:has(> aside#location) .close-outside {
+  inset: 0;
+  width: auto;
 }
 
 .overlay .light {

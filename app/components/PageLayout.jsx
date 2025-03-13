@@ -30,6 +30,7 @@ export function PageLayout({
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       <SubMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       <SubscribeAside />
+      <LocationAside />
       {header && (
         <Header
           header={header}
@@ -129,6 +130,19 @@ function SubscribeForm() {
     </div>
   );
 }
+
+function LocationAside() {
+  return (
+    <Aside type="location" heading="choose country">
+      <LocationForm />
+    </Aside>
+  );
+}
+
+function LocationForm() {
+  return <div>location</div>;
+}
+
 /**
  * @param {{cart: PageLayoutProps['cart']}}
  */
