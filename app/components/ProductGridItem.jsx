@@ -26,20 +26,29 @@ function ProductGridItem({product, loading}) {
     >
       <AnimatePresence mode="popLayout">
         <motion.div
-          key={image?.id}
+          key={image.id}
           initial={{opacity: 1}}
           animate={{opacity: 1}}
           exit={{opacity: 0}}
           transition={{duration: 1}}
         >
           <Image
-            alt={image?.altText || product.title}
+            alt={image.altText || product.title}
             aspectRatio="361/482"
             data={image}
-            loading={loading}
+            loading={'eager'}
             sizes="(min-width: 45em) 400px, 100vw"
           />
         </motion.div>
+        <div style={{display: 'none'}}>
+          <Image
+            alt={product.images.nodes[1]?.altText || product.title}
+            aspectRatio="361/482"
+            data={product.images.nodes[1]}
+            loading={'eager'}
+            sizes="(min-width: 45em) 400px, 100vw"
+          />
+        </div>
         <motion.div
           initial={{opacity: 0}}
           animate={{
