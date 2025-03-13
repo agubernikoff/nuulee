@@ -1,5 +1,6 @@
 :root {
-  --aside-width: 400px;
+  --aside-width: 500px;
+  --aside-width-small: 405px;
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 250px;
   --grid-item-width: 300px;
@@ -56,6 +57,9 @@ aside {
   top: 0;
   transition: transform 200ms ease-in-out;
 }
+aside * {
+  font-size: 12px;
+}
 aside#submenu {
   right: auto;
   top: var(--header-height);
@@ -67,7 +71,11 @@ aside#subscribe {
   box-shadow: none;
   height: auto;
 }
-
+aside#subscribe,
+aside#location {
+  min-width: var(--aside-width-small);
+  max-width: var(--aside-width-small);
+}
 aside header {
   align-items: center;
   display: flex;
@@ -81,23 +89,24 @@ aside#submenu header {
 aside#subscribe header {
   height: auto;
   margin-top: 1rem;
-  padding-inline: 2rem;
+  padding-inline: 2rem 1rem;
 }
 
 aside header p {
   margin: 0;
+  font-family: 'medium';
 }
 
 aside header .close {
   font-weight: bold;
-  opacity: 0.8;
   text-decoration: none;
   transition: all 200ms;
   width: 20px;
 }
 
 aside header .close:hover {
-  opacity: 1;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 aside header h2 {
@@ -109,7 +118,8 @@ aside main {
   margin: 1rem;
 }
 aside#subscribe main {
-  margin: 2rem;
+  margin: 1rem 2rem 2rem;
+  padding-right: 5rem;
 }
 
 aside p {
@@ -188,6 +198,10 @@ aside li {
   gap: 24px;
   justify-content: flex-start;
   align-items: center;
+  margin-top: 1rem;
+}
+.checkbox-container * {
+  cursor: pointer;
 }
 input[type='checkbox'] {
   appearance: none;
@@ -202,6 +216,7 @@ input[type='checkbox'] {
   border-radius: 0;
   margin: 0;
   margin-right: 7px;
+  transition: background-color 400ms ease-in-out;
 }
 input[type='checkbox']:checked {
   background-color: black;
@@ -212,6 +227,7 @@ input[type='checkbox']:checked {
   border-bottom: 1px solid black;
   display: flex;
   justify-content: space-between;
+  margin-block: 2rem;
 }
 .email-input-container input {
   border: none;
@@ -233,6 +249,10 @@ input[type='checkbox']:checked {
   padding: 0;
 }
 
+.subscribe-subtext,
+.subscribe-subtext > a {
+  font-size: 10px;
+}
 .subscribe-subtext > a {
   text-decoration: underline;
 }

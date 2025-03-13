@@ -75,7 +75,7 @@ function SubscribeAside() {
     <Aside
       type="subscribe"
       heading="subscribe to newsletter"
-      closeOnMouseLeave={true}
+      // closeOnMouseLeave={true}
     >
       <SubscribeForm />
     </Aside>
@@ -94,22 +94,24 @@ function SubscribeForm() {
         <div>
           <input
             type="checkbox"
+            id="womens"
             name="gender"
             value="womens"
             checked={gender === 'womens'}
             onChange={(e) => setGender(e.target.value)}
           />
-          <label for="subscribeNews">womens</label>
+          <label htmlFor="womens">womens</label>
         </div>
         <div>
           <input
             type="checkbox"
+            id="mens"
             name="gender"
             value="mens"
             checked={gender === 'mens'}
             onChange={(e) => setGender(e.target.value)}
           />
-          <label for="subscribeNews">mens</label>
+          <label htmlFor="mens">mens</label>
         </div>
       </div>
       <div className="email-input-container">
