@@ -9,7 +9,6 @@ export function Footer({footer: footerPromise, publicStoreDomain}) {
     <Suspense fallback={<div>Loading footer...</div>}>
       <Await resolve={footerPromise}>
         {(footer) => {
-          console.log('Footer data:', footer); // Debug footer data
           return (
             <FooterMenu
               menu={footer.menu}
