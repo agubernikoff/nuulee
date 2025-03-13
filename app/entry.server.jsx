@@ -22,6 +22,25 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
+    imgSrc: [
+      "'self'",
+      'https://cdn.sanity.io/images/hj7h0g6k/production/',
+      'https://cdn.sanity.io/files/hj7h0g6k/production/',
+      'https://cdn.shopify.com/',
+    ],
+    mediaSrc: [
+      "'self'",
+      'https://cdn.sanity.io/images/hj7h0g6k/production/',
+      'https://cdn.sanity.io/files/hj7h0g6k/production/',
+      'https://cdn.shopify.com/',
+    ],
+    connectSrc: [
+      'https://klaviyo.com',
+      'https://*.klaviyo.com',
+      'https://cdn.shopify.com',
+      'http://localhost:3000',
+      'https://*.klaviyo.com/*',
+    ],
   });
 
   const body = await renderToReadableStream(

@@ -543,17 +543,20 @@ button.reset:hover:not(:has(> *)) {
 */
 .hero-container {
   width: 100vw;
-  height: 120vh;
+  /* height: 120vh; */
   background: grey;
   margin-left: -10vw;
   margin-bottom: 8rem;
   position: relative;
+  display: flex;
 }
-.hero-container > p {
+.sticky-p {
   position: sticky;
-  margin-bottom: calc(var(--header-height) + 1rem);
+  margin-bottom: var(--header-height);
   top: calc(100% - var(--header-height) - 1rem);
   margin-left: 2rem;
+  font-size: 12px;
+  color: white;
 }
 
 .featured-collection-image {

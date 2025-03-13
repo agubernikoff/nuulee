@@ -2,6 +2,7 @@ import {Await, useLoaderData, Link} from '@remix-run/react';
 import {Suspense} from 'react';
 import {Image, Money} from '@shopify/hydrogen';
 import ProductGridItem from '~/components/ProductGridItem';
+import {sanityClient} from '~/sanity/SanityClient';
 
 /**
  * @type {MetaFunction}
@@ -36,10 +37,17 @@ async function loadCriticalData({context}) {
     context.storefront.query(WOMENS_COLLECTION_QUERY),
   ]);
 
+  const homePage = await sanityClient
+    .fetch(
+      "*[_type == 'home'][0]{...,hero{...,mediaItems[]{...,video{...,asset->{url}},image{...,asset->{url},'dimensions': asset->metadata.dimensions}}},sections[]{...,images[]{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}}}}",
+    )
+    .then((response) => response);
+
   return {
     featuredCollection: collections.nodes[0],
     menCollection: men.collection,
     womenCollection: women.collection,
+    sanityData: homePage,
   };
 }
 
@@ -66,9 +74,10 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
+  console.log(data.sanityData);
   return (
     <div className="home">
-      <Hero />
+      <Hero data={data.sanityData.hero} />
       <RecommendedProducts products={data.recommendedProducts} />
       <CollectionLinks
         collections={[data.menCollection, data.womenCollection]}
@@ -77,14 +86,47 @@ export default function Homepage() {
   );
 }
 
-function Hero() {
-  //import video files from sanity
+function Hero({data}) {
+  const media = data.mediaItems.map((mi) => {
+    if (mi.mediaType === 'video')
+      return (
+        <video
+          height={1150}
+          width={1100}
+          autoPlay
+          key={mi._key}
+          muted
+          loop
+          playsInline
+          style={{
+            width: data.mediaItems.length > 1 ? '50%' : '100%',
+            height: '110vh',
+            objectFit: 'cover',
+          }}
+        >
+          <source src={mi.video.asset.url} type="video/mp4" />
+        </video>
+      );
+    if (mi.mediaType === 'image')
+      return (
+        <img
+          key={mi._key}
+          src={mi.image.asset.url}
+          alt={mi.image.altText}
+          style={{
+            width: data.mediaItems.length > 1 ? '50%' : '100%',
+            height: '110vh',
+            objectFit: 'cover',
+          }}
+        />
+      );
+  });
   return (
     <div className="hero-container">
-      <p>
-        shop our latest signature styles—permanent fixtures of the nüülee
-        cashmere wardrobe.
-      </p>
+      {media}
+      <div style={{position: 'absolute', height: '100%', width: '300px'}}>
+        <p className="sticky-p">{data.headline}</p>
+      </div>
     </div>
   );
 }
@@ -124,12 +166,16 @@ function CollectionLinks({collections}) {
   return (
     <div className="collection-links-container">
       {collections.map((col) => (
-        <Link prefetch="intent" to={`/collections/${col.handle}`}>
+        <Link
+          key={col.handle}
+          prefetch="intent"
+          to={`/collections/${col.handle}`}
+        >
           <Image
             alt={col.image.altText || `shop ${col.handle}`}
             aspectRatio="361/482"
             data={col.image}
-            // sizes="(min-width: 45em) 400px, 100vw"
+            sizes="(min-width: 45em) 400px, 100vw"
           />
           <p>{`shop ${col.handle}`}</p>
         </Link>
