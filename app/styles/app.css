@@ -610,7 +610,6 @@ button.reset:hover:not(:has(> *)) {
 }
 .section-container:last-of-type {
   margin-bottom: 0;
-  justify-content: normal;
 }
 .section-container img {
   width: 100%;
@@ -618,9 +617,9 @@ button.reset:hover:not(:has(> *)) {
 .section-container * {
   font-size: 12px;
 }
-.section-container:has(.section-text-container:has(img)) {
+/* .section-container:has(.section-text-container:has(img)) {
   justify-content: flex-start;
-}
+} */
 .section-img-container {
   width: 45%;
 }

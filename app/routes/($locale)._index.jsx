@@ -188,7 +188,13 @@ function CollectionLinks({collections}) {
 
 function Section({section}) {
   return (
-    <div className="section-container">
+    <div
+      className="section-container"
+      style={{
+        justifyContent:
+          section.images.length === 1 ? 'normal' : 'space-between',
+      }}
+    >
       <div className="section-text-container">
         <p>{section.title}</p>
         <p>{section.description}</p>
@@ -323,7 +329,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   }
   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
-    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
+    products(first: 6, sortKey: UPDATED_AT, reverse: true) {
       nodes {
         ...RecommendedProduct
       }
