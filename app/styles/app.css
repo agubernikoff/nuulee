@@ -483,6 +483,22 @@ button.reset:hover:not(:has(> *)) {
   align-items: center;
   display: flex;
 }
+
+.cart-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-count {
+  position: absolute;
+  font-size: 10px;
+  font-weight: bold;
+  margin-top: 0.25rem;
+  color: black; /* Adjust color as needed */
+}
+
 /*
 * --------------------------------------------------
 * components/Search

@@ -188,6 +188,7 @@ function CartBadge({count}) {
   return (
     <a
       href="/cart"
+      className="cart-link"
       onClick={(e) => {
         e.preventDefault();
         open('cart');
@@ -199,26 +200,30 @@ function CartBadge({count}) {
         });
       }}
     >
-      <svg
-        width="22"
-        height="16"
-        viewBox="0 0 22 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect
-          x="0.951172"
-          y="4.18848"
-          width="20.55"
-          height="11.2116"
-          stroke="black"
-        />
-        <path
-          d="M5.98047 2.25363C5.98047 1.3396 6.72144 0.598633 7.63547 0.598633H14.8188C15.7328 0.598633 16.4738 1.3396 16.4738 2.25363V3.90863H5.98047V2.25363Z"
-          stroke="black"
-        />
-      </svg>
-      {count === null ? <span>&nbsp;</span> : count}
+      <div className="cart-container">
+        <svg
+          width="22"
+          height="16"
+          viewBox="0 0 22 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="0.951172"
+            y="4.18848"
+            width="20.55"
+            height="11.2116"
+            stroke="black"
+          />
+          <path
+            d="M5.98047 2.25363C5.98047 1.3396 6.72144 0.598633 7.63547 0.598633H14.8188C15.7328 0.598633 16.4738 1.3396 16.4738 2.25363V3.90863H5.98047V2.25363Z"
+            stroke="black"
+          />
+        </svg>
+
+        {/* Number inside the cart */}
+        {count !== null && <span className="cart-count">{count}</span>}
+      </div>
     </a>
   );
 }
