@@ -17,7 +17,16 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
         publicStoreDomain={publicStoreDomain}
       />
       <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
+      <NavLink
+        prefetch="intent"
+        to="/"
+        style={{
+          position: 'absolute',
+          left: '50%',
+          transform: 'translate(-50%)',
+        }}
+        end
+      >
         <Logo />
       </NavLink>
       <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
@@ -75,7 +84,7 @@ export function HeaderMenu({
               else close();
             }}
             prefetch="intent"
-            style={activeLinkStyle}
+            // style={activeLinkStyle}
             to={url}
             onMouseEnter={() => {
               if (item.items && item.items.length > 0 && viewport !== 'mobile')

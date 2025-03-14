@@ -80,10 +80,10 @@ export default function Homepage() {
       <Hero data={data.sanityData.hero} />
       <RecommendedProducts products={data.recommendedProducts} />
       <CollectionLinks
-        collections={[data.menCollection, data.womenCollection]}
+        collections={[data.womenCollection, data.menCollection]}
       />
       {data.sanityData.sections.map((section) => (
-        <Section section={section} />
+        <Section section={section} key={section._key} />
       ))}
     </div>
   );
