@@ -2,6 +2,8 @@ import {Suspense} from 'react';
 import {Await, NavLink, useAsyncValue} from '@remix-run/react';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
+import {useState} from 'react';
+import {useEffect} from 'react';
 
 /**
  * @param {HeaderProps}
@@ -164,9 +166,21 @@ function LocationToggle() {
 }
 
 function SearchToggle() {
-  const {open} = useAside();
+  const {open, close} = useAside();
+  const [isOpen, setIsOpen] = useState(false);
+
+  function toggle() {
+    setIsOpen(!isOpen);
+  }
   return (
-    <button className="reset header-menu-item" onClick={() => open('search')}>
+    <button
+      className="reset header-menu-item"
+      onClick={() => {
+        toggle();
+        if (isOpen) close();
+        else open('search');
+      }}
+    >
       <svg
         width="19"
         height="16"

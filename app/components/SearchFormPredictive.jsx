@@ -32,6 +32,9 @@ export function SearchFormPredictive({
     const term = inputRef?.current?.value;
     navigate(SEARCH_ENDPOINT + (term ? `?q=${term}` : ''));
     aside.close();
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
   }
 
   /** Fetch search results based on the input value */

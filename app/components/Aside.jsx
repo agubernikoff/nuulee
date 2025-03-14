@@ -1,4 +1,5 @@
-import {createContext, useContext, useEffect, useState} from 'react';
+import {createContext, useContext, useEffect, useState, useId} from 'react';
+import {SearchFormPredictive} from './SearchFormPredictive';
 
 /**
  * A side bar component with Overlay
@@ -36,6 +37,8 @@ export function Aside({children, heading, type, id, closeOnMouseLeave}) {
     return () => abortController.abort();
   }, [close, expanded]);
 
+  const queriesDatalistId = useId();
+
   return (
     <div
       aria-modal
@@ -45,7 +48,28 @@ export function Aside({children, heading, type, id, closeOnMouseLeave}) {
       <button className="close-outside" onClick={close} />
       <aside id={type} onMouseLeave={closeOnMouseLeave ? () => close() : null}>
         <header>
-          <p>{heading}</p>
+          {type === 'search' ? (
+            <SearchFormPredictive>
+              {({fetchResults, goToSearch, inputRef}) => (
+                <>
+                  <input
+                    name="q"
+                    onChange={fetchResults}
+                    onFocus={fetchResults}
+                    placeholder="type something"
+                    ref={inputRef}
+                    type="search"
+                    list={queriesDatalistId}
+                  />
+                  <button onClick={goToSearch} style={{display: 'none'}}>
+                    Search
+                  </button>
+                </>
+              )}
+            </SearchFormPredictive>
+          ) : (
+            <p>{heading}</p>
+          )}
           <button className="close reset" onClick={close} aria-label="Close">
             <svg
               width="10"

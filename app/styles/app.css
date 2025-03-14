@@ -11,6 +11,7 @@
   --color-hover: #acacac;
   --color-section-backgrounds: #a2a2a2;
   --color-stroke-color: #e7e7e7;
+  --color-dimmer: rgba(0, 0, 0, 0.2);
 }
 
 img {
@@ -33,6 +34,9 @@ button,
 input::placeholder {
   font-family: 'regular';
 }
+input[type='search' i]::-webkit-search-cancel-button {
+  appearance: none;
+}
 /*
 * --------------------------------------------------
 * Non anchor links
@@ -50,7 +54,7 @@ input::placeholder {
 */
 aside {
   background: var(--color-light);
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0 0 50px rgba(0, 0, 0, 0.3); */
   height: 100vh;
   max-width: var(--aside-width);
   min-width: var(--aside-width);
@@ -75,6 +79,7 @@ aside#subscribe {
   right: 0;
   box-shadow: none;
   height: auto;
+  border-top: 1px solid var(--color-dimmer);
 }
 aside#subscribe,
 aside#location {
@@ -87,13 +92,21 @@ aside#location {
   transform: translate(-50%, -50%);
   height: auto;
 }
+aside#search {
+  min-width: 100vw;
+  max-width: 100vw;
+  top: var(--header-height);
+  height: var(--header-height);
+  right: auto;
+  border-top: 1px solid var(--color-dimmer);
+}
 
 aside header {
   align-items: center;
   display: flex;
   height: var(--header-height);
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 1.3rem;
 }
 aside#submenu header {
   display: none;
@@ -111,6 +124,14 @@ aside#subscribe header {
 aside header p {
   margin: 0;
   font-family: 'medium';
+}
+
+aside header input {
+  border: none;
+  width: 95vw;
+}
+aside header input:focus-visible {
+  outline: none;
 }
 
 aside header .close {
@@ -154,7 +175,7 @@ aside li {
 }
 
 .overlay {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--color-dimmer);
   bottom: 0;
   left: 0;
   opacity: 0;
@@ -169,7 +190,8 @@ aside li {
 }
 
 .overlay:has(> aside#submenu),
-.overlay:has(> aside#subscribe) {
+.overlay:has(> aside#subscribe),
+.overlay:has(> aside#search) {
   top: var(--header-height);
 }
 
@@ -187,7 +209,8 @@ aside li {
   left: auto;
   right: 0;
 }
-.overlay:has(> aside#location) .close-outside {
+.overlay:has(> aside#location) .close-outside,
+.overlay:has(> aside#search) .close-outside {
   inset: 0;
   width: auto;
 }
@@ -213,7 +236,8 @@ aside li {
   transform: translateX(calc(var(--aside-width) * -1));
 }
 .overlay.expanded aside#submenu,
-.overlay.expanded aside#subscribe {
+.overlay.expanded aside#subscribe,
+.overlay.expanded aside#search {
   transform: translateX(0);
 }
 .checkbox-container {
