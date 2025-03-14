@@ -82,6 +82,9 @@ export default function Homepage() {
       <CollectionLinks
         collections={[data.menCollection, data.womenCollection]}
       />
+      {data.sanityData.sections.map((section) => (
+        <Section section={section} />
+      ))}
     </div>
   );
 }
@@ -139,7 +142,6 @@ function Hero({data}) {
 function RecommendedProducts({products}) {
   return (
     <div className="recommended-products">
-      <h2>Recommended Products</h2>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
@@ -180,6 +182,52 @@ function CollectionLinks({collections}) {
           <p>{`shop ${col.handle}`}</p>
         </Link>
       ))}
+    </div>
+  );
+}
+
+function Section({section}) {
+  return (
+    <div className="section-container">
+      <div className="section-text-container">
+        <p>{section.title}</p>
+        <p>{section.description}</p>
+        <Link to={`/pages/${section.title.split(' ').join('-')}`}>
+          learn more
+        </Link>
+        {section.images.length > 1 ? (
+          <div>
+            <img
+              src={section.images.find((s) => s.isPrimary).image.asset.url}
+              alt={section.images.find((s) => s.isPrimary).alt}
+              style={{
+                aspectRatio: section.images.find((s) => s.isPrimary).image
+                  .dimensions.aspectRatio,
+              }}
+            />
+          </div>
+        ) : null}
+      </div>
+      <div className="section-img-container">
+        <img
+          src={
+            section.images.length > 1
+              ? section.images[1].image.asset.url
+              : section.images[0].image.asset.url
+          }
+          alt={
+            section.images.length > 1
+              ? section.images[1].alt
+              : section.images[0].alt
+          }
+          style={{
+            aspectRatio:
+              section.images.length > 1
+                ? section.images[1].image.dimensions.aspectRatio
+                : section.images[0].image.dimensions.aspectRatio,
+          }}
+        />
+      </div>
     </div>
   );
 }

@@ -589,6 +589,7 @@ button.reset:hover:not(:has(> *)) {
   display: flex;
   justify-content: space-between;
   margin-bottom: 8rem;
+  font-family: 'medium';
 }
 .collection-links-container a {
   width: 45%;
@@ -597,6 +598,46 @@ button.reset:hover:not(:has(> *)) {
   height: auto;
 }
 
+.section-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10%;
+  margin-bottom: 8rem;
+}
+.section-container:last-of-type {
+  margin-bottom: 0;
+}
+.section-container img {
+  width: 100%;
+}
+.section-container * {
+  font-size: 12px;
+}
+.section-container:has(.section-text-container:has(img)) {
+  justify-content: flex-start;
+}
+.section-img-container {
+  width: 45%;
+}
+.section-text-container:has(img) {
+  width: 45%;
+}
+.section-text-container {
+  width: 17.5%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.section-text-container > p:first-of-type {
+  font-family: 'medium';
+}
+.section-text-container > div {
+  margin-top: 4rem;
+}
+.section-text-container > a {
+  text-decoration: underline;
+}
 /*
 * --------------------------------------------------
 * routes/collections._index.tsx
