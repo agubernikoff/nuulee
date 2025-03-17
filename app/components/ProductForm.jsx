@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import {Link, useNavigate, useLocation} from '@remix-run/react';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
+import {size} from 'node_modules/valibot/dist/index';
 
 /**
  * @param {{
@@ -18,7 +19,7 @@ export function ProductForm({productOptions, selectedVariant}) {
     const params = new URLSearchParams(location.search);
     const selectedOptions = {};
     productOptions.forEach((option) => {
-      const selectedValue = params.get(option.name.toLowerCase());
+      const selectedValue = params.get(option.name);
       if (selectedValue) {
         selectedOptions[option.name] = selectedValue;
       } else if (option.optionValues.length > 0) {
@@ -42,6 +43,24 @@ export function ProductForm({productOptions, selectedVariant}) {
     navigate(`?${newParams.toString()}`, {replace: true});
   };
 
+  function formatSize(abbr, optionName) {
+    if (optionName !== 'Size') return abbr;
+    switch (abbr) {
+      case 'xs':
+        return 'extra small';
+      case 's':
+        return 'small';
+      case 'm':
+        return 'medium';
+      case 'l':
+        return 'large';
+      case 'xl':
+        return 'extra large';
+      case 'xxl':
+        return 'extra extra large';
+    }
+  }
+
   return (
     <div className="product-form">
       {productOptions.map((option) => {
@@ -49,7 +68,10 @@ export function ProductForm({productOptions, selectedVariant}) {
           <div className="product-options" key={option.name}>
             <p>
               {option.name.toLowerCase()}:{' '}
-              {selectedOptions[option.name]?.toLowerCase()}
+              {formatSize(
+                selectedOptions[option.name]?.toLowerCase(),
+                option.name,
+              )}
             </p>
 
             <div className="product-options-grid">
