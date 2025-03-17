@@ -1,8 +1,7 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {Link, useNavigate, useLocation} from '@remix-run/react';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
-import {size} from 'node_modules/valibot/dist/index';
 
 /**
  * @param {{
@@ -139,7 +138,7 @@ export function ProductForm({productOptions, selectedVariant}) {
                 }
               })}
             </div>
-            <br />
+            <div className="divider" />
           </div>
         );
       })}

@@ -115,17 +115,14 @@ export default function Product() {
           price={selectedVariant?.price}
           compareAtPrice={selectedVariant?.compareAtPrice}
         />
-        <br />
+        <div className="divider" />
         <ProductForm
           productOptions={productOptions}
           selectedVariant={selectedVariant}
         />
-        <br />
-        <br />
-
-        <br />
+        <div className="divider" />
         <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-        <br />
+        <div className="divider" />
       </div>
       <Analytics.ProductView
         data={{

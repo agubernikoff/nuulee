@@ -37,6 +37,12 @@ input::placeholder {
 input[type='search' i]::-webkit-search-cancel-button {
   appearance: none;
 }
+.divider {
+  margin-block: 1rem;
+  height: 1px;
+  width: 100%;
+  background: var(--color-stroke-color);
+}
 /*
 * --------------------------------------------------
 * Non anchor links
@@ -817,7 +823,6 @@ aside#submenu .header-menu-item:hover {
 .product-option-label-swatch {
   width: 0.75rem;
   height: 0.75rem;
-  margin: 0.05rem;
 }
 .product-options:nth-of-type(2) .product-options-grid > button {
   border: none !important;
@@ -830,9 +835,15 @@ aside#submenu .header-menu-item:hover {
   font-size: 12px;
   font-family: 'regular';
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.75rem 0.5rem;
   background: transparent;
   border: 1px solid black;
+  transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+  cursor: pointer;
+}
+.add-to-cart-form-pdp:hover {
+  background: black;
+  color: white;
 }
 /*
 * --------------------------------------------------
