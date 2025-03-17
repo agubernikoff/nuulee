@@ -1,4 +1,5 @@
-import {Link, useNavigate} from '@remix-run/react';
+import {useState, useEffect} from 'react';
+import {Link, useNavigate, useLocation} from '@remix-run/react';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
 
@@ -11,16 +12,46 @@ import {useAside} from './Aside';
 export function ProductForm({productOptions, selectedVariant}) {
   const navigate = useNavigate();
   const {open} = useAside();
+  const location = useLocation();
+
+  const getQueryParams = () => {
+    const params = new URLSearchParams(location.search);
+    const selectedOptions = {};
+    productOptions.forEach((option) => {
+      const selectedValue = params.get(option.name.toLowerCase());
+      if (selectedValue) {
+        selectedOptions[option.name] = selectedValue;
+      } else if (option.optionValues.length > 0) {
+        selectedOptions[option.name] = option.optionValues[0].name;
+      }
+    });
+    return selectedOptions;
+  };
+
+  const [selectedOptions, setSelectedOptions] = useState(() =>
+    getQueryParams(),
+  );
+
+  const handleOptionChange = (optionName, value) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [optionName]: value,
+    }));
+    const newParams = new URLSearchParams(location.search);
+    newParams.set(optionName.toLowerCase(), value);
+    navigate(`?${newParams.toString()}`, {replace: true});
+  };
 
   return (
     <div className="product-form">
       {productOptions.map((option) => {
-        // If there is only a single value in the option values, don't display the option
-        // if (option.optionValues.length === 1) return null;
-
         return (
           <div className="product-options" key={option.name}>
-            <h5>{option.name}</h5>
+            <p>
+              {option.name.toLowerCase()}:{' '}
+              {selectedOptions[option.name]?.toLowerCase()}
+            </p>
+
             <div className="product-options-grid">
               {option.optionValues.map((value) => {
                 const {
@@ -34,11 +65,17 @@ export function ProductForm({productOptions, selectedVariant}) {
                   swatch,
                 } = value;
 
+                const onClickHandler = () => {
+                  handleOptionChange(option.name, value.name);
+                  if (!selected) {
+                    navigate(`?${variantUriQuery}`, {
+                      replace: true,
+                      preventScrollReset: true,
+                    });
+                  }
+                };
+
                 if (isDifferentProduct) {
-                  // SEO
-                  // When the variant is a combined listing child product
-                  // that leads to a different url, we need to render it
-                  // as an anchor tag
                   return (
                     <Link
                       className="product-options-item"
@@ -58,11 +95,6 @@ export function ProductForm({productOptions, selectedVariant}) {
                     </Link>
                   );
                 } else {
-                  // SEO
-                  // When the variant is an update to the search param,
-                  // render it as a button with javascript navigating to
-                  // the variant so that SEO bots do not index these as
-                  // duplicated links
                   return (
                     <button
                       type="button"
@@ -77,14 +109,7 @@ export function ProductForm({productOptions, selectedVariant}) {
                         opacity: available ? 1 : 0.3,
                       }}
                       disabled={!exists}
-                      onClick={() => {
-                        if (!selected) {
-                          navigate(`?${variantUriQuery}`, {
-                            replace: true,
-                            preventScrollReset: true,
-                          });
-                        }
-                      }}
+                      onClick={onClickHandler}
                     >
                       <ProductOptionSwatch swatch={swatch} name={name} />
                     </button>
@@ -119,12 +144,6 @@ export function ProductForm({productOptions, selectedVariant}) {
   );
 }
 
-/**
- * @param {{
- *   swatch?: Maybe<ProductOptionValueSwatch> | undefined;
- *   name: string;
- * }}
- */
 function ProductOptionSwatch({swatch, name}) {
   const image = swatch?.image?.previewImage?.url;
   const color = swatch?.color;
@@ -143,8 +162,3 @@ function ProductOptionSwatch({swatch, name}) {
     </div>
   );
 }
-
-/** @typedef {import('@shopify/hydrogen').MappedProductOptions} MappedProductOptions */
-/** @typedef {import('@shopify/hydrogen/storefront-api-types').Maybe} Maybe */
-/** @typedef {import('@shopify/hydrogen/storefront-api-types').ProductOptionValueSwatch} ProductOptionValueSwatch */
-/** @typedef {import('storefrontapi.generated').ProductFragment} ProductFragment */
