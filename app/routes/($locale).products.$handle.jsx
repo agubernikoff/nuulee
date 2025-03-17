@@ -101,11 +101,16 @@ export default function Product() {
 
   const {title, descriptionHtml} = product;
 
+  console.log('Fetched product images:', product.images.edges);
+  const productImage = product.images.edges.map((edge) => (
+    <ProductImage image={edge.node} />
+  ));
+
   return (
     <div className="product">
-      <ProductImage image={selectedVariant?.image} />
+      <div className="product-images">{productImage}</div>
       <div className="product-main">
-        <h1>{title}</h1>
+        <p>{title}</p>
         <ProductPrice
           price={selectedVariant?.price}
           compareAtPrice={selectedVariant?.compareAtPrice}
@@ -207,10 +212,27 @@ const PRODUCT_FRAGMENT = `#graphql
         }
       }
     }
-    selectedOrFirstAvailableVariant(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {
+    
+    images(first: 10) {
+      edges {
+        node {
+          id
+          url
+          altText
+          width
+          height
+        }
+      }
+    }
+    
+    selectedOrFirstAvailableVariant(
+      selectedOptions: $selectedOptions
+      ignoreUnknownOptions: true
+      caseInsensitiveMatch: true
+    ) {
       ...ProductVariant
     }
-    adjacentVariants (selectedOptions: $selectedOptions) {
+    adjacentVariants(selectedOptions: $selectedOptions) {
       ...ProductVariant
     }
     seo {
