@@ -31,6 +31,7 @@ export function PageLayout({
       <SubMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       <SubscribeAside />
       <LocationAside />
+      <SizeGuideAside />
       {header && (
         <Header
           header={header}
@@ -185,6 +186,10 @@ function MobileMenuAside({header, publicStoreDomain}) {
       </Aside>
     )
   );
+}
+
+function SizeGuideAside() {
+  return <Aside type="size-guide"></Aside>;
 }
 
 /**

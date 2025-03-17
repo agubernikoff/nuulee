@@ -65,13 +65,18 @@ export function ProductForm({productOptions, selectedVariant}) {
       {productOptions.map((option) => {
         return (
           <div className="product-options" key={option.name}>
-            <p>
-              {option.name.toLowerCase()}:{' '}
-              {formatSize(
-                selectedOptions[option.name]?.toLowerCase(),
-                option.name,
-              )}
-            </p>
+            <div className="product-options-title-container">
+              <p className="product-options-title">
+                {option.name.toLowerCase()}:{' '}
+                {formatSize(
+                  selectedOptions[option.name]?.toLowerCase(),
+                  option.name,
+                )}
+              </p>
+              {option.name === 'Size' ? (
+                <button onClick={() => open('size-guide')}>size guide</button>
+              ) : null}
+            </div>
 
             <div className="product-options-grid">
               {option.optionValues.map((value) => {
