@@ -174,7 +174,7 @@ function ProductOptionSwatch({swatch, name}) {
   const image = swatch?.image?.previewImage?.url;
   const color = swatch?.color;
 
-  if (!image && !color) return name;
+  if (!image && !color) return name.toLowerCase();
 
   return (
     <div

@@ -788,10 +788,7 @@ aside#submenu .header-menu-item:hover {
   width: 265px;
   top: calc(var(--header-height) + 34px);
 }
-.product-main > div,
-.product-main > p,
-.product-main > div > p,
-.product-main > div > button {
+.product-main * {
   font-family: 'regular' !important;
   font-size: 12px !important;
 }
