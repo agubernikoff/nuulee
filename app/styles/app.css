@@ -773,6 +773,7 @@ aside#submenu .header-menu-item:hover {
   position: sticky;
   margin-top: 34px;
   width: 265px;
+  top: 6rem;
 }
 .product-main > div,
 .product-main > p,
