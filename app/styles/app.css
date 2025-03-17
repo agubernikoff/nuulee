@@ -792,25 +792,36 @@ aside#submenu .header-menu-item:hover {
 .product-price-on-sale s {
   opacity: 0.5;
 }
+.product-options > p {
+  font-family: 'regular' !important;
+  font-size: 12px !important;
+}
 
 .product-options-grid {
   display: flex;
   flex-wrap: wrap;
   grid-gap: 0.75rem;
+  font-family: 'regular' !important;
+  font-size: 12px !important;
+  margin-top: 0.5rem;
+  border-top: 1px solid black;
 }
 
 .product-options-item,
 .product-options-item:disabled {
-  padding: 0.25rem 0.5rem;
+  padding: 0;
   background-color: transparent;
   font-family: 'regular' !important;
   font-size: 12px !important;
 }
 
 .product-option-label-swatch {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin: 0.25rem 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin: 0.05rem;
+}
+.product-options:nth-of-type(2) .product-options-grid > button {
+  border: none !important;
 }
 
 .product-option-label-swatch img {
