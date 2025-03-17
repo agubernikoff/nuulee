@@ -2,6 +2,8 @@ import {Suspense} from 'react';
 import {Await, NavLink, useAsyncValue} from '@remix-run/react';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
+import {useState} from 'react';
+import {useEffect} from 'react';
 
 /**
  * @param {HeaderProps}
@@ -17,7 +19,16 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
         publicStoreDomain={publicStoreDomain}
       />
       <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
+      <NavLink
+        prefetch="intent"
+        to="/"
+        style={{
+          position: 'absolute',
+          left: '50%',
+          transform: 'translate(-50%)',
+        }}
+        end
+      >
         <Logo />
       </NavLink>
       <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
@@ -75,7 +86,7 @@ export function HeaderMenu({
               else close();
             }}
             prefetch="intent"
-            style={activeLinkStyle}
+            // style={activeLinkStyle}
             to={url}
             onMouseEnter={() => {
               if (item.items && item.items.length > 0 && viewport !== 'mobile')
@@ -155,9 +166,21 @@ function LocationToggle() {
 }
 
 function SearchToggle() {
-  const {open} = useAside();
+  const {open, close} = useAside();
+  const [isOpen, setIsOpen] = useState(false);
+
+  function toggle() {
+    setIsOpen(!isOpen);
+  }
   return (
-    <button className="reset header-menu-item" onClick={() => open('search')}>
+    <button
+      className="reset header-menu-item"
+      onClick={() => {
+        toggle();
+        if (isOpen) close();
+        else open('search');
+      }}
+    >
       <svg
         width="19"
         height="16"
