@@ -764,6 +764,7 @@ aside#submenu .header-menu-item:hover {
 .product-images img {
   height: auto;
   width: 100%;
+  object-fit: cover;
 }
 .product-image {
   display: flex;
