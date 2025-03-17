@@ -160,7 +160,7 @@ export function ProductForm({productOptions, selectedVariant}) {
             : []
         }
       >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        {selectedVariant?.availableForSale ? 'add to bag' : 'sold out'}
       </AddToCartButton>
     </div>
   );

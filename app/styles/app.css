@@ -826,7 +826,14 @@ aside#submenu .header-menu-item:hover {
 .product-option-label-swatch img {
   width: 100%;
 }
-
+.add-to-cart-form-pdp {
+  font-size: 12px;
+  font-family: 'regular';
+  width: 100%;
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px solid black;
+}
 /*
 * --------------------------------------------------
 * routes/blog._index.tsx

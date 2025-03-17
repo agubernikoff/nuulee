@@ -27,6 +27,7 @@ export function AddToCartButton({
           />
           <button
             type="submit"
+            className="add-to-cart-form-pdp"
             onClick={onClick}
             disabled={disabled ?? fetcher.state !== 'idle'}
           >
