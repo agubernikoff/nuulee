@@ -1,4 +1,5 @@
 import {useLoaderData} from '@remix-run/react';
+import {useState} from 'react';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -83,17 +84,13 @@ export default function Product() {
   /** @type {LoaderReturnData} */
   const {product} = useLoaderData();
 
-  // Optimistically selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
     product.selectedOrFirstAvailableVariant,
     getAdjacentAndFirstAvailableVariants(product),
   );
 
-  // Sets the search param to the selected variant without navigation
-  // only when no search params are set in the url
   useSelectedOptionInUrlParam(selectedVariant.selectedOptions);
 
-  // Get the product options array
   const productOptions = getProductOptions({
     ...product,
     selectedOrFirstAvailableVariant: selectedVariant,
@@ -103,8 +100,14 @@ export default function Product() {
 
   console.log('Fetched product images:', product.images.edges);
   const productImage = product.images.edges.map((edge) => (
-    <ProductImage image={edge.node} />
+    <ProductImage key={edge.node.id} image={edge.node} />
   ));
+
+  const [openSection, setOpenSection] = useState(null);
+
+  const toggleSection = (section) => {
+    setOpenSection(openSection === section ? null : section);
+  };
 
   return (
     <div className="product">
@@ -123,6 +126,34 @@ export default function Product() {
         <div className="divider" />
         <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
         <div className="divider" />
+
+        <div className="dropdown-container">
+          {['details', 'sustainability'].map((section) => (
+            <div key={section} className="dropdown">
+              <p
+                className={`dropdown-header ${
+                  openSection === section ? 'open' : ''
+                }`}
+                onClick={() => toggleSection(section)}
+              >
+                <span className="dropdown-title">{section}</span>
+                <span
+                  className={`icon ${openSection === section ? 'open' : ''}`}
+                >
+                  +
+                </span>
+              </p>
+              {openSection === section && (
+                <div className="dropdown-content">
+                  {section === 'details'
+                    ? 'this product is made from high-quality materials and designed for durability.'
+                    : 'we use eco-friendly materials and sustainable practices in our production.'}
+                </div>
+              )}
+            </div>
+          ))}
+          <div className="divider" />
+        </div>
       </div>
       <Analytics.ProductView
         data={{

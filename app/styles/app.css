@@ -869,6 +869,46 @@ aside#submenu .header-menu-item:hover {
   background: black;
   color: white;
 }
+
+.dropdown-container {
+  width: 100%;
+}
+
+.dropdown {
+  margin-bottom: 0.5rem;
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 12px;
+  text-transform: lowercase;
+  cursor: pointer;
+  font-family: 'regular';
+}
+
+.dropdown-header.open .dropdown-title {
+  text-decoration: underline;
+}
+
+.dropdown-title {
+  flex: 1;
+}
+
+.icon {
+  transition: transform 0.3s ease;
+}
+
+.icon.open {
+  transform: rotate(45deg);
+}
+
+.dropdown-content {
+  font-family: 'regular';
+  font-size: 12px;
+}
 /*
 * --------------------------------------------------
 * routes/blog._index.tsx
