@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {Link, useNavigate, useLocation} from '@remix-run/react';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
+import {AnimatePresence, motion} from 'framer-motion';
 
 /**
  * @param {{
@@ -27,7 +28,6 @@ export function ProductForm({productOptions, selectedVariant}) {
     });
     return selectedOptions;
   };
-
   const [selectedOptions, setSelectedOptions] = useState(() =>
     getQueryParams(),
   );
@@ -68,10 +68,20 @@ export function ProductForm({productOptions, selectedVariant}) {
             <div className="product-options-title-container">
               <p className="product-options-title">
                 {option.name.toLowerCase()}:{' '}
-                {formatSize(
-                  selectedOptions[option.name]?.toLowerCase(),
-                  option.name,
-                )}
+                <AnimatePresence mode="popLayout">
+                  <motion.span
+                    key={`${selectedOptions[option.name]}`}
+                    initial={false}
+                    animate={{opacity: 1}}
+                    exit={{opacity: 0}}
+                    style={{display: 'inline-block', width: '10rem'}}
+                  >
+                    {formatSize(
+                      selectedOptions[option.name]?.toLowerCase(),
+                      option.name,
+                    )}
+                  </motion.span>
+                </AnimatePresence>
               </p>
               {option.name === 'Size' ? (
                 <button onClick={() => open('size-guide')}>size guide</button>
@@ -133,6 +143,7 @@ export function ProductForm({productOptions, selectedVariant}) {
                           ? '1px solid black'
                           : '1px solid transparent',
                         opacity: available ? 1 : 0.3,
+                        textDecoration: selected ? 'underline' : 'none',
                       }}
                       disabled={!exists}
                       onClick={onClickHandler}
