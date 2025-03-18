@@ -795,7 +795,7 @@ aside#submenu .header-menu-item:hover {
   align-self: start;
   position: sticky;
   margin-top: 34px;
-  width: 265px;
+  width: 285px;
   top: calc(var(--header-height) + 34px);
 }
 .product-main * {
