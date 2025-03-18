@@ -12,6 +12,7 @@
   --color-section-backgrounds: #a2a2a2;
   --color-stroke-color: #e7e7e7;
   --color-dimmer: rgba(0, 0, 0, 0.2);
+  --main-margin-top: 40px;
 }
 
 img {
@@ -721,12 +722,21 @@ aside#submenu .header-menu-item:hover {
 * routes/collections.$handle.tsx
 * --------------------------------------------------
 */
-.collection-description {
+.collection {
+  margin-top: var(--main-margin-top);
+}
+.collection > img {
+  height: auto;
   margin-bottom: 1rem;
-  max-width: 95%;
-  @media (min-width: 45em) {
-    max-width: 600px;
-  }
+}
+.collection-description {
+  margin-bottom: 5rem;
+}
+.collection-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
 }
 
 .products-grid {
@@ -771,7 +781,7 @@ aside#submenu .header-menu-item:hover {
   gap: 0;
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: var(--main-margin-top);
 }
 .product-images img {
   height: auto;

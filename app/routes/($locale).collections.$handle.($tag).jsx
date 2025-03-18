@@ -36,19 +36,25 @@ export async function loader(args) {
  * @param {LoaderFunctionArgs}
  */
 async function loadCriticalData({context, params, request}) {
-  const {handle} = params;
+  const {handle, tag} = params;
   const {storefront} = context;
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 8,
   });
+  const filters = [];
 
   if (!handle) {
     throw redirect('/collections');
   }
 
+  if (tag) {
+    filters.push({tag});
+  }
+  console.log(filters[0]);
+
   const [{collection}] = await Promise.all([
     storefront.query(COLLECTION_QUERY, {
-      variables: {handle, ...paginationVariables},
+      variables: {handle, filters, ...paginationVariables},
       // Add other queries here, so that they are loaded in parallel
     }),
   ]);
@@ -61,6 +67,8 @@ async function loadCriticalData({context, params, request}) {
 
   return {
     collection,
+    tag,
+    handle,
   };
 }
 
@@ -76,12 +84,27 @@ function loadDeferredData({context}) {
 
 export default function Collection() {
   /** @type {LoaderReturnData} */
-  const {collection} = useLoaderData();
-
+  const {collection, handle, tag} = useLoaderData();
   return (
     <div className="collection">
-      <h1>{collection.title}</h1>
+      {!tag ? (
+        <Image
+          alt={collection.image.altText}
+          aspectRatio={`${collection?.image?.width} / ${collection?.image?.height}`}
+          data={collection.image}
+          sizes="100vw"
+        />
+      ) : null}
       <p className="collection-description">{collection.description}</p>
+      <p className="collection-breadcrumb">
+        shop <Polygon /> {handle}
+        {tag ? (
+          <>
+            {' '}
+            <Polygon /> {tag}
+          </>
+        ) : null}
+      </p>
       <PaginatedResourceSection
         connection={collection.products}
         resourcesClassName="products-grid"
@@ -103,6 +126,20 @@ export default function Collection() {
         }}
       />
     </div>
+  );
+}
+
+function Polygon() {
+  return (
+    <svg
+      width="5"
+      height="6"
+      viewBox="0 0 5 6"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M5 3L0.5 5.59808L0.5 0.401924L5 3Z" fill="black" />
+    </svg>
   );
 }
 
@@ -153,17 +190,26 @@ const COLLECTION_QUERY = `#graphql
     $last: Int
     $startCursor: String
     $endCursor: String
+    $filters: [ProductFilter!]
   ) @inContext(country: $country, language: $language) {
     collection(handle: $handle) {
       id
       handle
       title
       description
+      image {
+        id
+        url
+        altText
+        width
+        height
+      }
       products(
         first: $first,
         last: $last,
         before: $startCursor,
-        after: $endCursor
+        after: $endCursor,
+        filters: $filters
       ) {
         nodes {
           ...ProductItem
