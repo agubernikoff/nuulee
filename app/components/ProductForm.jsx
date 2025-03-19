@@ -123,9 +123,10 @@ export function ProductForm({productOptions, selectedVariant}) {
                       replace
                       to={`/products/${handle}?${variantUriQuery}`}
                       style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
+                        outline:
+                          selected && option.name === 'Color'
+                            ? '1px solid black'
+                            : '1px solid transparent',
                         opacity: available ? 1 : 0.3,
                       }}
                     >
@@ -141,9 +142,10 @@ export function ProductForm({productOptions, selectedVariant}) {
                       }`}
                       key={option.name + name}
                       style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
+                        outline:
+                          selected && option.name === 'Color'
+                            ? '1px solid black'
+                            : '1px solid transparent',
                         opacity: available ? 1 : 0.3,
                         textDecoration: selected ? 'underline' : 'none',
                       }}
