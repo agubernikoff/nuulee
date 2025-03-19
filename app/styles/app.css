@@ -876,6 +876,7 @@ aside#submenu .header-menu-item:hover {
 
 .dropdown {
   margin-bottom: 0.5rem;
+  position: relative;
 }
 
 .dropdown-header {

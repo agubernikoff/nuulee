@@ -11,6 +11,7 @@ import {
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
+import {motion, AnimatePresence} from 'motion/react';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -98,7 +99,6 @@ export default function Product() {
 
   const {title, descriptionHtml} = product;
 
-  console.log('Fetched product images:', product.images.edges);
   const productImage = product.images.edges.map((edge) => (
     <ProductImage key={edge.node.id} image={edge.node} />
   ));
@@ -128,32 +128,28 @@ export default function Product() {
         <div className="divider" />
 
         <div className="dropdown-container">
-          {['details', 'sustainability'].map((section) => (
-            <div key={section} className="dropdown">
-              <p
-                className={`dropdown-header ${
-                  openSection === section ? 'open' : ''
-                }`}
-                onClick={() => toggleSection(section)}
-              >
-                <span className="dropdown-title">{section}</span>
-                <span
-                  className={`icon ${openSection === section ? 'open' : ''}`}
-                >
-                  +
-                </span>
-              </p>
-              {openSection === section && (
-                <div className="dropdown-content">
-                  {section === 'details'
-                    ? 'this product is made from high-quality materials and designed for durability.'
-                    : 'we use eco-friendly materials and sustainable practices in our production.'}
-                </div>
-              )}
-            </div>
+          {[
+            {
+              title: 'details',
+              details:
+                'this product is made from high-quality materials and designed for durability.',
+            },
+            {
+              title: 'sustainability',
+              details:
+                'we use eco-friendly materials and sustainable practices in our production.',
+            },
+          ].map((section) => (
+            <Expandable
+              key={section.title}
+              openSection={openSection}
+              toggleSection={toggleSection}
+              title={section.title}
+              details={section.details}
+            />
           ))}
-          <div className="divider" />
         </div>
+        <motion.div className="divider" layout />
       </div>
       <Analytics.ProductView
         data={{
@@ -171,6 +167,37 @@ export default function Product() {
         }}
       />
     </div>
+  );
+}
+
+function Expandable({openSection, toggleSection, title, details}) {
+  return (
+    <motion.div key={title} className="dropdown" layout="position">
+      <motion.p
+        layout="position"
+        className={`dropdown-header ${openSection === title ? 'open' : ''}`}
+        onClick={() => toggleSection(title)}
+      >
+        <span className="dropdown-title">{title}</span>
+        <span className={`icon ${openSection === title ? 'open' : ''}`}>+</span>
+      </motion.p>
+      <AnimatePresence mode="popLayout">
+        {openSection === title && (
+          <div style={{overflow: 'hidden'}}>
+            <motion.div
+              className="dropdown-content"
+              initial={{opacity: 0, y: -50}}
+              animate={{opacity: 1, y: 0}}
+              exit={{opacity: 0, y: -50}}
+              key={title}
+              transition={{ease: 'easeOut'}}
+            >
+              {details}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
 

@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Link, useNavigate, useLocation} from '@remix-run/react';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
-import {AnimatePresence, motion} from 'framer-motion';
+import {AnimatePresence, motion} from 'motion/react';
 
 /**
  * @param {{
