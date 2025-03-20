@@ -725,18 +725,42 @@ aside#submenu .header-menu-item:hover {
 .collection {
   margin-top: var(--main-margin-top);
 }
+.collection * {
+  font-size: 12px;
+}
 .collection > img {
   height: auto;
   margin-bottom: 1rem;
 }
 .collection-description {
   margin-bottom: 5rem;
+  font-size: 12px;
+}
+.filter-container {
+  width: 100%;
+  padding-bottom: 3rem;
+}
+.filter-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 .collection-breadcrumb {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 3rem;
+  width: fit-content;
+}
+.collection-breadcrumb svg {
+  scale: 1.5;
+}
+.filter-toggle {
+  cursor: pointer;
+  width: 5rem;
+  text-align: right;
+}
+.filter-body {
 }
 
 .products-grid {
@@ -903,6 +927,7 @@ aside#submenu .header-menu-item:hover {
 
 .icon {
   transition: transform 0.3s ease;
+  display: inline-block;
 }
 
 .icon.open {

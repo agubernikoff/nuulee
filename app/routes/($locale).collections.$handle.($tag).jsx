@@ -9,6 +9,9 @@ import {
 import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import ProductGridItem from '~/components/ProductGridItem';
+import {useState} from 'react';
+import {motion, AnimatePresence} from 'motion/react';
+import {useEffect} from 'react';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -96,27 +99,22 @@ export default function Collection() {
         />
       ) : null}
       <p className="collection-description">{collection.description}</p>
-      <p className="collection-breadcrumb">
-        shop <Polygon /> {handle}
-        {tag ? (
-          <>
-            {' '}
-            <Polygon /> {tag}
-          </>
-        ) : null}
-      </p>
-      <PaginatedResourceSection
-        connection={collection.products}
-        resourcesClassName="products-grid"
-      >
-        {({node: product, index}) => (
-          <ProductGridItem
-            key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
-          />
-        )}
-      </PaginatedResourceSection>
+      <Filter tag={tag} handle={handle} />
+      <motion.div layout>x</motion.div>
+      <motion.div layout="position">
+        <PaginatedResourceSection
+          connection={collection.products}
+          resourcesClassName="products-grid"
+        >
+          {({node: product, index}) => (
+            <ProductGridItem
+              key={product.id}
+              product={product}
+              loading={index < 8 ? 'eager' : undefined}
+            />
+          )}
+        </PaginatedResourceSection>
+      </motion.div>
       <Analytics.CollectionView
         data={{
           collection: {
@@ -126,6 +124,60 @@ export default function Collection() {
         }}
       />
     </div>
+  );
+}
+
+function Filter({handle, tag}) {
+  const [open, setOpen] = useState(false);
+  const [init, setInit] = useState(true);
+  useEffect(() => {
+    setInit(false);
+  }, []);
+  function toggleOpen() {
+    setOpen(!open);
+  }
+  return (
+    <motion.div
+      initial={{height: '17px'}}
+      animate={{height: open ? 'auto' : '17px'}}
+      className="filter-container"
+    >
+      <div className="filter-header">
+        <motion.p className="collection-breadcrumb" layout={false}>
+          shop <Polygon /> {handle}
+          {tag ? (
+            <>
+              {' '}
+              <Polygon /> {tag}
+            </>
+          ) : null}
+        </motion.p>
+        <p onClick={toggleOpen} className="filter-toggle">
+          <AnimatePresence mode="popLayout">
+            <motion.span
+              key={`toggle-${open}`}
+              initial={{opacity: init ? 1 : 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+              transition={{duration: 0.5}}
+              style={{marginRight: '.25rem'}}
+            >
+              {!open ? 'filter/sort' : 'close'}
+            </motion.span>
+          </AnimatePresence>
+          <span className={`icon ${open ? 'open' : ''}`}>+</span>
+        </p>
+      </div>
+      <motion.div
+        initial={{opacity: 0}}
+        animate={{opacity: open ? 1 : 0}}
+        className="filter-body"
+      >
+        <p>x</p>
+        <p>x</p>
+        <p>x</p>
+      </motion.div>
+    </motion.div>
   );
 }
 
