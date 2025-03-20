@@ -243,6 +243,8 @@ const COLLECTION_QUERY = `#graphql
     $startCursor: String
     $endCursor: String
     $filters: [ProductFilter!]
+    $reverse: Boolean
+    $sortKey: ProductCollectionSortKeys
   ) @inContext(country: $country, language: $language) {
     collection(handle: $handle) {
       id
@@ -261,8 +263,25 @@ const COLLECTION_QUERY = `#graphql
         last: $last,
         before: $startCursor,
         after: $endCursor,
-        filters: $filters
+        filters: $filters,
+        reverse: $reverse,
+        sortKey: $sortKey
       ) {
+        filters{
+          id
+          label
+          presentation
+          type
+          values{
+            count
+            id
+            input
+            label
+            swatch{
+              color
+            }
+          }
+        }
         nodes {
           ...ProductItem
         }
