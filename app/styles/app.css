@@ -276,7 +276,7 @@ input[type='checkbox'] {
   border-radius: 0;
   margin: 0;
   margin-right: 7px;
-  transition: background-color 400ms ease-in-out;
+  transition: background-color 200ms ease-in-out;
 }
 input[type='checkbox']:checked {
   background-color: black;
@@ -761,6 +761,42 @@ aside#submenu .header-menu-item:hover {
   text-align: right;
 }
 .filter-body {
+  display: flex;
+  gap: 21.5%;
+  justify-content: flex-start;
+}
+.filter-columns-container {
+  width: 50%;
+}
+.filter-columns {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.bold-filter-header {
+  font-family: 'medium';
+  margin-bottom: 2rem;
+}
+.filter-column-container > p {
+  margin-bottom: 2rem;
+}
+.filter-column {
+  height: 8rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+}
+.filter-column input:disabled:hover {
+  background-color: transparent;
+}
+.filter-column input:hover {
+  background: black;
+}
+.filter-column > div {
+  margin-bottom: 0.25rem;
+  transition: opacity 200ms ease-in-out, text-decoration 200ms ease-in-out;
 }
 
 .products-grid {
@@ -770,6 +806,9 @@ aside#submenu .header-menu-item:hover {
   grid-template-columns: repeat(auto-fill, minmax(var(--grid-item-width), 1fr));
   margin: auto;
   margin-bottom: 8rem;
+  z-index: 2;
+  position: relative;
+  background: white;
 }
 @media (min-width: 1537px) {
   .products-grid {
@@ -867,7 +906,7 @@ aside#submenu .header-menu-item:hover {
   font-family: 'regular' !important;
   font-size: 12px !important;
   cursor: pointer;
-  transition: all 300ms ease-in-out;
+  transition: all 200ms ease-in-out;
   border: none;
 }
 

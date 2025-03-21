@@ -1,5 +1,5 @@
 import {redirect} from '@shopify/remix-oxygen';
-import {useLoaderData, Link} from '@remix-run/react';
+import {useLoaderData, Link, useSearchParams} from '@remix-run/react';
 import {
   getPaginationVariables,
   Image,
@@ -9,9 +9,8 @@ import {
 import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import ProductGridItem from '~/components/ProductGridItem';
-import {useState} from 'react';
 import {motion, AnimatePresence} from 'motion/react';
-import {useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -41,10 +40,14 @@ export async function loader(args) {
 async function loadCriticalData({context, params, request}) {
   const {handle, tag} = params;
   const {storefront} = context;
+  const url = new URL(request.url);
+  const searchParams = new URLSearchParams(url.search);
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 8,
   });
   const filters = [];
+  let reverse = false;
+  let sortKey = null;
 
   if (!handle) {
     throw redirect('/collections');
@@ -53,11 +56,16 @@ async function loadCriticalData({context, params, request}) {
   if (tag) {
     filters.push({tag});
   }
-  console.log(filters[0]);
+  if (searchParams.has('filter')) {
+    filters.push(...searchParams.getAll('filter').map((x) => JSON.parse(x)));
+  }
+  if (searchParams.has('sortKey')) sortKey = searchParams.get('sortKey');
+  if (searchParams.has('reverse'))
+    reverse = searchParams.get('reverse') === 'true';
 
   const [{collection}] = await Promise.all([
     storefront.query(COLLECTION_QUERY, {
-      variables: {handle, filters, ...paginationVariables},
+      variables: {handle, filters, reverse, sortKey, ...paginationVariables},
       // Add other queries here, so that they are loaded in parallel
     }),
   ]);
@@ -99,8 +107,11 @@ export default function Collection() {
         />
       ) : null}
       <p className="collection-description">{collection.description}</p>
-      <Filter tag={tag} handle={handle} />
-      <motion.div layout>x</motion.div>
+      <Filter
+        tag={tag}
+        handle={handle}
+        filters={collection?.products?.filters}
+      />
       <motion.div layout="position">
         <PaginatedResourceSection
           connection={collection.products}
@@ -127,7 +138,7 @@ export default function Collection() {
   );
 }
 
-function Filter({handle, tag}) {
+function Filter({handle, tag, filters}) {
   const [open, setOpen] = useState(false);
   const [init, setInit] = useState(true);
   useEffect(() => {
@@ -136,6 +147,73 @@ function Filter({handle, tag}) {
   function toggleOpen() {
     setOpen(!open);
   }
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  function addFilter(input) {
+    setSearchParams(
+      (prev) => {
+        if (prev.has('filter')) {
+          prev.append('filter', input);
+        } else prev.set('filter', input);
+        return prev;
+      },
+      {preventScrollReset: true},
+    );
+  }
+
+  function removeFilter(input) {
+    setSearchParams(
+      (prev) => {
+        const newParams = new URLSearchParams(prev); // Clone to avoid mutation
+        const filters = newParams.getAll('filter'); // Get all filter values
+        newParams.delete('filter'); // Remove all instances
+
+        // Re-add only the filters that are NOT being removed
+        filters
+          .filter((f) => f !== input)
+          .forEach((f) => newParams.append('filter', f));
+
+        return newParams;
+      },
+      {preventScrollReset: true},
+    );
+  }
+
+  function isChecked(input) {
+    return searchParams.getAll('filter').includes(input);
+  }
+
+  function addSort(input) {
+    const parsed = JSON.parse(input);
+    setSearchParams(
+      (prev) => {
+        prev.set('reverse', Boolean(parsed.reverse));
+        prev.set('sortKey', parsed.sortKey);
+        return prev;
+      },
+      {preventScrollReset: true},
+    );
+  }
+
+  function removeSort() {
+    setSearchParams(
+      (prev) => {
+        prev.delete('reverse');
+        prev.delete('sortKey');
+        return prev;
+      },
+      {preventScrollReset: true},
+    );
+  }
+
+  function isSortChecked(input) {
+    const parsed = JSON.parse(input);
+    return (
+      searchParams.get('reverse') === parsed.reverse.toString() &&
+      searchParams.get('sortKey') === parsed.sortKey
+    );
+  }
+
   return (
     <motion.div
       initial={{height: '17px'}}
@@ -173,11 +251,180 @@ function Filter({handle, tag}) {
         animate={{opacity: open ? 1 : 0}}
         className="filter-body"
       >
-        <p>x</p>
-        <p>x</p>
-        <p>x</p>
+        <FilterColumns
+          filters={filters}
+          tag={tag}
+          handle={handle}
+          addFilter={addFilter}
+          removeFilter={removeFilter}
+          isChecked={isChecked}
+        />
+        <SortColumn
+          addSort={addSort}
+          removeSort={removeSort}
+          isChecked={isSortChecked}
+        />
       </motion.div>
     </motion.div>
+  );
+}
+
+function FilterColumns({filters, addFilter, isChecked, removeFilter}) {
+  return (
+    <div className="filter-columns-container">
+      <p className="bold-filter-header">filter</p>
+      <div className="filter-columns">
+        {filters.map((f) => (
+          <FilterColumn
+            key={f.id}
+            filter={f}
+            addFilter={addFilter}
+            isChecked={isChecked}
+            removeFilter={removeFilter}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SortColumn({addSort, removeSort, isChecked}) {
+  return (
+    <div>
+      <p className="bold-filter-header">sort</p>
+      <div className="filter-column">
+        <FilterInput
+          label={'alphabetically, a-z'}
+          value={JSON.stringify({reverse: false, sortKey: 'TITLE'})}
+          addFilter={addSort}
+          isChecked={isChecked}
+          removeFilter={removeSort}
+        />
+        <FilterInput
+          label={'alphabetically, z-a'}
+          value={JSON.stringify({reverse: true, sortKey: 'TITLE'})}
+          addFilter={addSort}
+          isChecked={isChecked}
+          removeFilter={removeSort}
+        />
+        <FilterInput
+          label={'date, new to old'}
+          value={JSON.stringify({reverse: true, sortKey: 'CREATED'})}
+          addFilter={addSort}
+          isChecked={isChecked}
+          removeFilter={removeSort}
+        />
+        <FilterInput
+          label={'date, old to new'}
+          value={JSON.stringify({reverse: false, sortKey: 'CREATED'})}
+          addFilter={addSort}
+          isChecked={isChecked}
+          removeFilter={removeSort}
+        />
+        <FilterInput
+          label={'price, low to high'}
+          value={JSON.stringify({reverse: false, sortKey: 'PRICE'})}
+          addFilter={addSort}
+          isChecked={isChecked}
+          removeFilter={removeSort}
+        />
+        <FilterInput
+          label={'price, high to low'}
+          value={JSON.stringify({reverse: true, sortKey: 'PRICE'})}
+          addFilter={addSort}
+          isChecked={isChecked}
+          removeFilter={removeSort}
+        />
+      </div>
+    </div>
+  );
+}
+
+function FilterColumn({filter, addFilter, isChecked, removeFilter}) {
+  const filterOrderRef = useRef(new Map()); // Persist across renders
+
+  function storeInitialOrder(filters) {
+    if (filterOrderRef.current.size === 0) {
+      filters.forEach((filter, index) => {
+        filterOrderRef.current.set(filter.label, index);
+      });
+    }
+  }
+
+  function sortByStoredOrder(filters) {
+    return filters.slice().sort((a, b) => {
+      return (
+        (filterOrderRef.current.get(a.label) ?? Infinity) -
+        (filterOrderRef.current.get(b.label) ?? Infinity)
+      );
+    });
+  }
+
+  useEffect(() => {
+    storeInitialOrder(filter.values);
+  }, []);
+
+  return (
+    <div className="filter-column-container">
+      <p>{filter.label}:</p>
+      <div className="filter-column">
+        {sortByStoredOrder(
+          filter.values.filter(
+            (v) => !(filter.label === 'category' && v.label.includes('men')),
+          ),
+        ).map((v) => (
+          <FilterInput
+            key={v.id}
+            label={v.label}
+            value={v.input}
+            count={v.count}
+            addFilter={addFilter}
+            isChecked={isChecked}
+            removeFilter={removeFilter}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FilterInput({
+  label,
+  value,
+  count,
+  addFilter,
+  isChecked,
+  removeFilter,
+}) {
+  return (
+    <div style={count === 0 ? {opacity: '33%'} : null}>
+      <input
+        type="checkbox"
+        id={label}
+        name="gender"
+        value={value}
+        checked={isChecked(value)}
+        onChange={(e) => {
+          if (e.target.checked) addFilter(e.target.value);
+          else removeFilter(e.target.value);
+        }}
+        disabled={count === 0 ? true : null}
+      />
+      <label
+        htmlFor={label}
+        style={
+          count === 0
+            ? {
+                textDecoration: 'underline',
+                textUnderlineOffset: '-38%',
+                textDecorationSkipInk: 'none',
+              }
+            : null
+        }
+      >
+        {label.toLowerCase()}
+      </label>
+    </div>
   );
 }
 
