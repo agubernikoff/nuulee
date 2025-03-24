@@ -90,40 +90,45 @@ export default function Homepage() {
 }
 
 function Hero({data}) {
-  const media = data.mediaItems.map((mi) => {
-    if (mi.mediaType === 'video')
-      return (
-        <video
-          height={1150}
-          width={1100}
-          autoPlay
-          key={mi._key}
-          muted
-          loop
-          playsInline
-          style={{
-            width: data.mediaItems.length > 1 ? '50%' : '100%',
-            height: '110vh',
-            objectFit: 'cover',
-          }}
-        >
-          <source src={mi.video.asset.url} type="video/mp4" />
-        </video>
-      );
-    if (mi.mediaType === 'image')
-      return (
-        <img
-          key={mi._key}
-          src={mi.image.asset.url}
-          alt={mi.image.altText}
-          style={{
-            width: data.mediaItems.length > 1 ? '50%' : '100%',
-            height: '110vh',
-            objectFit: 'cover',
-          }}
-        />
-      );
-  });
+  console.log(data);
+  const media = data.mediaItems
+    .sort((a, b) => (b.isPrimary ? 1 : -1))
+    .map((mi) => {
+      if (mi.mediaType === 'video')
+        return (
+          <video
+            height={1150}
+            width={1100}
+            autoPlay
+            key={mi._key}
+            muted
+            loop
+            playsInline
+            style={{
+              width: data.mediaItems.length > 1 ? '50%' : '100%',
+              height: '110vh',
+              objectFit: 'cover',
+            }}
+            className="hero-media"
+          >
+            <source src={mi.video.asset.url} type="video/mp4" />
+          </video>
+        );
+      if (mi.mediaType === 'image')
+        return (
+          <img
+            key={mi._key}
+            src={mi.image.asset.url}
+            alt={mi.image.altText}
+            style={{
+              width: data.mediaItems.length > 1 ? '50%' : '100%',
+              height: '110vh',
+              objectFit: 'cover',
+            }}
+            className="hero-media"
+          />
+        );
+    });
   return (
     <div className="hero-container">
       {media}

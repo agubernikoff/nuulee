@@ -1026,6 +1026,13 @@ MEDIA QUIERIES
     margin-left: -1.3rem;
     margin-bottom: 4rem;
   }
+  .hero-media {
+    width: 100% !important;
+    height: 75vh !important;
+  }
+  .hero-media:nth-child(2) {
+    display: none;
+  }
   .collection-links-container {
     flex-direction: column;
     gap: 4rem;
