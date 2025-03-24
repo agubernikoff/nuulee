@@ -833,6 +833,7 @@ aside#submenu .header-menu-item:hover {
 .product {
   display: flex;
   gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .product h1 {
@@ -976,6 +977,10 @@ aside#submenu .header-menu-item:hover {
 .dropdown-content {
   font-family: 'regular';
   font-size: 12px;
+}
+
+.recs-title {
+  font-family: 'medium';
 }
 /*
 * --------------------------------------------------

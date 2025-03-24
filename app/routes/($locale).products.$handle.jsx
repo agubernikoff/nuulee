@@ -1,5 +1,5 @@
-import {useLoaderData} from '@remix-run/react';
-import {useState} from 'react';
+import {useLoaderData, Await} from '@remix-run/react';
+import {useState, Suspense} from 'react';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -12,6 +12,7 @@ import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {motion, AnimatePresence} from 'motion/react';
+import ProductGridItem from '~/components/ProductGridItem';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -75,15 +76,24 @@ async function loadCriticalData({context, params, request}) {
  * @param {LoaderFunctionArgs}
  */
 function loadDeferredData({context, params}) {
+  const {handle} = params;
+  const {storefront} = context;
+
   // Put any API calls that is not critical to be available on first page render
   // For example: product reviews, product recommendations, social feeds.
+  const recs = storefront.query(PRODUCT_RECOMENDATIONS_QUERY, {
+    variables: {handle},
+  });
+  const compliments = storefront.query(COMPLEMENTARY_QUERY, {
+    variables: {handle},
+  });
 
-  return {};
+  return {recs, compliments};
 }
 
 export default function Product() {
   /** @type {LoaderReturnData} */
-  const {product} = useLoaderData();
+  const {product, recs, compliments} = useLoaderData();
 
   const selectedVariant = useOptimisticVariant(
     product.selectedOrFirstAvailableVariant,
@@ -110,62 +120,65 @@ export default function Product() {
   };
 
   return (
-    <div className="product">
-      <div className="product-images">{productImage}</div>
-      <div className="product-main">
-        <p>{title}</p>
-        <ProductPrice
-          price={selectedVariant?.price}
-          compareAtPrice={selectedVariant?.compareAtPrice}
-        />
-        <div className="divider" />
-        <ProductForm
-          productOptions={productOptions}
-          selectedVariant={selectedVariant}
-        />
-        <div className="divider" />
-        <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-        <div className="divider" />
-
-        <div className="dropdown-container">
-          {[
-            {
-              title: 'details',
-              details:
-                'this product is made from high-quality materials and designed for durability.',
-            },
-            {
-              title: 'sustainability',
-              details:
-                'we use eco-friendly materials and sustainable practices in our production.',
-            },
-          ].map((section) => (
-            <Expandable
-              key={section.title}
-              openSection={openSection}
-              toggleSection={toggleSection}
-              title={section.title}
-              details={section.details}
-            />
-          ))}
+    <div>
+      <div className="product">
+        <div className="product-images">{productImage}</div>
+        <div className="product-main">
+          <p>{title}</p>
+          <ProductPrice
+            price={selectedVariant?.price}
+            compareAtPrice={selectedVariant?.compareAtPrice}
+          />
+          <div className="divider" />
+          <ProductForm
+            productOptions={productOptions}
+            selectedVariant={selectedVariant}
+          />
+          <div className="divider" />
+          <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
+          <div className="divider" />
+          {/* this needs to be pulled properly */}
+          <div className="dropdown-container">
+            {[
+              {
+                title: 'details',
+                details:
+                  'this product is made from high-quality materials and designed for durability.',
+              },
+              {
+                title: 'sustainability',
+                details:
+                  'we use eco-friendly materials and sustainable practices in our production.',
+              },
+            ].map((section) => (
+              <Expandable
+                key={section.title}
+                openSection={openSection}
+                toggleSection={toggleSection}
+                title={section.title}
+                details={section.details}
+              />
+            ))}
+          </div>
+          <motion.div className="divider" layout />
         </div>
-        <motion.div className="divider" layout />
+        <Analytics.ProductView
+          data={{
+            products: [
+              {
+                id: product.id,
+                title: product.title,
+                price: selectedVariant?.price.amount || '0',
+                vendor: product.vendor,
+                variantId: selectedVariant?.id || '',
+                variantTitle: selectedVariant?.title || '',
+                quantity: 1,
+              },
+            ],
+          }}
+        />
       </div>
-      <Analytics.ProductView
-        data={{
-          products: [
-            {
-              id: product.id,
-              title: product.title,
-              price: selectedVariant?.price.amount || '0',
-              vendor: product.vendor,
-              variantId: selectedVariant?.id || '',
-              variantTitle: selectedVariant?.title || '',
-              quantity: 1,
-            },
-          ],
-        }}
-      />
+      <YouMayAlsoLike recs={recs} compliments={compliments} />
     </div>
   );
 }
@@ -198,6 +211,46 @@ function Expandable({openSection, toggleSection, title, details}) {
         )}
       </AnimatePresence>
     </motion.div>
+  );
+}
+
+function YouMayAlsoLike({compliments, recs}) {
+  return (
+    <div>
+      <p className="recs-title">you may also like</p>
+      <div className="recommended-products">
+        <Suspense fallback={<div>Loading...</div>}>
+          <Await resolve={Promise.all([compliments, recs])}>
+            {([complimentsRes, recsRes]) => {
+              const resolvedCompliments =
+                complimentsRes.productRecommendations || [];
+              const resolvedRecs = recsRes.productRecommendations || [];
+
+              // Filter out invalid products and remove duplicates based on `product.id`
+              const uniqueProducts = [
+                ...new Map(
+                  [...resolvedCompliments, ...resolvedRecs]
+                    .filter((p) => p?.id) // Ensure product has a valid id
+                    .map((p) => [p.id, p]), // Remove duplicates
+                ).values(),
+              ].slice(0, 3); // Take the first 3 unique items
+
+              return (
+                <div className="products-grid">
+                  {uniqueProducts.map((product, index) => (
+                    <ProductGridItem
+                      key={product.id} // Now guaranteed to be unique
+                      product={product}
+                      loading={index < 8 ? 'eager' : undefined}
+                    />
+                  ))}
+                </div>
+              );
+            }}
+          </Await>
+        </Suspense>
+      </div>
+    </div>
   );
 }
 
@@ -310,6 +363,60 @@ const PRODUCT_QUERY = `#graphql
   ${PRODUCT_FRAGMENT}
 `;
 
+const PRODUCT_RECOMENDATIONS_QUERY = `#graphql
+query MyQuery(
+$country: CountryCode
+$handle: String!
+$language: LanguageCode
+) @inContext(country: $country, language: $language) {
+  productRecommendations(intent: RELATED, productHandle: $handle) {
+    images(first: 2) {
+      nodes {
+        id
+        url
+        width
+        height
+        altText
+      }
+    }
+    id
+    handle
+    title
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+  }
+}`;
+
+const COMPLEMENTARY_QUERY = `#graphql
+query MyQuery(
+$country: CountryCode
+$handle: String!
+$language: LanguageCode
+) @inContext(country: $country, language: $language) {
+  productRecommendations(intent: COMPLEMENTARY, productHandle: $handle) {
+    images(first: 2) {
+      nodes {
+        url
+        width
+        height
+        altText
+      }
+    }
+    id
+    handle
+    title
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+  }
+}`;
 /** @typedef {import('@shopify/remix-oxygen').LoaderFunctionArgs} LoaderFunctionArgs */
 /** @template T @typedef {import('@remix-run/react').MetaFunction<T>} MetaFunction */
 /** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof loader>} LoaderReturnData */
