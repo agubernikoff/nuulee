@@ -445,31 +445,6 @@ aside#submenu .header-menu-item:hover {
   text-decoration: underline;
 }
 
-@media (max-width: 45em) {
-  .footer {
-    display: block;
-  }
-  .footer-links {
-    flex-direction: column;
-    gap: 2.5rem;
-  }
-
-  .footer-column {
-    width: 100%; /* Full width columns */
-  }
-
-  .footer-info {
-    order: 2;
-    width: 100%;
-    max-width: 100%;
-    margin-top: 2.5rem;
-  }
-
-  .footer-column:last-of-type {
-    margin-left: 0;
-  }
-}
-
 /*
 * --------------------------------------------------
 * components/Cart
@@ -1039,4 +1014,35 @@ aside#submenu .header-menu-item:hover {
 
 .account-logout {
   display: inline-block;
+}
+
+/* 
+MEDIA QUIERIES
+*/
+@media (max-width: 499px) {
+  :root {
+    --grid-item-width: 150px;
+  }
+  .footer {
+    display: block;
+  }
+  .footer-links {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .footer-column {
+    width: 100%; /* Full width columns */
+  }
+
+  .footer-info {
+    order: 2;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 2.5rem;
+  }
+
+  .footer-column:last-of-type {
+    margin-left: 0;
+  }
 }
