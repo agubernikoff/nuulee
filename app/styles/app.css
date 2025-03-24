@@ -1022,6 +1022,35 @@ MEDIA QUIERIES
   body > main {
     margin: 0 1.3rem 4rem 1.3rem;
   }
+  .hero-container {
+    margin-left: -1.3rem;
+    margin-bottom: 4rem;
+  }
+  .collection-links-container {
+    flex-direction: column;
+    gap: 4rem;
+    margin-bottom: 4rem;
+  }
+  .collection-links-container > a {
+    width: 100%;
+  }
+  .section-container {
+    flex-direction: column-reverse;
+    margin-bottom: 4rem;
+  }
+  .section-text-container {
+    margin-top: 1rem;
+    width: 100%;
+  }
+  .section-text-container > div {
+    display: none;
+  }
+  .section-text-container:has(img) {
+    width: 100%;
+  }
+  .section-img-container {
+    width: 100%;
+  }
   .collection > img,
   .collection-description {
     display: none;
