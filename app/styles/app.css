@@ -1034,6 +1034,8 @@ MEDIA QUIERIES
   }
   .products-grid {
     row-gap: 20px;
+    column-gap: 5px;
+    margin-bottom: 0;
   }
   .product-item > div:last-of-type {
     opacity: 1 !important;
