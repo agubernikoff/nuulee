@@ -993,6 +993,9 @@ aside#submenu .header-menu-item:hover {
   .product-main {
     width: 100%;
   }
+  .product-images {
+    flex-direction: row;
+  }
 }
 /*
 * --------------------------------------------------
