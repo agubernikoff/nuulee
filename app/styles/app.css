@@ -1030,6 +1030,7 @@ MEDIA QUIERIES
     flex-direction: column;
     gap: 4rem;
     margin-bottom: 4rem;
+    margin-top: 4rem;
   }
   .collection-links-container > a {
     width: 100%;
