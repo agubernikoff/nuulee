@@ -985,6 +985,15 @@ aside#submenu .header-menu-item:hover {
   font-size: 12px;
   margin-bottom: 2rem;
 }
+
+@media (max-width: 45em) {
+  .product {
+    flex-direction: column;
+  }
+  .product-main {
+    width: 100%;
+  }
+}
 /*
 * --------------------------------------------------
 * routes/blog._index.tsx
