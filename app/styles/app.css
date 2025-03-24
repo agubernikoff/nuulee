@@ -632,6 +632,7 @@ aside#submenu .header-menu-item:hover {
 .recommended-products-grid {
   display: grid;
   grid-gap: 1.5rem;
+
   grid-template-columns: repeat(2, 1fr);
   @media (min-width: 45em) {
     grid-template-columns: repeat(4, 1fr);
@@ -762,6 +763,8 @@ aside#submenu .header-menu-item:hover {
 }
 .filter-body {
   display: flex;
+  position: relative;
+  z-index: -1;
   gap: 21.5%;
   justify-content: flex-start;
 }
@@ -806,7 +809,7 @@ aside#submenu .header-menu-item:hover {
   grid-template-columns: repeat(auto-fill, minmax(var(--grid-item-width), 1fr));
   margin: auto;
   margin-bottom: 8rem;
-  z-index: 2;
+  z-index: 0 !important;
   position: relative;
   background: white;
 }
