@@ -965,17 +965,6 @@ aside#submenu .header-menu-item:hover {
   margin-bottom: 2rem;
 }
 
-@media (max-width: 45em) {
-  .product {
-    flex-direction: column;
-  }
-  .product-main {
-    width: 100%;
-  }
-  .product-images {
-    flex-direction: row;
-  }
-}
 /*
 * --------------------------------------------------
 * routes/blog._index.tsx
@@ -1020,6 +1009,11 @@ aside#submenu .header-menu-item:hover {
 /* 
 MEDIA QUIERIES
 */
+@media (min-width: 500px) {
+  .you-may-also-like-container .product-item:last-of-type {
+    display: none;
+  }
+}
 @media (max-width: 499px) {
   :root {
     --grid-item-width: 150px;
@@ -1039,6 +1033,15 @@ MEDIA QUIERIES
   }
   .product-item > div:last-of-type {
     opacity: 1 !important;
+  }
+  .product {
+    flex-direction: column;
+  }
+  .product-main {
+    width: 100%;
+  }
+  .product-images {
+    flex-direction: row;
   }
   .footer {
     display: block;

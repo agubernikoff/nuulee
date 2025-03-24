@@ -216,7 +216,7 @@ function Expandable({openSection, toggleSection, title, details}) {
 
 function YouMayAlsoLike({compliments, recs}) {
   return (
-    <div>
+    <div className="you-may-also-like-container">
       <p className="recs-title">you may also like</p>
       <div className="recommended-products">
         <Suspense fallback={<div>Loading...</div>}>
@@ -233,7 +233,7 @@ function YouMayAlsoLike({compliments, recs}) {
                     .filter((p) => p?.id) // Ensure product has a valid id
                     .map((p) => [p.id, p]), // Remove duplicates
                 ).values(),
-              ].slice(0, 3); // Take the first 3 unique items
+              ].slice(0, 4); // Take the first 3 unique items
 
               return (
                 <div className="products-grid">
