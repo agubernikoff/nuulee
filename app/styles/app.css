@@ -1023,9 +1023,14 @@ MEDIA QUIERIES
 @media (max-width: 499px) {
   :root {
     --grid-item-width: 150px;
+    --main-margin-top: 20px;
   }
   body > main {
     margin: 0 1.3rem 4rem 1.3rem;
+  }
+  .collection > img,
+  .collection-description {
+    display: none;
   }
   .products-grid {
     row-gap: 20px;
