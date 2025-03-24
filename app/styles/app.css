@@ -356,6 +356,7 @@ button.reset:hover:not(:has(> *)) {
 }
 
 .header-menu-mobile-toggle {
+  padding: 0;
   @media (min-width: 48em) {
     display: none;
   }
@@ -1022,6 +1023,15 @@ MEDIA QUIERIES
 @media (max-width: 499px) {
   :root {
     --grid-item-width: 150px;
+  }
+  body > main {
+    margin: 0 1.3rem 4rem 1.3rem;
+  }
+  .products-grid {
+    row-gap: 20px;
+  }
+  .product-item > div:last-of-type {
+    opacity: 1 !important;
   }
   .footer {
     display: block;
