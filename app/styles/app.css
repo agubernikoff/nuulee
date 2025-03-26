@@ -446,6 +446,23 @@ aside#submenu .header-menu-item:hover {
   text-decoration: underline;
 }
 
+.footer-header-submenu {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  border-block: 1px solid var(--color-dimmer);
+  width: 100vw;
+  padding: 1rem 1.3rem;
+  background: white;
+}
+.footer-header-submenu-nav {
+  display: flex;
+  grid-gap: 1rem;
+}
+.footer-header-submenu-nav > .header-menu-item:hover {
+  text-decoration: none;
+}
+
 /*
 * --------------------------------------------------
 * components/Cart
@@ -964,6 +981,35 @@ aside#submenu .header-menu-item:hover {
   font-size: 12px;
   margin-bottom: 2rem;
 }
+/*
+* --------------------------------------------------
+* routes/pages.$handle.jsx
+* --------------------------------------------------
+*/
+
+.page {
+  margin: auto;
+  margin-top: calc(var(--header-height) * 2);
+  width: 60%;
+}
+.page * {
+  font-size: 12px;
+}
+.page-title {
+  font-size: 20px;
+  margin-bottom: 1.5rem;
+}
+.page > main {
+  margin-inline: 2rem;
+}
+.page p {
+  margin-bottom: 1rem;
+}
+.page a[href^='mailto:'] {
+  color: var(--color-section-backgrounds);
+  font-weight: bold;
+  text-decoration: underline;
+}
 
 /*
 * --------------------------------------------------
@@ -1021,6 +1067,7 @@ MEDIA QUIERIES
   }
   body > main {
     margin: 0 1.3rem 4rem 1.3rem;
+    min-height: calc(100vh - var(--header-height) - 1.3rem);
   }
   .hero-container {
     margin-left: -1.3rem;
