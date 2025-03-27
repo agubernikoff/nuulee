@@ -996,24 +996,37 @@ aside#submenu .header-menu-item:hover {
 .page > main {
   margin-inline: 2rem;
 }
+.page > main p:first-of-type {
+  margin-top: 0;
+}
 .page * {
   font-size: 12px;
 }
 .page p {
   margin-bottom: 1rem;
 }
-
 .page-title {
   font-size: 20px;
-  margin-bottom: 1.5rem !important;
+  margin-bottom: 2rem !important;
 }
 .page strong {
   font-family: 'medium';
+}
+.page p:has(strong) {
+  margin-top: -1rem;
 }
 .page a[href^='mailto:'] {
   color: var(--color-section-backgrounds);
   font-weight: bold;
   text-decoration: underline;
+}
+.page li:has(ul) {
+  font-family: 'medium';
+}
+.page li > ul {
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+  font-family: 'regular';
 }
 
 /*
