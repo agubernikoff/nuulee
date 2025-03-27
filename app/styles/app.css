@@ -997,36 +997,60 @@ aside#submenu .header-menu-item:hover {
   margin-inline: 2rem;
 }
 .page > main p:first-of-type {
-  margin-top: 0;
+  padding-top: 0;
 }
 .page * {
   font-size: 12px;
 }
-.page p {
+.page p,
+.page ul {
   margin-bottom: 1rem;
+}
+.page ol {
+  margin-bottom: 2rem;
 }
 .page-title {
   font-size: 20px;
-  margin-bottom: 2rem !important;
+  margin-bottom: 3rem !important;
 }
 .page strong {
   font-family: 'medium';
 }
 .page p:has(strong) {
-  margin-top: -1rem;
+  padding-top: 2rem;
+}
+.page a {
+  text-decoration: underline;
 }
 .page a[href^='mailto:'] {
   color: var(--color-section-backgrounds);
   font-weight: bold;
-  text-decoration: underline;
 }
 .page li:has(ul) {
   font-family: 'medium';
 }
 .page li > ul {
   margin-top: 0.5rem;
-  margin-left: 1rem;
+  margin-left: 2rem;
   font-family: 'regular';
+}
+.page ul:not(:has(+ p > strong)) {
+  margin-bottom: -0.25rem;
+}
+.page p:not(:has(strong)):has(+ ul) {
+  margin-bottom: 0;
+}
+.page table {
+  width: 100%; /* Makes the table stretch across the container */
+  border-collapse: collapse; /* Ensures borders don’t double up */
+}
+
+.page th,
+.page td {
+  border: 1px solid black; /* Adds an outline to each cell */
+  padding: 8px; /* Adds spacing inside cells */
+  text-align: center;
+  width: 50%;
 }
 
 /*
