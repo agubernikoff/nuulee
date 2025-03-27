@@ -991,19 +991,24 @@ aside#submenu .header-menu-item:hover {
   margin: auto;
   margin-top: calc(var(--header-height) * 2);
   width: 60%;
-}
-.page * {
-  font-size: 12px;
-}
-.page-title {
-  font-size: 20px;
-  margin-bottom: 1.5rem;
+  text-transform: lowercase;
 }
 .page > main {
   margin-inline: 2rem;
 }
+.page * {
+  font-size: 12px;
+}
 .page p {
   margin-bottom: 1rem;
+}
+
+.page-title {
+  font-size: 20px;
+  margin-bottom: 1.5rem !important;
+}
+.page strong {
+  font-family: 'medium';
 }
 .page a[href^='mailto:'] {
   color: var(--color-section-backgrounds);

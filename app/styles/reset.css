@@ -111,15 +111,24 @@ legend {
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
-
+.page p:has(+ ol),
+.page p:has(+ ul) {
+  font-family: 'medium';
+}
 ul {
-  list-style: none;
+  list-style: inside;
   margin: 0;
+  margin-bottom: 2rem;
   padding: 0;
+}
+ol {
+  list-style-position: inside;
+  padding: 0;
+  margin-bottom: 2rem;
 }
 
 li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 dl {
