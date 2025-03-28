@@ -993,9 +993,6 @@ aside#submenu .header-menu-item:hover {
   width: 60%;
   text-transform: lowercase;
 }
-.page > main {
-  margin-inline: 2rem;
-}
 .page > main p:first-of-type {
   padding-top: 0;
 }
@@ -1011,7 +1008,7 @@ aside#submenu .header-menu-item:hover {
 }
 .page-title {
   font-size: 20px;
-  margin-bottom: 3rem !important;
+  margin-bottom: 2rem !important;
 }
 .page strong {
   font-family: 'medium';
@@ -1168,6 +1165,9 @@ MEDIA QUIERIES
   }
   .product-images {
     flex-direction: row;
+  }
+  .page {
+    width: 100%;
   }
   .footer {
     display: block;
