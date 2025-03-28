@@ -185,7 +185,14 @@ export default function Product() {
 
 function Expandable({openSection, toggleSection, title, details}) {
   return (
-    <motion.div key={title} className="dropdown" layout="position">
+    <motion.div
+      key={title}
+      className="dropdown"
+      layout="position"
+      initial={{height: '1rem'}}
+      animate={{height: openSection === title ? 'auto' : '1rem'}}
+      style={{overflow: 'hidden'}}
+    >
       <motion.p
         layout="position"
         className={`dropdown-header ${openSection === title ? 'open' : ''}`}
@@ -194,22 +201,17 @@ function Expandable({openSection, toggleSection, title, details}) {
         <span className="dropdown-title">{title}</span>
         <span className={`icon ${openSection === title ? 'open' : ''}`}>+</span>
       </motion.p>
-      <AnimatePresence mode="popLayout">
-        {openSection === title && (
-          <div style={{overflow: 'hidden'}}>
-            <motion.div
-              className="dropdown-content"
-              initial={{opacity: 0, y: -50}}
-              animate={{opacity: 1, y: 0}}
-              exit={{opacity: 0, y: -50}}
-              key={title}
-              transition={{ease: 'easeOut'}}
-            >
-              {details}
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      <div style={{overflow: 'hidden'}}>
+        <motion.div
+          className="dropdown-content"
+          initial={{opacity: 0}}
+          animate={{opacity: openSection === title ? 1 : 0}}
+          key={title}
+          transition={{ease: 'easeOut'}}
+        >
+          {details}
+        </motion.div>
+      </div>
     </motion.div>
   );
 }
