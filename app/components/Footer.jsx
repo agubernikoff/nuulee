@@ -144,8 +144,9 @@ function FooterHeaderSubMenu({links, publicStoreDomain}) {
               to={url}
               className="header-menu-item"
               style={activeLinkStyle}
+              data-text={link.title.toLowerCase()}
             >
-              {link.title.toLowerCase()}
+              <p>{link.title.toLowerCase()}</p>
             </NavLink>
           );
         })}

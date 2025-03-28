@@ -459,6 +459,22 @@ aside#submenu .header-menu-item:hover {
   display: flex;
   grid-gap: 1rem;
 }
+.footer-header-submenu-nav > .header-menu-item {
+  position: relative;
+}
+.footer-header-submenu-nav > .header-menu-item > p {
+  min-width: max-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+}
+.footer-header-submenu-nav > .header-menu-item::before {
+  content: attr(data-text);
+  font-family: 'medium'; /* Same as the active state */
+  visibility: hidden;
+}
 .footer-header-submenu-nav > .header-menu-item:hover {
   text-decoration: none;
 }
