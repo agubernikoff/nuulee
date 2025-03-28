@@ -46,7 +46,7 @@ export function ProductForm({productOptions, selectedVariant}) {
     if (optionName !== 'Size') return abbr;
     switch (abbr) {
       case 'os':
-        return 'one size fits all';
+        return 'one size';
       case 'xs':
         return 'extra small';
       case 's':
