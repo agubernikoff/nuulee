@@ -758,17 +758,20 @@ aside#submenu .header-menu-item:hover {
   display: flex;
   position: relative;
   /* z-index: -1; */
-  gap: 21.5%;
+  /* gap: 21.5%; */
   justify-content: flex-start;
 }
 .filter-columns-container {
-  width: 50%;
+  flex: 2;
+}
+.sort-column-container {
+  flex: 1;
 }
 .filter-columns {
   display: flex;
   width: 100%;
   flex-direction: row;
-  gap: clamp(0px, 10vw, 150px);
+  gap: clamp(0px, calc(14vw - 2rem), 200px);
 }
 .bold-filter-header {
   font-family: 'medium';

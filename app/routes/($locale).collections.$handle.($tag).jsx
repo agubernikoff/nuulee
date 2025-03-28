@@ -291,7 +291,7 @@ function FilterColumns({filters, addFilter, isChecked, removeFilter}) {
 
 function SortColumn({addSort, removeSort, isChecked}) {
   return (
-    <div>
+    <div className="sort-column-container">
       <p className="bold-filter-header">sort</p>
       <div className="filter-column">
         <FilterInput
