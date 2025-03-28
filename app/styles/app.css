@@ -768,7 +768,7 @@ aside#submenu .header-menu-item:hover {
   display: flex;
   width: 100%;
   flex-direction: row;
-  justify-content: space-between;
+  gap: clamp(0px, 10vw, 150px);
 }
 .bold-filter-header {
   font-family: 'medium';
