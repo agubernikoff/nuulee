@@ -249,7 +249,7 @@ function Filter({handle, tag, filters}) {
       <motion.div
         initial={{opacity: 0}}
         animate={{opacity: open ? 1 : 0}}
-        style={{zIndex: open ? 1 : -1}}
+        style={{zIndex: open ? 0 : -1}}
         className="filter-body"
       >
         <FilterColumns
