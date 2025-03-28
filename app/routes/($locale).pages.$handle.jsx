@@ -88,87 +88,18 @@ function FAQs({faqs}) {
 }
 
 function FaqSection({section}) {
-  const mapped = section.questions.map((q) => {
-    console.log(
-      `${q.question
-        .split(' ')
-        .join('')
-        .split('"')
-        .join('')
-        .split('?')
-        .join('')}-div`,
-    );
-    return (
-      <motion.div
-        layout
-        key={`${q.question
-          .split(' ')
-          .join('')
-          .split('"')
-          .join('')
-          .split('?')
-          .join('')}-div`}
-      >
-        <Expandable title={q.question} details={q.answer} />
-        <motion.div
-          className="divider"
-          layout
-          key={`${q.question
-            .split(' ')
-            .join('')
-            .split('"')
-            .join('')
-            .split('?')
-            .join('')}-divider`}
-        />
-      </motion.div>
-    );
-  });
+  const mapped = section.questions.map((q) => (
+    <motion.div layout>
+      <Expandable title={q.question} details={q.answer} />
+      <motion.div className="divider" layout />
+    </motion.div>
+  ));
   return (
-    <motion.div
-      className="faq-section"
-      layout
-      key={`${section.title
-        .split(' ')
-        .join('')
-        .split('"')
-        .join('')
-        .split('?')
-        .join('')}-div`}
-    >
-      <motion.p
-        layout
-        key={`${section.title
-          .split(' ')
-          .join('')
-          .split('"')
-          .join('')
-          .split('?')
-          .join('')}-p`}
-      >
-        <motion.strong
-          key={`${section.title
-            .split(' ')
-            .join('')
-            .split('"')
-            .join('')
-            .split('?')
-            .join('')}-strong`}
-        >
-          {section.title}
-        </motion.strong>
+    <motion.div className="faq-section" layout>
+      <motion.p layout>
+        <motion.strong>{section.title}</motion.strong>
       </motion.p>
-      <motion.div
-        className="divider"
-        layout
-        key={`${section.title
-          .split(' ')
-          .join('')
-          .split('"')
-          .join('')
-          .split('?')
-          .join('')}-divider`}
-      />
+      <motion.div className="divider" layout />
       {mapped}
     </motion.div>
   );
@@ -182,9 +113,11 @@ function Expandable({title, details}) {
   }
   return (
     <motion.div
-      key={title.split(' ').join('').split('"').join('').split('?').join('')}
       className="dropdown"
       layout="position"
+      initial={{height: '1rem'}}
+      animate={{height: open ? 'auto' : '1rem'}}
+      style={{overflow: 'hidden'}}
     >
       <motion.p
         layout="position"
@@ -196,29 +129,17 @@ function Expandable({title, details}) {
           <Triangle />
         </span>
       </motion.p>
-      <AnimatePresence mode="popLayout">
-        {open && (
-          <motion.div style={{overflow: 'hidden'}} layout>
-            <motion.div
-              className="dropdown-content"
-              initial={{opacity: 0, y: -50}}
-              animate={{opacity: 1, y: 0}}
-              exit={{opacity: 0, y: -50}}
-              key={details
-                .split(' ')
-                .join('')
-                .split('"')
-                .join('')
-                .split('?')
-                .join('')}
-              transition={{ease: 'easeOut'}}
-              layout
-            >
-              {details}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <motion.div style={{overflow: 'hidden'}} layout>
+        <motion.div
+          className="dropdown-content"
+          initial={{opacity: 0}}
+          animate={{opacity: open ? 1 : 0}}
+          transition={{ease: 'easeOut'}}
+          layout
+        >
+          {details}
+        </motion.div>
+      </motion.div>
     </motion.div>
   );
 }

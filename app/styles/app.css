@@ -1069,6 +1069,9 @@ aside#submenu .header-menu-item:hover {
 .faq-section .icon.open {
   transform: rotate(90deg);
 }
+.faq-section p {
+  margin: 0;
+}
 
 /*
 * --------------------------------------------------
