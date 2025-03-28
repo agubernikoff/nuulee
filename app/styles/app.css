@@ -908,10 +908,14 @@ aside#submenu .header-menu-item:hover {
   transition: all 200ms ease-in-out;
   border: none;
 }
+.product-options-item:not(:has(div)) {
+  padding: 3px 5px 4px;
+}
 
 .product-option-label-swatch {
   width: 0.75rem;
   height: 0.75rem;
+  margin: 2px;
 }
 .product-options:nth-of-type(2) .product-options-grid > button {
   border: none !important;
