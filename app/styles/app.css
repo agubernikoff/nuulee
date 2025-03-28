@@ -1018,6 +1018,7 @@ aside#submenu .header-menu-item:hover {
 }
 .page strong {
   font-family: 'medium';
+  font-weight: normal;
 }
 .page p:has(strong) {
   padding-top: 2rem;
@@ -1046,6 +1047,7 @@ aside#submenu .header-menu-item:hover {
 .page table {
   width: 100%; /* Makes the table stretch across the container */
   border-collapse: collapse; /* Ensures borders don’t double up */
+  margin-bottom: 1rem;
 }
 .page th,
 .page td {
@@ -1205,5 +1207,8 @@ MEDIA QUIERIES
 
   .footer-column:last-of-type {
     margin-left: 0;
+  }
+  .footer-header-submenu-nav > .header-menu-item:first-of-type {
+    padding-left: 0;
   }
 }
