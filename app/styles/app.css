@@ -1041,13 +1041,22 @@ aside#submenu .header-menu-item:hover {
   width: 100%; /* Makes the table stretch across the container */
   border-collapse: collapse; /* Ensures borders don’t double up */
 }
-
 .page th,
 .page td {
   border: 1px solid black; /* Adds an outline to each cell */
   padding: 8px; /* Adds spacing inside cells */
   text-align: center;
   width: 50%;
+}
+.faq-section {
+  margin-bottom: 3rem;
+}
+.faq-section .dropdown-header.open .dropdown-title {
+  font-family: 'medium';
+  text-decoration: none;
+}
+.faq-section .icon.open {
+  transform: rotate(90deg);
 }
 
 /*

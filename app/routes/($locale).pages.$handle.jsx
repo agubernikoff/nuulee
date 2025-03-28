@@ -1,4 +1,6 @@
-import {useLoaderData} from '@remix-run/react';
+import {useLoaderData, useLocation} from '@remix-run/react';
+import {useState} from 'react';
+import {motion, AnimatePresence} from 'motion/react';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -61,14 +63,180 @@ function loadDeferredData({context}) {
 export default function Page() {
   /** @type {LoaderReturnData} */
   const {page} = useLoaderData();
+  const {pathname} = useLocation();
 
   return (
     <div className="page">
       <header>
         <p className="page-title">{page.title}</p>
       </header>
-      <main dangerouslySetInnerHTML={{__html: page.body}} />
+      {pathname === '/pages/faq' ? (
+        <FAQs faqs={page.metafield.value} />
+      ) : (
+        <main dangerouslySetInnerHTML={{__html: page.body}} />
+      )}
     </div>
+  );
+}
+
+function FAQs({faqs}) {
+  const parsed = JSON.parse(faqs);
+  const mapped = parsed.sections.map((section) => (
+    <FaqSection section={section} key={section.title} />
+  ));
+  return <main>{mapped}</main>;
+}
+
+function FaqSection({section}) {
+  const mapped = section.questions.map((q) => {
+    console.log(
+      `${q.question
+        .split(' ')
+        .join('')
+        .split('"')
+        .join('')
+        .split('?')
+        .join('')}-div`,
+    );
+    return (
+      <motion.div
+        layout
+        key={`${q.question
+          .split(' ')
+          .join('')
+          .split('"')
+          .join('')
+          .split('?')
+          .join('')}-div`}
+      >
+        <Expandable title={q.question} details={q.answer} />
+        <motion.div
+          className="divider"
+          layout
+          key={`${q.question
+            .split(' ')
+            .join('')
+            .split('"')
+            .join('')
+            .split('?')
+            .join('')}-divider`}
+        />
+      </motion.div>
+    );
+  });
+  return (
+    <motion.div
+      className="faq-section"
+      layout
+      key={`${section.title
+        .split(' ')
+        .join('')
+        .split('"')
+        .join('')
+        .split('?')
+        .join('')}-div`}
+    >
+      <motion.p
+        layout
+        key={`${section.title
+          .split(' ')
+          .join('')
+          .split('"')
+          .join('')
+          .split('?')
+          .join('')}-p`}
+      >
+        <motion.strong
+          key={`${section.title
+            .split(' ')
+            .join('')
+            .split('"')
+            .join('')
+            .split('?')
+            .join('')}-strong`}
+        >
+          {section.title}
+        </motion.strong>
+      </motion.p>
+      <motion.div
+        className="divider"
+        layout
+        key={`${section.title
+          .split(' ')
+          .join('')
+          .split('"')
+          .join('')
+          .split('?')
+          .join('')}-divider`}
+      />
+      {mapped}
+    </motion.div>
+  );
+}
+
+function Expandable({title, details}) {
+  const [open, setOpen] = useState(false);
+
+  function toggleOpen() {
+    setOpen(!open);
+  }
+  return (
+    <motion.div
+      key={title.split(' ').join('').split('"').join('').split('?').join('')}
+      className="dropdown"
+      layout="position"
+    >
+      <motion.p
+        layout="position"
+        className={`dropdown-header ${open ? 'open' : ''}`}
+        onClick={() => toggleOpen()}
+      >
+        <span className="dropdown-title">{title}</span>
+        <span className={`icon ${open ? 'open' : ''}`}>
+          <Triangle />
+        </span>
+      </motion.p>
+      <AnimatePresence mode="popLayout">
+        {open && (
+          <motion.div style={{overflow: 'hidden'}} layout>
+            <motion.div
+              className="dropdown-content"
+              initial={{opacity: 0, y: -50}}
+              animate={{opacity: 1, y: 0}}
+              exit={{opacity: 0, y: -50}}
+              key={details
+                .split(' ')
+                .join('')
+                .split('"')
+                .join('')
+                .split('?')
+                .join('')}
+              transition={{ease: 'easeOut'}}
+              layout
+            >
+              {details}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+function Triangle() {
+  return (
+    <svg
+      width="6"
+      height="8"
+      viewBox="0 0 6 8"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6 4L1.50571e-07 7.4641L4.53412e-07 0.535898L6 4Z"
+        fill="black"
+      />
+    </svg>
   );
 }
 
@@ -83,6 +251,9 @@ const PAGE_QUERY = `#graphql
       id
       title
       body
+      metafield(namespace:"custom",key:"test"){
+        value
+      }
       seo {
         description
         title
