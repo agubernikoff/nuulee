@@ -816,9 +816,11 @@ aside#submenu .header-menu-item:hover {
   height: auto;
   width: 100%;
 }
-.product-item > div > p,
-.product-item > div > div {
+.product-item > div > p {
   font-size: 12px !important;
+}
+.product-item > div > div {
+  font-size: 11px !important;
 }
 
 /*

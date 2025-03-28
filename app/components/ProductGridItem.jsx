@@ -59,7 +59,6 @@ function ProductGridItem({product, loading}) {
           <p>{product.title.toLowerCase()}</p>
           <Money
             data={product.priceRange.minVariantPrice}
-            withoutCurrency
             withoutTrailingZeros
           />
         </motion.div>
