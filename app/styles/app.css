@@ -527,7 +527,7 @@ aside#submenu .header-menu-item:hover {
 
 .cart-count {
   position: absolute;
-  font-size: 10px;
+  font-size: 8px;
   font-weight: bold;
   margin-top: 0.25rem;
   color: black; /* Adjust color as needed */
