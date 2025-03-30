@@ -64,14 +64,13 @@ export default function Page() {
   /** @type {LoaderReturnData} */
   const {page} = useLoaderData();
   const {pathname} = useLocation();
-
   return (
     <div className="page">
       <header>
         <p className="page-title">{page.title}</p>
       </header>
       {pathname === '/pages/faq' ? (
-        <FAQs faqs={page.metafield.value} />
+        <FAQs faqs={page.metafield.references.nodes} />
       ) : (
         <main dangerouslySetInnerHTML={{__html: page.body}} />
       )}
@@ -80,24 +79,35 @@ export default function Page() {
 }
 
 function FAQs({faqs}) {
-  const parsed = JSON.parse(faqs);
-  const mapped = parsed.sections.map((section) => (
-    <FaqSection section={section} key={section.title} />
+  const mapped = faqs.map((section) => (
+    <FaqSection section={section} key={section.id} />
   ));
   return <main>{mapped}</main>;
 }
 
 function FaqSection({section}) {
-  const mapped = section.questions.map((q) => (
-    <motion.div layout>
-      <Expandable title={q.question} details={q.answer} />
+  const title = section.fields.find(
+    (field) => field.type === 'single_line_text_field',
+  ).value;
+
+  const questions =
+    section.fields.find((field) => field.type === 'list.metaobject_reference')
+      ?.references?.nodes || [];
+
+  const mapped = questions.map((q) => (
+    <motion.div layout key={q.id}>
+      <Expandable
+        title={q.fields.find((q) => q.key === 'question').value}
+        details={q.fields.find((q) => q.key === 'answer').value}
+      />
       <motion.div className="divider" layout />
     </motion.div>
   ));
+
   return (
     <motion.div className="faq-section" layout>
       <motion.p layout>
-        <motion.strong>{section.title}</motion.strong>
+        <motion.strong>{title}</motion.strong>
       </motion.p>
       <motion.div className="divider" layout />
       {mapped}
@@ -111,6 +121,17 @@ function Expandable({title, details}) {
   function toggleOpen() {
     setOpen(!open);
   }
+
+  const answer = JSON.parse(details).children[0].children.map((child) => {
+    if (child.type === 'text') return <span>{child.value}</span>;
+    else if (child.type === 'link')
+      return (
+        <a href={child.url}>
+          {child.children.find((c) => c.type === 'text').value}
+        </a>
+      );
+  });
+
   return (
     <motion.div
       className="dropdown"
@@ -137,7 +158,7 @@ function Expandable({title, details}) {
           transition={{ease: 'easeOut'}}
           layout
         >
-          {details}
+          {answer}
         </motion.div>
       </motion.div>
     </motion.div>
@@ -172,8 +193,29 @@ const PAGE_QUERY = `#graphql
       id
       title
       body
-      metafield(namespace:"custom",key:"test"){
-        value
+      metafield(key: "faqs", namespace: "custom") {
+        references(first: 10) {
+          nodes {
+            ... on Metaobject {
+              id
+              fields {
+                references(first: 10) {
+                  nodes {
+                    ... on Metaobject {
+                      id
+                      fields {
+                        value
+                        key
+                      }
+                    }
+                  }
+                }
+                type
+                value
+              }
+            }
+          }
+        }
       }
       seo {
         description
