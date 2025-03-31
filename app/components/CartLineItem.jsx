@@ -18,12 +18,16 @@ export function CartLineItem({layout, line}) {
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
   const {close} = useAside();
 
+  if (!line || typeof line?.quantity === 'undefined') return null;
+  const {id: lineId, quantity, isOptimistic} = line;
+  const prevQuantity = Number(Math.max(0, quantity - 1).toFixed(0));
+  const nextQuantity = Number((quantity + 1).toFixed(0));
   return (
     <li key={id} className="cart-line">
       {image && (
         <Image
           alt={title}
-          aspectRatio="1/1"
+          aspectRatio="1/1.5"
           data={image}
           height={100}
           loading="lazy"
@@ -31,30 +35,32 @@ export function CartLineItem({layout, line}) {
         />
       )}
 
-      <div>
-        <Link
-          prefetch="intent"
-          to={lineItemUrl}
-          onClick={() => {
-            if (layout === 'aside') {
-              close();
-            }
-          }}
-        >
-          <p>
-            <strong>{product.title}</strong>
-          </p>
-        </Link>
-        <ProductPrice price={line?.cost?.totalAmount} />
-        <ul>
-          {selectedOptions.map((option) => (
-            <li key={option.name}>
-              <small>
-                {option.name}: {option.value}
-              </small>
-            </li>
-          ))}
-        </ul>
+      <div className="cart-product-details">
+        <div>
+          <Link
+            prefetch="intent"
+            to={lineItemUrl}
+            onClick={() => {
+              if (layout === 'aside') {
+                close();
+              }
+            }}
+          >
+            <p>{product.title}</p>
+          </Link>
+          <ProductPrice price={line?.cost?.totalAmount} />
+          <div className="cart-middle-details">
+            {selectedOptions.map((option) => (
+              <p key={option.name}>
+                <small>
+                  {option.name}: {option.value}
+                </small>
+              </p>
+            ))}
+            <p>quantity: {quantity} &nbsp;&nbsp;</p>
+          </div>
+        </div>
+
         <CartLineQuantity line={line} />
       </div>
     </li>
@@ -75,7 +81,7 @@ function CartLineQuantity({line}) {
 
   return (
     <div className="cart-line-quantity">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
+      {/* <small>Quantity: {quantity} &nbsp;&nbsp;</small> */}
       <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
         <button
           aria-label="Decrease quantity"
