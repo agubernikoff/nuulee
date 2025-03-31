@@ -165,7 +165,7 @@ aside header h2 {
 }
 
 aside main {
-  margin: 1rem;
+  margin: 1.25rem;
 }
 aside#subscribe main {
   margin: 1rem 2rem 2rem;
@@ -506,7 +506,7 @@ aside#submenu .header-menu-item:hover {
 .cart-line img {
   height: 100%;
   display: block;
-  margin-right: 0.75rem;
+  margin-right: 1.25rem;
   width: 40%;
 }
 .cart-details > div > ul {
