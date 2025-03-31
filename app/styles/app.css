@@ -548,6 +548,7 @@ aside#submenu .header-menu-item:hover {
   padding-top: 0.75rem;
   position: absolute;
   width: calc(var(--aside-width) - 40px);
+  margin-bottom: 1rem;
 }
 
 .cart-discount {
@@ -559,6 +560,24 @@ aside#submenu .header-menu-item:hover {
 .cart-subtotal {
   align-items: center;
   display: flex;
+  justify-content: space-between;
+  font-family: 'medium';
+  text-transform: lowercase;
+}
+.checkout-button {
+  display: block;
+  width: 100%;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  text-align: center;
+  font-family: 'regular';
+  text-transform: lowercase;
+  text-decoration: none;
+  border: 1px solid black;
+  background: none;
+  color: black;
+  cursor: pointer;
+  margin-top: 1rem;
 }
 
 .cart-container {
@@ -574,6 +593,13 @@ aside#submenu .header-menu-item:hover {
   font-weight: bold;
   margin-top: 0.25rem;
   color: black; /* Adjust color as needed */
+}
+
+.empty-cart-message {
+  height: calc(100vh - var(--header-height));
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /*
