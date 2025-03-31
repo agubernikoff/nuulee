@@ -1,5 +1,5 @@
 import {useLoaderData, Await} from '@remix-run/react';
-import {useState, Suspense} from 'react';
+import {useState, useEffect, Suspense} from 'react';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -217,40 +217,45 @@ function Expandable({openSection, toggleSection, title, details}) {
 }
 
 function YouMayAlsoLike({compliments, recs}) {
+  const [resolvedCompliments, setResolvedCompliments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([compliments, recs])
+      .then(([complimentsRes, recsRes]) => {
+        const complimentsData = complimentsRes?.productRecommendations || [];
+        const recsData = recsRes?.productRecommendations || [];
+
+        const uniqueProducts = [
+          ...new Map(
+            [...complimentsData, ...recsData]
+              .filter((p) => p?.id)
+              .map((p) => [p.id, p]),
+          ).values(),
+        ].slice(0, 4);
+
+        setResolvedCompliments(uniqueProducts);
+      })
+      .finally(() => setLoading(false));
+  }, [compliments, recs]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="you-may-also-like-container">
       <p className="recs-title">you may also like</p>
       <div className="recommended-products">
-        <Suspense fallback={<div>Loading...</div>}>
-          <Await resolve={Promise.all([compliments, recs])}>
-            {([complimentsRes, recsRes]) => {
-              const resolvedCompliments =
-                complimentsRes.productRecommendations || [];
-              const resolvedRecs = recsRes.productRecommendations || [];
-
-              // Filter out invalid products and remove duplicates based on `product.id`
-              const uniqueProducts = [
-                ...new Map(
-                  [...resolvedCompliments, ...resolvedRecs]
-                    .filter((p) => p?.id) // Ensure product has a valid id
-                    .map((p) => [p.id, p]), // Remove duplicates
-                ).values(),
-              ].slice(0, 4); // Take the first 3 unique items
-
-              return (
-                <div className="products-grid">
-                  {uniqueProducts.map((product, index) => (
-                    <ProductGridItem
-                      key={product.id} // Now guaranteed to be unique
-                      product={product}
-                      loading={index < 8 ? 'eager' : undefined}
-                    />
-                  ))}
-                </div>
-              );
-            }}
-          </Await>
-        </Suspense>
+        <div className="products-grid">
+          {resolvedCompliments.map((product, index) => (
+            <ProductGridItem
+              key={product.id}
+              product={product}
+              loading={index < 8 ? 'eager' : undefined}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
