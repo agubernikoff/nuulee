@@ -47,7 +47,8 @@ export function Aside({children, heading, type, id, closeOnMouseLeave}) {
     >
       <button className="close-outside" onClick={close} />
       <aside id={type} onMouseLeave={closeOnMouseLeave ? () => close() : null}>
-        <header>
+        {/* Hide header on screens ≤ 499px */}
+        <header className="aside-header">
           {type === 'search' ? (
             <SearchFormPredictive>
               {({fetchResults, goToSearch, inputRef}) => (

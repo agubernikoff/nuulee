@@ -365,7 +365,7 @@ button.reset:hover:not(:has(> *)) {
 .header-menu-mobile {
   display: flex;
   flex-direction: column;
-  grid-gap: 1rem;
+  grid-gap: 0.75rem;
 }
 
 .header-menu-desktop {
@@ -1137,6 +1137,9 @@ MEDIA QUIERIES
   .you-may-also-like-container .product-item:last-of-type {
     display: none;
   }
+  .header-image {
+    display: none;
+  }
 }
 @media (max-width: 499px) {
   :root {
@@ -1232,5 +1235,22 @@ MEDIA QUIERIES
   }
   .footer-header-submenu-nav > .header-menu-item:first-of-type {
     padding-left: 0;
+  }
+
+  .header-ctas > button {
+    display: none;
+  }
+
+  aside {
+    min-width: 100%;
+    max-width: 100%;
+    margin-top: var(--header-height);
+  }
+  .overlay {
+    background: none;
+    margin-top: 10rem;
+  }
+  .aside-header {
+    display: none;
   }
 }

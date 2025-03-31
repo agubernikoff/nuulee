@@ -4,6 +4,7 @@ import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import {useState} from 'react';
 import {useEffect} from 'react';
+import mobilemenu from '../assets/mobile-menu.png';
 
 /**
  * @param {HeaderProps}
@@ -118,13 +119,20 @@ function HeaderCtas({isLoggedIn, cart}) {
 }
 
 function HeaderMenuMobileToggle() {
-  const {open} = useAside();
+  const {open, close, type: activeType} = useAside();
+
   return (
     <button
       className="header-menu-mobile-toggle reset"
-      onClick={() => open('mobile')}
+      onClick={() => (activeType === 'mobile' ? close() : open('mobile'))}
+      style={{display: 'flex'}}
     >
-      <h3>☰</h3>
+      <img
+        className="header-image"
+        style={{width: '30%'}}
+        src={mobilemenu}
+        alt="Menu"
+      />
     </button>
   );
 }
@@ -205,7 +213,7 @@ function SearchToggle() {
  * @param {{count: number | null}}
  */
 function CartBadge({count}) {
-  const {open} = useAside();
+  const {open, close, type: activeType} = useAside();
   const {publish, shop, cart, prevCart} = useAnalytics();
 
   return (
@@ -214,7 +222,7 @@ function CartBadge({count}) {
       className="cart-link"
       onClick={(e) => {
         e.preventDefault();
-        open('cart');
+        activeType === 'cart' ? close() : open('cart'); // Toggle cart open/close
         publish('cart_viewed', {
           cart,
           prevCart,
