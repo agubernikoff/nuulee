@@ -149,20 +149,18 @@ function LocationForm() {
  */
 function CartAside({cart}) {
   return (
-    <Aside type="cart">
-      <Suspense fallback={<p>Loading cart ...</p>}>
-        <Await resolve={cart}>
-          {(cartData) => (
-            <Aside
-              type="cart"
-              heading={`shopping bag (${cartData?.totalQuantity || 0})`}
-            >
-              <CartMain cart={cartData} layout="aside" />
-            </Aside>
-          )}
-        </Await>
-      </Suspense>
-    </Aside>
+    <Suspense fallback={<p>Loading cart ...</p>}>
+      <Await resolve={cart}>
+        {(cartData) => (
+          <Aside
+            type="cart"
+            heading={`shopping bag (${cartData?.totalQuantity || 0})`}
+          >
+            <CartMain cart={cartData} layout="aside" />
+          </Aside>
+        )}
+      </Await>
+    </Suspense>
   );
 }
 

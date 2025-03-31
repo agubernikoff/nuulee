@@ -120,7 +120,8 @@ aside header {
   justify-content: space-between;
   padding: 0 1.3rem;
 }
-aside#submenu header {
+aside#submenu header,
+aside#mobile header {
   display: none;
 }
 aside#subscribe header,
@@ -1276,9 +1277,6 @@ MEDIA QUIERIES
   .overlay {
     background: none;
     margin-top: 10rem;
-  }
-  .aside-header {
-    display: none;
   }
   .overlay.expanded aside {
     transform: translateX(0);
