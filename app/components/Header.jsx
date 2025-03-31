@@ -5,6 +5,7 @@ import {useAside} from '~/components/Aside';
 import {useState} from 'react';
 import {useEffect} from 'react';
 import mobilemenu from '../assets/mobile-menu.png';
+import x from '../assets/x.png';
 
 /**
  * @param {HeaderProps}
@@ -120,17 +121,18 @@ function HeaderCtas({isLoggedIn, cart}) {
 
 function HeaderMenuMobileToggle() {
   const {open, close, type: activeType} = useAside();
+  const isOpen = activeType === 'mobile';
 
   return (
     <button
       className="header-menu-mobile-toggle reset"
-      onClick={() => (activeType === 'mobile' ? close() : open('mobile'))}
+      onClick={() => (isOpen ? close() : open('mobile'))}
       style={{display: 'flex'}}
     >
       <img
         className="header-image"
         style={{width: '30%'}}
-        src={mobilemenu}
+        src={isOpen ? x : mobilemenu}
         alt="Menu"
       />
     </button>
