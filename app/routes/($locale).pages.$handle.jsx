@@ -123,10 +123,14 @@ function Expandable({title, details}) {
   }
 
   const answer = JSON.parse(details).children[0].children.map((child) => {
-    if (child.type === 'text') return <span>{child.value}</span>;
+    if (child.type === 'text')
+      return <span key={child.value}>{child.value}</span>;
     else if (child.type === 'link')
       return (
-        <a href={child.url}>
+        <a
+          href={child.url}
+          key={child.children.find((c) => c.type === 'text').value}
+        >
           {child.children.find((c) => c.type === 'text').value}
         </a>
       );
