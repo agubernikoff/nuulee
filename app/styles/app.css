@@ -176,6 +176,8 @@ aside#location main {
 
 aside p {
   margin: 0 0 0.25rem;
+  font-family: 'regular' !important;
+  font-weight: normal !important;
 }
 
 aside p:last-child {
