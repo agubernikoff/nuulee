@@ -1245,6 +1245,7 @@ MEDIA QUIERIES
     min-width: 100%;
     max-width: 100%;
     margin-top: var(--header-height);
+    right: auto;
   }
   .overlay {
     background: none;
@@ -1252,5 +1253,8 @@ MEDIA QUIERIES
   }
   .aside-header {
     display: none;
+  }
+  .overlay.expanded aside {
+    transform: translateX(0);
   }
 }
