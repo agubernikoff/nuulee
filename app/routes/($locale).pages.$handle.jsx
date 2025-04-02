@@ -1,6 +1,7 @@
 import {useLoaderData} from '@remix-run/react';
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {motion} from 'motion/react';
+import {Image} from '@shopify/hydrogen';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -132,19 +133,7 @@ function Expandable({title, details}) {
     setOpen(!open);
   }
 
-  const answer = JSON.parse(details).children[0].children.map((child) => {
-    if (child.type === 'text')
-      return <span key={child.value}>{child.value}</span>;
-    else if (child.type === 'link')
-      return (
-        <a
-          href={child.url}
-          key={child.children.find((c) => c.type === 'text').value}
-        >
-          {child.children.find((c) => c.type === 'text').value}
-        </a>
-      );
-  });
+  const answer = mapRichText(JSON.parse(details));
 
   return (
     <motion.div
@@ -202,45 +191,167 @@ function Sections({sections}) {
     switch (section.type) {
       case 'title_and_blurb':
         return <TitleAndBlurb section={section} key={section.id} />;
+      case 'image_and_blurb':
+        return <ImageAndBlurb section={section} key={section.id} />;
+      case 'offset_images_and_blurb':
+        return <OffsetImagesAndBlurb section={section} key={section.id} />;
     }
   });
   return <main>{mapped}</main>;
 }
 
 function TitleAndBlurb({section}) {
-  const [mapped, setMapped] = useState();
   useEffect(() => {
     const sectionTitle = section.fields.find(
       (f) => f.type === 'single_line_text_field',
     ).value;
     const pageTitle = document.querySelector('.page-title');
     pageTitle.innerText = sectionTitle;
-    setMapped(
-      mapRichText(
+  }, []);
+  return (
+    <div className="title-and-blurb">
+      {mapRichText(
         JSON.parse(
           section.fields.find((f) => f.type === 'rich_text_field').value,
-        ).children[0],
-      ),
-    );
-  }, []);
-  return <div className="title-and-blurb">{mapped}</div>;
+        ),
+        'title-and-blurb',
+      )}
+    </div>
+  );
 }
 
-function mapRichText(richTextObject) {
-  console.log(richTextObject);
+function ImageAndBlurb({section}) {
+  return (
+    <div className="image-and-blurb">
+      <div>
+        <Image
+          alt={
+            section.fields.find((f) => f.type === 'file_reference').reference
+              .image.altText
+          }
+          aspectRatio={`${
+            section.fields.find((f) => f.type === 'file_reference').reference
+              .image.width
+          }/${
+            section.fields.find((f) => f.type === 'file_reference').reference
+              .image.height
+          }`}
+          data={
+            section.fields.find((f) => f.type === 'file_reference').reference
+              .image
+          }
+          loading={'eager'}
+          sizes="(min-width: 45em) 400px, 100vw"
+        />
+      </div>
+      <div>
+        {mapRichText(
+          JSON.parse(
+            section.fields.find((f) => f.type === 'rich_text_field').value,
+          ),
+          'image-and-blurb',
+        )}
+      </div>
+    </div>
+  );
+}
+
+function OffsetImagesAndBlurb({section}) {
+  const images = section.fields
+    .find((f) => f.type === 'list.metaobject_reference')
+    .references.nodes.map((node) => {
+      const isPrimary =
+        node.fields.find((f) => f.key === 'is_primary')?.value === 'true'
+          ? true
+          : false;
+
+      const image = node.fields.find((f) => f.key === 'image')?.reference
+        ?.image;
+
+      return {isPrimary, image};
+    })
+    .sort((a, b) => (b.isPrimary ? 1 : -1));
+
+  return (
+    <div className="section-container">
+      <div className="section-text-container">
+        {mapRichText(
+          JSON.parse(
+            section.fields.find((f) => f.type === 'rich_text_field').value,
+          ),
+          'offset-images-and-blurb',
+        )}
+        <Image
+          alt={images[0].image.altText}
+          aspectRatio={`${images[0].image.width}/${images[0].image.height}`}
+          data={images[0].image}
+          loading={'eager'}
+          sizes="(min-width: 45em) 400px, 100vw"
+        />
+      </div>
+      <div className="section-img-container">
+        <Image
+          alt={images[1].image.altText}
+          aspectRatio={`${images[1].image.width}/${images[1].image.height}`}
+          data={images[1].image}
+          loading={'eager'}
+          sizes="(min-width: 45em) 400px, 100vw"
+        />
+      </div>
+    </div>
+  );
+}
+
+function mapRichText(richTextObject, index = 0) {
+  // console.log(index, richTextObject);
   switch (richTextObject.type) {
+    case 'root':
+      return (
+        <React.Fragment key={index}>
+          {richTextObject.children.map((child, childIndex) =>
+            mapRichText(child, `${index}-${childIndex}`),
+          )}
+        </React.Fragment>
+      );
     case 'paragraph':
       return (
-        <p style={{whiteSpace: 'pre-line'}}>
-          {richTextObject.children.map((child) => mapRichText(child))}
+        <p key={index} style={{whiteSpace: 'pre-line'}}>
+          {richTextObject.children.map((child, childIndex) =>
+            mapRichText(child, `${index}-${childIndex}`),
+          )}
         </p>
       );
     case 'text':
       if (richTextObject.bold)
+        return <strong key={index}>{richTextObject.value}</strong>;
+      return <span key={index}>{richTextObject.value}</span>;
+    case 'list':
+      if (richTextObject.listType === 'ordered')
         return (
-          <strong key={richTextObject.value}>{richTextObject.value}</strong>
+          <ol
+            key={`${richTextObject.type}-${richTextObject.listType}-${index}`}
+          >
+            {richTextObject.children.map((child, childIndex) =>
+              mapRichText(child, `${index}-${childIndex}`),
+            )}
+          </ol>
         );
-      return richTextObject.value;
+    case 'list-item':
+      return (
+        <li key={index} style={{whiteSpace: 'pre-line'}}>
+          {richTextObject.children.map((child, childIndex) =>
+            mapRichText(child, `${index}-${childIndex}`),
+          )}
+        </li>
+      );
+    case 'link':
+      return (
+        <a href={richTextObject.url} key={index}>
+          {richTextObject.children.map((child, childIndex) =>
+            mapRichText(child, `${index}-${childIndex}`),
+          )}
+        </a>
+      );
   }
 }
 
@@ -289,6 +400,19 @@ const PAGE_QUERY = `#graphql
               fields {
                 type
                 value
+                reference{
+                  ...on MediaImage{
+                    id
+                    __typename
+                    image{
+                      url
+                      height
+                      id
+                      width
+                      altText
+                    }
+                  }
+                }
                 references(first: 10) {
                   nodes {
                     ... on Metaobject {
@@ -296,6 +420,19 @@ const PAGE_QUERY = `#graphql
                       fields {
                         value
                         key
+                        reference {
+                          ... on MediaImage {
+                            id
+                            __typename
+                            image {
+                              url
+                              height
+                              id
+                              width
+                              altText
+                            }
+                          }
+                        }
                         type
                       }
                     }

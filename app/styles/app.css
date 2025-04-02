@@ -1142,8 +1142,29 @@ aside#submenu .header-menu-item:hover {
   margin: 0;
 }
 
-.title-and-blurb {
+.title-and-blurb,
+.image-and-blurb,
+.page .section-container {
+  margin-bottom: 16rem;
+}
+.page > main > div:last-of-type {
+  margin-bottom: auto;
+}
+.title-and-blurb,
+.image-and-blurb > * {
   width: 45%;
+}
+
+.image-and-blurb {
+  display: flex;
+  justify-content: space-between;
+}
+.image-and-blurb img,
+.page .section-container img {
+  height: auto;
+}
+.page .section-text-container > p:first-of-type {
+  font-family: 'regular';
 }
 
 /*
