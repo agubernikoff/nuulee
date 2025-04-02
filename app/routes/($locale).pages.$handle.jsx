@@ -1,6 +1,6 @@
-import {useLoaderData, useLocation} from '@remix-run/react';
-import {useState} from 'react';
-import {motion, AnimatePresence} from 'motion/react';
+import {useLoaderData} from '@remix-run/react';
+import {useState, useEffect} from 'react';
+import {motion} from 'motion/react';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -63,14 +63,24 @@ function loadDeferredData({context}) {
 export default function Page() {
   /** @type {LoaderReturnData} */
   const {page} = useLoaderData();
-  const {pathname} = useLocation();
   return (
-    <div className="page">
+    <div
+      className="page"
+      style={
+        page.sections
+          ? {width: '100%', marginTop: 'var(--header-height)'}
+          : null
+      }
+    >
       <header>
         <p className="page-title">{page.title}</p>
       </header>
-      {pathname === '/pages/faq' ? (
-        <FAQs faqs={page.metafield.references.nodes} />
+      {page.faq || page.sections ? (
+        page.faq ? (
+          <FAQs faqs={page.faq?.references?.nodes} />
+        ) : (
+          <Sections sections={page.sections?.references?.nodes} />
+        )
       ) : (
         <main dangerouslySetInnerHTML={{__html: page.body}} />
       )}
@@ -186,6 +196,54 @@ function Triangle() {
   );
 }
 
+function Sections({sections}) {
+  const mapped = sections.map((section) => {
+    console.log(section.type);
+    switch (section.type) {
+      case 'title_and_blurb':
+        return <TitleAndBlurb section={section} key={section.id} />;
+    }
+  });
+  return <main>{mapped}</main>;
+}
+
+function TitleAndBlurb({section}) {
+  const [mapped, setMapped] = useState();
+  useEffect(() => {
+    const sectionTitle = section.fields.find(
+      (f) => f.type === 'single_line_text_field',
+    ).value;
+    const pageTitle = document.querySelector('.page-title');
+    pageTitle.innerText = sectionTitle;
+    setMapped(
+      mapRichText(
+        JSON.parse(
+          section.fields.find((f) => f.type === 'rich_text_field').value,
+        ).children[0],
+      ),
+    );
+  }, []);
+  return <div className="title-and-blurb">{mapped}</div>;
+}
+
+function mapRichText(richTextObject) {
+  console.log(richTextObject);
+  switch (richTextObject.type) {
+    case 'paragraph':
+      return (
+        <p style={{whiteSpace: 'pre-line'}}>
+          {richTextObject.children.map((child) => mapRichText(child))}
+        </p>
+      );
+    case 'text':
+      if (richTextObject.bold)
+        return (
+          <strong key={richTextObject.value}>{richTextObject.value}</strong>
+        );
+      return richTextObject.value;
+  }
+}
+
 const PAGE_QUERY = `#graphql
   query Page(
     $language: LanguageCode,
@@ -197,12 +255,13 @@ const PAGE_QUERY = `#graphql
       id
       title
       body
-      metafield(key: "faqs", namespace: "custom") {
+      faq:metafield(key: "faqs", namespace: "custom") {
         references(first: 10) {
           nodes {
             ... on Metaobject {
               id
               fields {
+                value
                 references(first: 10) {
                   nodes {
                     ... on Metaobject {
@@ -210,12 +269,38 @@ const PAGE_QUERY = `#graphql
                       fields {
                         value
                         key
+                        type
                       }
                     }
                   }
                 }
                 type
+              }
+            }
+          }
+        }
+      }
+      sections:metafield(key: "sections", namespace: "custom") {
+        references(first: 10) {
+          nodes {
+            ... on Metaobject {
+              type
+              id
+              fields {
+                type
                 value
+                references(first: 10) {
+                  nodes {
+                    ... on Metaobject {
+                      id
+                      fields {
+                        value
+                        key
+                        type
+                      }
+                    }
+                  }
+                }
               }
             }
           }

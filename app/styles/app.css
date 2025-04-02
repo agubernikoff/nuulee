@@ -1142,6 +1142,10 @@ aside#submenu .header-menu-item:hover {
   margin: 0;
 }
 
+.title-and-blurb {
+  width: 45%;
+}
+
 /*
 * --------------------------------------------------
 * routes/blog._index.tsx
