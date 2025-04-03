@@ -65,14 +65,7 @@ export default function Page() {
   /** @type {LoaderReturnData} */
   const {page} = useLoaderData();
   return (
-    <div
-      className="page"
-      style={
-        page.sections
-          ? {width: '100%', marginTop: 'var(--header-height)'}
-          : null
-      }
-    >
+    <div className={`page ${page.sections ? 'discover' : null}`}>
       <header>
         <p className="page-title">{page.title}</p>
       </header>
@@ -281,19 +274,21 @@ function OffsetImagesAndBlurb({section}) {
           ),
           'offset-images-and-blurb',
         )}
+        <div>
+          <Image
+            alt={images[1].image.altText}
+            aspectRatio={`${images[1].image.width}/${images[1].image.height}`}
+            data={images[1].image}
+            loading={'eager'}
+            sizes="(min-width: 45em) 400px, 100vw"
+          />
+        </div>
+      </div>
+      <div className="section-img-container">
         <Image
           alt={images[0].image.altText}
           aspectRatio={`${images[0].image.width}/${images[0].image.height}`}
           data={images[0].image}
-          loading={'eager'}
-          sizes="(min-width: 45em) 400px, 100vw"
-        />
-      </div>
-      <div className="section-img-container">
-        <Image
-          alt={images[1].image.altText}
-          aspectRatio={`${images[1].image.width}/${images[1].image.height}`}
-          data={images[1].image}
           loading={'eager'}
           sizes="(min-width: 45em) 400px, 100vw"
         />
