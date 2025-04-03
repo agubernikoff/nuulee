@@ -51,6 +51,7 @@ export function HeaderMenu({
   primaryDomainUrl,
   viewport,
   publicStoreDomain,
+  displayBackButton,
 }) {
   const className = `header-menu-${viewport}`;
   const {close, open} = useAside();
@@ -68,6 +69,31 @@ export function HeaderMenu({
           Home
         </NavLink>
       )} */}
+      {displayBackButton ? (
+        <div className="mobile-menu-back-btn-container">
+          <strong>{displayBackButton}</strong>
+          <button
+            onClick={() => {
+              console.log('something');
+              open('mobile', null);
+            }}
+          >
+            <svg
+              width="7"
+              height="8"
+              viewBox="0 0 7 8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0.599609 3.79707L6.89961 0.159764L6.89961 7.43438L0.599609 3.79707Z"
+                fill="black"
+              />
+            </svg>{' '}
+            back
+          </button>
+        </div>
+      ) : null}
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
         if (!item.url) return null;
 
@@ -91,9 +117,10 @@ export function HeaderMenu({
             // style={activeLinkStyle}
             to={url}
             onMouseEnter={() => {
-              if (item.items && item.items.length > 0 && viewport !== 'mobile')
-                open('submenu', item.title);
-              else if (item.items && viewport !== 'mobile') close();
+              if (item.items && item.items.length > 0) {
+                if (viewport !== 'mobile') open('submenu', item.title);
+                else open('mobile', item.title);
+              } else if (item.items && viewport !== 'mobile') close();
             }}
             onMouseLeave={() => {}}
           >

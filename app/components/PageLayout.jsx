@@ -176,15 +176,23 @@ function SearchAside() {
  * }}
  */
 function MobileMenuAside({header, publicStoreDomain}) {
+  const {subType} = useAside();
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
       <Aside type="mobile" heading="MENU">
         <HeaderMenu
-          menu={header.menu}
+          menu={{
+            id: header.menu.id,
+            items: subType
+              ? header?.menu?.items.find((item) => item.title === subType)
+                  ?.items
+              : header.menu.items,
+          }}
           viewport="mobile"
           primaryDomainUrl={header.shop.primaryDomain.url}
           publicStoreDomain={publicStoreDomain}
+          displayBackButton={subType}
         />
       </Aside>
     )
