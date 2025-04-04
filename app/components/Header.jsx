@@ -74,7 +74,6 @@ export function HeaderMenu({
           <strong>{displayBackButton}</strong>
           <button
             onClick={() => {
-              console.log('something');
               open('mobile', null);
             }}
           >
@@ -94,7 +93,7 @@ export function HeaderMenu({
           </button>
         </div>
       ) : null}
-      {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
+      {(menu || FALLBACK_HEADER_MENU).items?.map((item) => {
         if (!item.url) return null;
 
         // if the url is internal, we strip the domain
