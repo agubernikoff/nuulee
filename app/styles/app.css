@@ -366,6 +366,10 @@ button.reset:hover:not(:has(> *)) {
   }
 }
 
+.mobile-menu-alt-view-container {
+  margin-top: 0.75rem;
+}
+
 .mobile-menu-back-btn-container {
   font-size: 12px;
   display: flex;

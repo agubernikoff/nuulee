@@ -101,7 +101,10 @@ function SubscribeForm() {
             name="gender"
             value="womens"
             checked={gender === 'womens'}
-            onChange={(e) => setGender(e.target.value)}
+            onChange={(e) => {
+              if (gender !== 'womens') setGender(e.target.value);
+              else setGender(null);
+            }}
           />
           <label htmlFor="womens">womens</label>
         </div>
@@ -112,7 +115,10 @@ function SubscribeForm() {
             name="gender"
             value="mens"
             checked={gender === 'mens'}
-            onChange={(e) => setGender(e.target.value)}
+            onChange={(e) => {
+              if (gender !== 'mens') setGender(e.target.value);
+              else setGender(null);
+            }}
           />
           <label htmlFor="mens">mens</label>
         </div>
@@ -225,7 +231,9 @@ function MobileMenuAside({header, publicStoreDomain}) {
                 subscribe
               </button>
             ) : subType === 'subscribe to our newsletter' ? (
-              <div>y</div>
+              <div className="mobile-menu-alt-view-container">
+                <SubscribeForm />
+              </div>
             ) : null}
             {!subType ? (
               <button
