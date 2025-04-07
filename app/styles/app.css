@@ -419,7 +419,7 @@ aside#mobile .header-menu-item,
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .header-menu-mobile {
