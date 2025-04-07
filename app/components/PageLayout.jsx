@@ -259,7 +259,9 @@ function MobileMenuAside({header, publicStoreDomain}) {
                 united states / usd
               </button>
             ) : subType === 'choose country' ? (
-              <div>y</div>
+              <div className="mobile-menu-alt-view-container">
+                <LocationForm />
+              </div>
             ) : null}
             {!subType ? <div className="divider" /> : null}
             {!subType ? (
