@@ -14,7 +14,7 @@ export function getLocaleFromRequest(request) {
   }
 
   const strippedCountry = country.replace('.DATA', '');
-  console.log({language, strippedCountry, pathPrefix});
+
   return {language, country: strippedCountry, pathPrefix};
 }
 
