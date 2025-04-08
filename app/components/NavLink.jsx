@@ -8,7 +8,6 @@ export default function NavLink(props) {
   const {to, className, ...resOfProps} = props;
   const [root] = useMatches();
   const selectedLocale = root.data.selectedLocale;
-  console.log(root, selectedLocale);
 
   let toWithLocale = to;
 
