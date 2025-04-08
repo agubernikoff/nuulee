@@ -1,7 +1,8 @@
 import {Suspense} from 'react';
-import {Await, NavLink} from '@remix-run/react';
+import {Await} from '@remix-run/react';
 import {useLocation} from 'react-router';
 import {useEffect, useState} from 'react';
+import NavLink from './NavLink';
 
 /**
  * @param {FooterProps}

@@ -23,6 +23,7 @@ export const meta = ({data}) => {
  * @param {LoaderFunctionArgs} args
  */
 export async function loader(args) {
+  console.log(args.context.storefront.i18n);
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 

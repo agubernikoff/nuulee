@@ -1,8 +1,9 @@
-import {Await, useLoaderData, Link} from '@remix-run/react';
+import {Await, useLoaderData} from '@remix-run/react';
 import {Suspense} from 'react';
 import {Image, Money} from '@shopify/hydrogen';
 import ProductGridItem from '~/components/ProductGridItem';
 import {sanityClient} from '~/sanity/SanityClient';
+import NavLink from '~/components/NavLink';
 
 /**
  * @type {MetaFunction}
@@ -173,7 +174,7 @@ function CollectionLinks({collections}) {
   return (
     <div className="collection-links-container">
       {collections.map((col) => (
-        <Link
+        <NavLink
           key={col.handle}
           prefetch="intent"
           to={`/collections/${col.handle}`}
@@ -185,7 +186,7 @@ function CollectionLinks({collections}) {
             sizes="(min-width: 45em) 400px, 100vw"
           />
           <p>{`shop ${col.handle}`}</p>
-        </Link>
+        </NavLink>
       ))}
     </div>
   );
@@ -203,9 +204,9 @@ function Section({section}) {
       <div className="section-text-container">
         <p>{section.title}</p>
         <p>{section.description}</p>
-        <Link to={`/pages/${section.title.split(' ').join('-')}`}>
+        <NavLink to={`/pages/${section.title.split(' ').join('-')}`}>
           learn more
-        </Link>
+        </NavLink>
         {section.images.length > 1 ? (
           <div>
             <img

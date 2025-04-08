@@ -1,11 +1,12 @@
 import {Suspense} from 'react';
-import {Await, NavLink, useAsyncValue} from '@remix-run/react';
+import {Await, useAsyncValue} from '@remix-run/react';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import {useState} from 'react';
 import {useEffect} from 'react';
 import mobilemenu from '../assets/mobile-menu.png';
 import x from '../assets/x.png';
+import NavLink from './NavLink';
 
 /**
  * @param {HeaderProps}
