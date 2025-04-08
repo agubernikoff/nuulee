@@ -12,6 +12,7 @@ import {
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
 import {useAside} from './Aside';
 import {AnimatePresence, motion} from 'motion/react';
+import {useEffect} from 'react';
 
 /**
  * @param {PageLayoutProps}
@@ -23,15 +24,20 @@ export function PageLayout({
   header,
   isLoggedIn,
   publicStoreDomain,
+  availableCountries,
 }) {
   return (
     <Aside.Provider>
       <CartAside cart={cart} />
       <SearchAside />
-      <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
+      <MobileMenuAside
+        header={header}
+        publicStoreDomain={publicStoreDomain}
+        availableCountries={availableCountries}
+      />
       <SubMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       <SubscribeAside />
-      <LocationAside />
+      <LocationAside availableCountries={availableCountries} />
       <SizeGuideAside />
       {header && (
         <Header
@@ -139,16 +145,88 @@ function SubscribeForm() {
   );
 }
 
-function LocationAside() {
+function LocationAside({availableCountries}) {
   return (
     <Aside type="location" heading="choose country">
-      <LocationForm />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Await resolve={availableCountries}>
+          {(availableCountries) => {
+            return <LocationForm availableCountries={availableCountries} />;
+          }}
+        </Await>
+      </Suspense>
     </Aside>
   );
 }
 
-function LocationForm() {
-  return <div>location</div>;
+function LocationForm({availableCountries}) {
+  const {type} = useAside();
+  const [open, setOpen] = useState(false);
+  const [country, setCountry] = useState({
+    currency: {
+      isoCode: 'USD',
+      name: 'United States Dollar',
+      symbol: '$',
+    },
+    isoCode: 'US',
+    name: 'United States',
+    unitSystem: 'IMPERIAL_SYSTEM',
+  });
+
+  useEffect(() => {
+    setCountry(availableCountries.localization.country);
+  }, [availableCountries]);
+
+  useEffect(() => {
+    setTimeout(() => setCountry(availableCountries.localization.country), 300);
+  }, [type]);
+
+  const options = availableCountries.localization.availableCountries.map(
+    (c) => (
+      <p
+        className="country-option"
+        key={c.isoCode}
+        onClick={() => {
+          setCountry(c);
+          setOpen(false);
+        }}
+      >{`${c.name.toLowerCase()} / ${c.currency.isoCode.toLowerCase()}`}</p>
+    ),
+  );
+  return (
+    <div className="location-form">
+      <p>
+        {'Please select the country where your order will be shipped to. This will give you the correct pricing, delivery dates and shipping costs for your destination. All orders are dispatched from the united states.'.toLowerCase()}
+      </p>
+      <div className="country-dropdown">
+        <div className="location-select" onClick={() => setOpen(true)}>
+          <p>{`${country.name.toLowerCase()} / ${country.currency.isoCode.toLowerCase()}`}</p>
+          <svg
+            width="7"
+            height="8"
+            viewBox="0 0 7 8"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7 3.79668L0.7 7.43399L0.7 0.159373L7 3.79668Z"
+              fill="black"
+            />
+          </svg>
+        </div>
+        {open ? (
+          <div className="country-dropdown-content">{options}</div>
+        ) : null}
+      </div>
+      {open ? (
+        <button
+          className="close-dropdown"
+          onClick={() => setOpen(false)}
+        ></button>
+      ) : null}
+      <button className="add-to-cart-form-pdp">save</button>
+    </div>
+  );
 }
 
 /**
@@ -181,9 +259,26 @@ function SearchAside() {
  *   publicStoreDomain: PageLayoutProps['publicStoreDomain'];
  * }}
  */
-function MobileMenuAside({header, publicStoreDomain}) {
+function MobileMenuAside({header, publicStoreDomain, availableCountries}) {
   const {subType, open} = useAside();
   const queriesDatalistId = useId();
+
+  const [country, setCountry] = useState({
+    currency: {
+      isoCode: 'USD',
+      name: 'United States Dollar',
+      symbol: '$',
+    },
+    isoCode: 'US',
+    name: 'United States',
+    unitSystem: 'IMPERIAL_SYSTEM',
+  });
+
+  useEffect(() => {
+    availableCountries.then((countries) =>
+      setCountry(countries.localization.country),
+    );
+  }, [availableCountries]);
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
@@ -225,7 +320,7 @@ function MobileMenuAside({header, publicStoreDomain}) {
                     d="M1.18605 0.587402C1.08358 0.587402 1 0.670251 1 0.773449V10.82C1 10.9224 1.08358 11.006 1.18605 11.006H16.814C16.9164 11.006 17 10.9224 17 10.82V0.773449C17 0.670251 16.9164 0.587402 16.814 0.587402H1.18605ZM1.73256 0.959495H16.2674L9.00009 6.66889L1.73256 0.959495ZM1.37209 1.15717L8.88372 7.05838C8.95204 7.11289 9.04797 7.11289 9.11628 7.05838L16.6279 1.15717V10.634H1.37209V1.15717Z"
                     fill="black"
                     stroke="black"
-                    stroke-width="0.3"
+                    strokeWidth="0.3"
                   />
                 </svg>
                 subscribe
@@ -256,11 +351,19 @@ function MobileMenuAside({header, publicStoreDomain}) {
                     strokeWidth="0.3"
                   />
                 </svg>{' '}
-                united states / usd
+                {`${country.name.toLowerCase()} / ${country.currency.isoCode.toLowerCase()}`}
               </button>
             ) : subType === 'choose country' ? (
               <div className="mobile-menu-alt-view-container">
-                <LocationForm />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Await resolve={availableCountries}>
+                    {(availableCountries) => {
+                      return (
+                        <LocationForm availableCountries={availableCountries} />
+                      );
+                    }}
+                  </Await>
+                </Suspense>
               </div>
             ) : null}
             {!subType ? <div className="divider" /> : null}

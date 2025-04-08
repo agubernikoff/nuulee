@@ -21,5 +21,7 @@ export default function NavLink(props) {
     );
   }
 
-  return <RemixLink to={toWithLocale} className={className} {...resOfProps} />;
+  return (
+    <RemixNavLink to={toWithLocale} className={className} {...resOfProps} />
+  );
 }

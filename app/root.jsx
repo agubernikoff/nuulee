@@ -13,7 +13,7 @@ import favicon from '~/assets/favicon.svg';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import {PageLayout} from '~/components/PageLayout';
-import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
+import {COUNTRIES_QUERY, FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -133,10 +133,21 @@ function loadDeferredData({context}) {
       console.error(error);
       return null;
     });
+
+  const availableCountries = storefront
+    .query(COUNTRIES_QUERY, {
+      cache: storefront.CacheLong(),
+    })
+    .catch((error) => {
+      // Log query errors, but don't throw them so the page can still render
+      console.error(error);
+      return null;
+    });
   return {
     cart: cart.get(),
     isLoggedIn: customerAccount.isLoggedIn(),
     footer,
+    availableCountries,
   };
 }
 

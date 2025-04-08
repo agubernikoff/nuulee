@@ -8,12 +8,14 @@ export function getLocaleFromRequest(request) {
   let pathPrefix = '';
   let [language, country] = ['EN', 'US'];
 
-  if (/^[A-Z]{2}-[A-Z]{2}$/i.test(firstPathPart)) {
-    pathPrefix = '/' + firstPathPart;
+  if (/^[A-Z]{2}-[A-Z]{2}$/i.test(firstPathPart.replace('.DATA', ''))) {
+    pathPrefix = '/' + firstPathPart.replace('.DATA', '');
     [language, country] = firstPathPart.split('-');
   }
 
-  return {language, country, pathPrefix};
+  const strippedCountry = country.replace('.DATA', '');
+  console.log({language, strippedCountry, pathPrefix});
+  return {language, country: strippedCountry, pathPrefix};
 }
 
 /**

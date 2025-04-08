@@ -35,15 +35,21 @@ export function FooterMenu({menu, publicStoreDomain}) {
   const [footerHeaderSubMenu, setFooterHeaderSubMenu] = useState(
     menu.items.find((sub) =>
       sub.items
-        .map((link) =>
+        .map((link) => {
           link.url.includes(publicStoreDomain)
             ? new URL(link.url).pathname
-            : link.url,
-        )
-        .includes(pathname),
+            : link.url;
+        })
+        .includes(
+          pathname.split('/').length > 3
+            ? pathname
+                .split('/')
+                .filter((x, i) => i !== 1)
+                .join('/')
+            : pathname,
+        ),
     ),
   );
-
   useEffect(() => {
     if (pathname.includes('pages'))
       setFooterHeaderSubMenu(
@@ -55,7 +61,14 @@ export function FooterMenu({menu, publicStoreDomain}) {
                   ? new URL(link.url).pathname
                   : link.url,
               )
-              .includes(pathname) &&
+              .includes(
+                pathname.split('/').length > 3
+                  ? pathname
+                      .split('/')
+                      .filter((x, i) => i !== 1)
+                      .join('/')
+                  : pathname,
+              ) &&
             (sub.title === 'support' || sub.title === 'legal'),
         ),
       );
