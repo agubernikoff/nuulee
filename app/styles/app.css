@@ -71,7 +71,7 @@ aside {
   transition: transform 200ms ease-in-out;
 }
 aside * {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 aside#submenu {
@@ -397,7 +397,7 @@ button.reset:hover:not(:has(> *)) {
   top: 0;
   z-index: 1;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .header-menu-mobile-toggle {
@@ -412,7 +412,7 @@ button.reset:hover:not(:has(> *)) {
 }
 
 .mobile-menu-back-btn-container {
-  font-size: 12px;
+  font-size: 13px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -484,7 +484,7 @@ aside#mobile .header-menu-item,
 
 .header-menu-item {
   cursor: pointer;
-  font-size: 12px;
+  font-size: 13px;
   padding-inline: 6px;
 }
 aside#submenu .header-menu-item:hover {
@@ -518,7 +518,7 @@ aside#submenu .header-menu-item:hover {
   align-items: flex-start;
   padding: 1rem;
   font-family: 'regular';
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .footer-links {
@@ -537,12 +537,12 @@ aside#submenu .header-menu-item:hover {
 }
 .footer-info > p {
   font-family: 'regular';
-  font-size: 12px !important;
+  font-size: 13px !important;
 }
 
 .footer-heading {
   font-family: 'regular';
-  font-size: 12px;
+  font-size: 13px;
   color: rgb(177, 177, 177);
   margin-bottom: 0.25rem;
 }
@@ -573,7 +573,7 @@ aside#submenu .header-menu-item:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 12px;
+  font-size: 13px;
 }
 .footer-header-submenu-nav > .header-menu-item::before {
   content: attr(data-text);
@@ -776,7 +776,7 @@ aside#submenu .header-menu-item:hover {
   margin-bottom: 2rem;
   top: calc(100% - var(--header-height));
   margin-left: 1.3rem;
-  font-size: 12px;
+  font-size: 13px;
   color: white;
 }
 
@@ -820,7 +820,7 @@ aside#submenu .header-menu-item:hover {
   height: auto;
 }
 .collection-links-container > a > p {
-  font-size: 12px !important;
+  font-size: 13px !important;
   margin-top: 0.5rem;
 }
 
@@ -838,7 +838,7 @@ aside#submenu .header-menu-item:hover {
   width: 100%;
 }
 .section-container * {
-  font-size: 12px;
+  font-size: 13px;
 }
 /* .section-container:has(.section-text-container:has(img)) {
   justify-content: flex-start;
@@ -891,7 +891,7 @@ aside#submenu .header-menu-item:hover {
   margin-top: var(--main-margin-top);
 }
 .collection * {
-  font-size: 12px;
+  font-size: 13px;
 }
 .collection > img {
   height: auto;
@@ -899,7 +899,7 @@ aside#submenu .header-menu-item:hover {
 }
 .collection-description {
   margin-bottom: 5rem;
-  font-size: 12px;
+  font-size: 13px;
 }
 .filter-container {
   width: 100%;
@@ -991,7 +991,7 @@ aside#submenu .header-menu-item:hover {
   width: 100%;
 }
 .product-item > div > p {
-  font-size: 12px !important;
+  font-size: 13px !important;
 }
 .product-item > div > div {
   font-size: 11px !important;
@@ -1036,7 +1036,7 @@ aside#submenu .header-menu-item:hover {
 }
 .product-main * {
   font-family: 'regular' !important;
-  font-size: 12px !important;
+  font-size: 13px !important;
 }
 
 .product-price-on-sale {
@@ -1060,7 +1060,7 @@ aside#submenu .header-menu-item:hover {
 .product-options-title,
 .product-options-title-container > button {
   font-family: 'regular';
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .product-options-grid {
@@ -1068,7 +1068,7 @@ aside#submenu .header-menu-item:hover {
   flex-wrap: wrap;
   grid-gap: 1.5rem;
   font-family: 'regular' !important;
-  font-size: 12px !important;
+  font-size: 13px !important;
   margin-top: 0.5rem;
 }
 
@@ -1077,7 +1077,7 @@ aside#submenu .header-menu-item:hover {
   padding: 0;
   background-color: transparent;
   font-family: 'regular' !important;
-  font-size: 12px !important;
+  font-size: 13px !important;
   cursor: pointer;
   transition: all 200ms ease-in-out;
   border: none;
@@ -1099,7 +1099,7 @@ aside#submenu .header-menu-item:hover {
   width: 100%;
 }
 .add-to-cart-form-pdp {
-  font-size: 12px;
+  font-size: 13px;
   font-family: 'regular';
   width: 100%;
   padding: 0.65rem 0.5rem;
@@ -1127,7 +1127,7 @@ aside#submenu .header-menu-item:hover {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  font-size: 12px;
+  font-size: 13px;
   text-transform: lowercase;
   cursor: pointer;
   font-family: 'regular';
@@ -1152,13 +1152,13 @@ aside#submenu .header-menu-item:hover {
 
 .dropdown-content {
   font-family: 'regular';
-  font-size: 12px;
+  font-size: 13px;
   margin-top: 0.5rem;
 }
 
 .recs-title {
   font-family: 'medium';
-  font-size: 12px;
+  font-size: 13px;
   margin-bottom: 2rem;
 }
 /*
@@ -1181,7 +1181,7 @@ aside#submenu .header-menu-item:hover {
   padding-top: 0;
 }
 .page * {
-  font-size: 12px;
+  font-size: 13px;
 }
 .page p,
 .page ul {
