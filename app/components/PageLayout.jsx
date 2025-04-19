@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Await, Link, useNavigate, useLocation, Form} from '@remix-run/react';
+import {Await, Link, useLocation, Form} from '@remix-run/react';
 import {Suspense, useId, useEffect} from 'react';
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
@@ -170,7 +170,6 @@ function LocationAside({availableCountries, selectedLocale}) {
 }
 
 function LocationForm({availableCountries, selectedLocale, close}) {
-  const nav = useNavigate();
   const {pathname} = useLocation();
   const {type} = useAside();
   const [open, setOpen] = useState(false);
