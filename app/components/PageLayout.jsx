@@ -1,6 +1,6 @@
 import {useState} from 'react';
-import {Await, Link} from '@remix-run/react';
-import {Suspense, useId} from 'react';
+import {Await, Link, useNavigate, useLocation, Form} from '@remix-run/react';
+import {Suspense, useId, useEffect} from 'react';
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
 import {Header, HeaderMenu} from '~/components/Header';
@@ -12,7 +12,6 @@ import {
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
 import {useAside} from './Aside';
 import {AnimatePresence, motion} from 'motion/react';
-import {useEffect} from 'react';
 
 /**
  * @param {PageLayoutProps}
@@ -25,6 +24,7 @@ export function PageLayout({
   isLoggedIn,
   publicStoreDomain,
   availableCountries,
+  selectedLocale,
 }) {
   return (
     <Aside.Provider>
@@ -37,7 +37,10 @@ export function PageLayout({
       />
       <SubMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       <SubscribeAside />
-      <LocationAside availableCountries={availableCountries} />
+      <LocationAside
+        availableCountries={availableCountries}
+        selectedLocale={selectedLocale}
+      />
       <SizeGuideAside />
       {header && (
         <Header
@@ -145,13 +148,20 @@ function SubscribeForm() {
   );
 }
 
-function LocationAside({availableCountries}) {
+function LocationAside({availableCountries, selectedLocale}) {
+  const {close} = useAside();
   return (
     <Aside type="location" heading="choose country">
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={availableCountries}>
           {(availableCountries) => {
-            return <LocationForm availableCountries={availableCountries} />;
+            return (
+              <LocationForm
+                availableCountries={availableCountries}
+                selectedLocale={selectedLocale}
+                close={close}
+              />
+            );
           }}
         </Await>
       </Suspense>
@@ -159,7 +169,9 @@ function LocationAside({availableCountries}) {
   );
 }
 
-function LocationForm({availableCountries}) {
+function LocationForm({availableCountries, selectedLocale, close}) {
+  const nav = useNavigate();
+  const {pathname} = useLocation();
   const {type} = useAside();
   const [open, setOpen] = useState(false);
   const [country, setCountry] = useState({
@@ -173,9 +185,10 @@ function LocationForm({availableCountries}) {
     unitSystem: 'IMPERIAL_SYSTEM',
   });
 
-  useEffect(() => {
-    setCountry(availableCountries.localization.country);
-  }, [availableCountries]);
+  useEffect(
+    () => setCountry(availableCountries.localization.country),
+    [availableCountries, pathname, selectedLocale],
+  );
 
   useEffect(() => {
     setTimeout(() => setCountry(availableCountries.localization.country), 300);
@@ -193,6 +206,13 @@ function LocationForm({availableCountries}) {
       >{`${c.name.toLowerCase()} / ${c.currency.isoCode.toLowerCase()}`}</p>
     ),
   );
+
+  const strippedPathname = pathname.includes('EN-')
+    ? pathname
+        .split('/')
+        .filter((part) => !part.includes('EN-'))
+        .join('/')
+    : pathname;
   return (
     <div className="location-form">
       <p>
@@ -224,7 +244,14 @@ function LocationForm({availableCountries}) {
           onClick={() => setOpen(false)}
         ></button>
       ) : null}
-      <button className="add-to-cart-form-pdp">save</button>
+      <Form method="post" action="/locale" preventScrollReset={true}>
+        <input type="hidden" name="language" value={country.language} />
+        <input type="hidden" name="country" value={country.isoCode} />
+        <input type="hidden" name="path" value={strippedPathname} />
+        <button type="submit" onClick={close} className="add-to-cart-form-pdp">
+          save
+        </button>
+      </Form>
     </div>
   );
 }
