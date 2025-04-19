@@ -385,7 +385,10 @@ function MobileMenuAside({header, publicStoreDomain, availableCountries}) {
                   <Await resolve={availableCountries}>
                     {(availableCountries) => {
                       return (
-                        <LocationForm availableCountries={availableCountries} />
+                        <LocationForm
+                          availableCountries={availableCountries}
+                          close={() => open('mobile', null)}
+                        />
                       );
                     }}
                   </Await>
