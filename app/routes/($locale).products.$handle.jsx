@@ -119,10 +119,47 @@ export default function Product() {
     setOpenSection(openSection === section ? null : section);
   };
 
+  const [imageIndex, setImageIndex] = useState(0);
+
+  function handleScroll(scrollWidth, scrollLeft) {
+    const widthOfAnImage = scrollWidth / product?.images?.edges.length;
+    const dividend = scrollLeft / widthOfAnImage;
+    const rounded = parseFloat((scrollLeft / widthOfAnImage).toFixed(0));
+
+    if (Math.abs(dividend - rounded) < 0.001) setImageIndex(rounded);
+  }
+
+  const mappedIndicators =
+    product?.images?.edges.length > 1
+      ? product?.images?.edges.map((e, i) => (
+          <div
+            key={e.node.id}
+            className="circle"
+            style={{
+              background: 'var(--color-stroke-color)',
+              opacity: i === imageIndex ? 1 : 0.33,
+              height: '6px',
+              width: '6px',
+              borderRadius: '4px',
+            }}
+          ></div>
+        ))
+      : null;
+
   return (
     <div>
       <div className="product">
-        <div className="product-images">{productImage}</div>
+        <div style={{position: 'relative'}}>
+          <div
+            className="product-images"
+            onScroll={(e) =>
+              handleScroll(e.target.scrollWidth, e.target.scrollLeft)
+            }
+          >
+            {productImage}
+          </div>
+          <div className="mapped-indicators">{mappedIndicators}</div>
+        </div>
         <div className="product-main">
           <p>{title}</p>
           <ProductPrice
