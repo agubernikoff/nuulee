@@ -99,14 +99,16 @@ export default function Collection() {
   return (
     <div className="collection">
       {!tag ? (
-        <Image
-          alt={collection.image.altText}
-          aspectRatio={`${collection?.image?.width} / ${collection?.image?.height}`}
-          data={collection.image}
-          sizes="100vw"
-        />
+        <>
+          <Image
+            alt={collection.image.altText}
+            aspectRatio={`${collection?.image?.width} / ${collection?.image?.height}`}
+            data={collection.image}
+            sizes="100vw"
+          />
+          <p className="collection-description">{collection.description}</p>
+        </>
       ) : null}
-      <p className="collection-description">{collection.description}</p>
       <Filter
         tag={tag}
         handle={handle}
