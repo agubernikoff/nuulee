@@ -1407,14 +1407,28 @@ MEDIA QUIERIES
     column-gap: 5px;
     margin-bottom: 0;
   }
+  .product-options-grid {
+    margin-left: 0.1rem;
+  }
+  .product-options-item:not(:has(div)) {
+    padding: 0;
+  }
+  .product-options-item:not(:has(div)) button {
+    color: black;
+  }
   .product-item > div:last-of-type {
     opacity: 1 !important;
   }
   .product {
     flex-direction: column;
+    gap: 1.25rem;
   }
   .product-main {
     width: 100%;
+    margin-top: 0;
+  }
+  .product-form > form > button {
+    color: black;
   }
   .product-images {
     width: 100%;
