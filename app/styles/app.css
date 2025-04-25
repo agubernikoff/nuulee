@@ -1403,7 +1403,7 @@ MEDIA QUIERIES
     display: none;
   }
   .divider {
-    margin-block: 1rem;
+    margin-block: 1.1rem;
   }
   .products-grid {
     row-gap: 20px;
@@ -1418,9 +1418,11 @@ MEDIA QUIERIES
   }
   .product-options-grid > button {
     color: black !important;
+    font-size: 12px !important;
   }
   .product-options-title-container > button {
     color: black !important;
+    font-size: 12px !important;
   }
   .product-item > div:last-of-type {
     opacity: 1 !important;
@@ -1428,17 +1430,28 @@ MEDIA QUIERIES
   .product {
     flex-direction: column;
     gap: 1.25rem;
+    font-size: 12px !important;
   }
   .product-main {
     width: 100%;
     margin-top: 0;
+    font-size: 12px !important;
+  }
+  .product-main p,
+  .product-price > div,
+  .dropdown-content,
+  .recs-title,
+  .dropdown-title,
+  .products-grid > a > div > p {
+    font-size: 12px !important;
   }
   .product-form > form > button {
     color: black;
     font-family: 'regular';
-    font-size: 12px;
+    font-size: 12px !important;
     font-weight: normal !important;
   }
+
   .product-images {
     width: 100%;
     /* height: 69vh; */
@@ -1493,12 +1506,16 @@ MEDIA QUIERIES
 
   .footer {
     display: block;
+    font-size: 12px !important;
   }
   .footer-links {
     flex-direction: column;
     gap: 2.5rem;
   }
-
+  .footer-heading,
+  .footer-info > p {
+    font-size: 12px !important;
+  }
   .footer-column {
     width: 100%; /* Full width columns */
   }
