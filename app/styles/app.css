@@ -1447,6 +1447,11 @@ MEDIA QUIERIES
     overflow: scroll;
     scroll-snap-type: x mandatory;
     align-items: flex-end;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .product-images::-webkit-scrollbar {
+    display: none;
   }
   .product-image {
     height: auto;
