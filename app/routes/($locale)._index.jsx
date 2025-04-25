@@ -31,8 +31,8 @@ export async function loader(args) {
  * @param {LoaderFunctionArgs}
  */
 async function loadCriticalData({context}) {
-  const [{collections}, men, women] = await Promise.all([
-    context.storefront.query(FEATURED_COLLECTION_QUERY),
+  const [newArrivals, men, women] = await Promise.all([
+    context.storefront.query(NEW_ARRIVALS_QUERY),
     // Add other queries here, so that they are loaded in parallel
     context.storefront.query(MENS_COLLECTION_QUERY),
     context.storefront.query(WOMENS_COLLECTION_QUERY),
@@ -45,7 +45,7 @@ async function loadCriticalData({context}) {
     .then((response) => response);
 
   return {
-    featuredCollection: collections.nodes[0],
+    featuredCollection: newArrivals.collection,
     menCollection: men.collection,
     womenCollection: women.collection,
     sanityData: homePage,
@@ -338,6 +338,87 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
     products(first: 6, sortKey: UPDATED_AT, reverse: true) {
       nodes {
         ...RecommendedProduct
+      }
+    }
+  }
+`;
+
+const PRODUCT_ITEM_FRAGMENT = `#graphql
+  fragment ProductItem on Product {
+    id
+    title
+    handle
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    featuredImage {
+      id
+      altText
+      url
+      width
+      height
+    }
+    images(first: 2) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
+    }
+  }
+`;
+
+// NOTE: https://shopify.dev/docs/api/storefront/2022-04/objects/collection
+const NEW_ARRIVALS_QUERY = `#graphql
+  ${PRODUCT_ITEM_FRAGMENT}
+  query Collection(
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    collection(handle: "new-arrivals") {
+      id
+      handle
+      title
+      description
+      image {
+        id
+        url
+        altText
+        width
+        height
+      }
+      products(
+        first: 6
+      ) {
+        filters{
+          id
+          label
+          presentation
+          type
+          values{
+            count
+            id
+            input
+            label
+            swatch{
+              color
+            }
+          }
+        }
+        nodes {
+          ...ProductItem
+        }
+        pageInfo {
+          hasPreviousPage
+          hasNextPage
+          endCursor
+          startCursor
+        }
       }
     }
   }
