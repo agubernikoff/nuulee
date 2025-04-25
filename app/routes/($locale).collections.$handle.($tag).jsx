@@ -401,7 +401,6 @@ function FilterInput({
   isChecked,
   removeFilter,
 }) {
-  console.log(label, isChecked(value));
   return (
     <div style={count === 0 ? {opacity: '33%'} : null}>
       <input
