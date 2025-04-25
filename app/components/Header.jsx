@@ -13,6 +13,7 @@ import NavLink from './NavLink';
  */
 export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
   const {shop, menu} = header;
+  const {close} = useAside();
   return (
     <header className="header">
       <HeaderMenu
@@ -31,6 +32,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
           transform: 'translate(-50%)',
         }}
         end
+        onClick={close}
       >
         <Logo />
       </NavLink>
