@@ -997,7 +997,6 @@ aside#submenu .header-menu-item:hover {
   font-size: 13px !important;
 }
 .product-item > div > div {
-  font-size: 12px !important;
 }
 
 /*
@@ -1418,11 +1417,9 @@ MEDIA QUIERIES
   }
   .product-options-grid > button {
     color: black !important;
-    font-size: 12px !important;
   }
   .product-options-title-container > button {
     color: black !important;
-    font-size: 12px !important;
   }
   .product-item > div:last-of-type {
     opacity: 1 !important;
@@ -1430,12 +1427,10 @@ MEDIA QUIERIES
   .product {
     flex-direction: column;
     gap: 1.25rem;
-    font-size: 12px !important;
   }
   .product-main {
     width: 100%;
     margin-top: 0;
-    font-size: 12px !important;
   }
   .product-main p,
   .product-price > div,
@@ -1444,12 +1439,11 @@ MEDIA QUIERIES
   .dropdown-title,
   .products-grid > a > div > p,
   .page.null > main > p {
-    font-size: 12px !important;
   }
   .product-form > form > button {
     color: black;
     font-family: 'regular';
-    font-size: 12px !important;
+
     font-weight: normal !important;
   }
 
@@ -1507,7 +1501,6 @@ MEDIA QUIERIES
 
   .footer {
     display: block;
-    font-size: 12px !important;
   }
   .footer-links {
     flex-direction: column;
@@ -1515,7 +1508,6 @@ MEDIA QUIERIES
   }
   .footer-heading,
   .footer-info > p {
-    font-size: 12px !important;
   }
   .footer-column {
     width: 100%; /* Full width columns */
