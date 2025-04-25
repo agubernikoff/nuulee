@@ -1402,6 +1402,9 @@ MEDIA QUIERIES
   .collection-description {
     display: none;
   }
+  .divider {
+    margin-block: 1rem;
+  }
   .products-grid {
     row-gap: 20px;
     column-gap: 5px;
@@ -1434,6 +1437,7 @@ MEDIA QUIERIES
     color: black;
     font-family: 'regular';
     font-size: 12px;
+    font-weight: normal !important;
   }
   .product-images {
     width: 100%;
