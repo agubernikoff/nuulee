@@ -1416,6 +1416,9 @@ MEDIA QUIERIES
   .product-options-item:not(:has(div)) button {
     color: black;
   }
+  .product-options-title-container > button {
+    color: black;
+  }
   .product-item > div:last-of-type {
     opacity: 1 !important;
   }
