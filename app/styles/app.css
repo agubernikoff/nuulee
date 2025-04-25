@@ -945,7 +945,7 @@ aside#submenu .header-menu-item:hover {
   display: flex;
   width: 100%;
   flex-direction: row;
-  gap: clamp(0px, calc(15vw - 3rem), 200px);
+  gap: clamp(20px, calc(10vw - 3rem), 200px);
 }
 .bold-filter-header {
   font-family: 'medium';
