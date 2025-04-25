@@ -254,6 +254,7 @@ function Filter({handle, tag, filters}) {
         style={{zIndex: open ? 0 : -1}}
         className="filter-body"
       >
+        <div className="divider" />
         <FilterColumns
           filters={filters}
           tag={tag}
@@ -262,6 +263,7 @@ function Filter({handle, tag, filters}) {
           removeFilter={removeFilter}
           isChecked={isChecked}
         />
+        <div className="divider" />
         <SortColumn
           addSort={addSort}
           removeSort={removeSort}
@@ -399,6 +401,7 @@ function FilterInput({
   isChecked,
   removeFilter,
 }) {
+  console.log(label, isChecked(value));
   return (
     <div style={count === 0 ? {opacity: '33%'} : null}>
       <input

@@ -283,7 +283,7 @@ input[type='checkbox'] {
   transition: background-color 200ms ease-in-out;
 }
 input[type='checkbox']:checked {
-  background-color: black;
+  background-color: black !important;
   border-color: black;
 }
 
@@ -932,6 +932,9 @@ aside#submenu .header-menu-item:hover {
   /* gap: 21.5%; */
   justify-content: flex-start;
 }
+.filter-body > .divider {
+  display: none;
+}
 .filter-columns-container {
   flex: 2;
 }
@@ -952,7 +955,7 @@ aside#submenu .header-menu-item:hover {
   margin-bottom: 2rem;
 }
 .filter-column {
-  height: 8rem;
+  max-height: 8rem;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -1373,6 +1376,27 @@ MEDIA QUIERIES
   }
   .section-img-container {
     width: 100%;
+  }
+  .filter-body,
+  .filter-columns {
+    flex-direction: column;
+  }
+  .filter-column {
+    max-height: 6rem;
+    align-content: flex-start;
+    column-gap: 2rem;
+  }
+  .filter-column input:hover {
+    background: inherit;
+  }
+  .filter-body > .divider {
+    display: block;
+  }
+  .filter-body > .divider:first-of-type {
+    margin-top: 0;
+  }
+  .filter-column-container > p {
+    margin-bottom: 1rem;
   }
   .collection > img,
   .collection-description {
