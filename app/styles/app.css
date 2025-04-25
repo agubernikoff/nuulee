@@ -1442,7 +1442,8 @@ MEDIA QUIERIES
   .dropdown-content,
   .recs-title,
   .dropdown-title,
-  .products-grid > a > div > p {
+  .products-grid > a > div > p,
+  .page.null > main > p {
     font-size: 12px !important;
   }
   .product-form > form > button {
