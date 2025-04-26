@@ -3,6 +3,7 @@ import {Await} from '@remix-run/react';
 import {useLocation} from 'react-router';
 import {useEffect, useState} from 'react';
 import NavLink from './NavLink';
+import {useAside} from './Aside';
 
 /**
  * @param {FooterProps}
@@ -124,6 +125,7 @@ export function FooterMenu({menu, publicStoreDomain}) {
  * }}
  */
 function FooterColumn({title, links, publicStoreDomain}) {
+  const {open} = useAside();
   return (
     <div className="footer-column">
       <p className="footer-heading">{title}</p>
@@ -131,9 +133,16 @@ function FooterColumn({title, links, publicStoreDomain}) {
         const url = link.url.includes(publicStoreDomain)
           ? new URL(link.url).pathname
           : link.url;
-
+        console.log(link.title);
         return (
-          <NavLink key={link.id} to={url}>
+          <NavLink
+            key={link.id}
+            to={url}
+            onClick={(e) => {
+              if (link.title.toLowerCase() === 'subscribe') e.preventDefault();
+              open('subscribe');
+            }}
+          >
             {link.title.toLowerCase()}
           </NavLink>
         );
