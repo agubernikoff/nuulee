@@ -140,7 +140,7 @@ export default function Collection() {
   );
 }
 
-function Filter({handle, tag, filters}) {
+export function Filter({handle, tag, filters, term}) {
   const [open, setOpen] = useState(false);
   const [init, setInit] = useState(true);
   useEffect(() => {
@@ -224,13 +224,19 @@ function Filter({handle, tag, filters}) {
     >
       <div className="filter-header">
         <motion.p className="collection-breadcrumb" layout={false}>
-          shop <Polygon /> {handle}
-          {tag ? (
+          {term ? (
+            term
+          ) : (
             <>
-              {' '}
-              <Polygon /> {tag}
+              shop <Polygon /> {handle}
+              {tag ? (
+                <>
+                  {' '}
+                  <Polygon /> {tag}
+                </>
+              ) : null}
             </>
-          ) : null}
+          )}
         </motion.p>
         <p onClick={toggleOpen} className="filter-toggle">
           <AnimatePresence mode="popLayout">
@@ -268,6 +274,7 @@ function Filter({handle, tag, filters}) {
           addSort={addSort}
           removeSort={removeSort}
           isChecked={isSortChecked}
+          term={term}
         />
       </motion.div>
     </motion.div>
@@ -293,7 +300,7 @@ function FilterColumns({filters, addFilter, isChecked, removeFilter}) {
   );
 }
 
-function SortColumn({addSort, removeSort, isChecked}) {
+function SortColumn({addSort, removeSort, isChecked, term}) {
   return (
     <div className="sort-column-container">
       <p className="bold-filter-header">sort</p>
@@ -304,6 +311,7 @@ function SortColumn({addSort, removeSort, isChecked}) {
           addFilter={addSort}
           isChecked={isChecked}
           removeFilter={removeSort}
+          count={term ? 0 : null}
         />
         <FilterInput
           label={'alphabetically, z-a'}
@@ -311,6 +319,7 @@ function SortColumn({addSort, removeSort, isChecked}) {
           addFilter={addSort}
           isChecked={isChecked}
           removeFilter={removeSort}
+          count={term ? 0 : null}
         />
         <FilterInput
           label={'date, new to old'}
@@ -318,6 +327,7 @@ function SortColumn({addSort, removeSort, isChecked}) {
           addFilter={addSort}
           isChecked={isChecked}
           removeFilter={removeSort}
+          count={term ? 0 : null}
         />
         <FilterInput
           label={'date, old to new'}
@@ -325,6 +335,7 @@ function SortColumn({addSort, removeSort, isChecked}) {
           addFilter={addSort}
           isChecked={isChecked}
           removeFilter={removeSort}
+          count={term ? 0 : null}
         />
         <FilterInput
           label={'price, low to high'}

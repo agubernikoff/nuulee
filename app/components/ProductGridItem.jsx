@@ -4,7 +4,7 @@ import {Link} from '@remix-run/react';
 import {Image, Money} from '@shopify/hydrogen';
 import {motion, AnimatePresence} from 'motion/react';
 
-function ProductGridItem({product, loading}) {
+function ProductGridItem({product, productUrl, loading}) {
   const [image, setImage] = useState(product?.images?.nodes[0]);
   const [hovered, setHovered] = useState(false);
   const variantUrl = useVariantUrl(product.handle);
@@ -14,7 +14,7 @@ function ProductGridItem({product, loading}) {
       className="product-item"
       key={product.id}
       prefetch="intent"
-      to={variantUrl}
+      to={productUrl || variantUrl}
       onMouseEnter={() => {
         setHovered(true);
         if (product.images.nodes.length > 1) setImage(product.images.nodes[1]);
