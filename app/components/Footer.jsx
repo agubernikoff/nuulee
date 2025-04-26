@@ -133,7 +133,7 @@ function FooterColumn({title, links, publicStoreDomain}) {
         const url = link.url.includes(publicStoreDomain)
           ? new URL(link.url).pathname
           : link.url;
-        console.log(link.title);
+
         return (
           <NavLink
             key={link.id}
