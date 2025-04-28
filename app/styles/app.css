@@ -435,6 +435,7 @@ button.reset:hover:not(:has(> *)) {
   cursor: pointer;
   padding-block: 0;
   display: block;
+  color: black;
 }
 .predictive-search-form > .mobile-menu-btn {
   display: inline;
@@ -453,6 +454,7 @@ aside#mobile .predictive-search-form > div > input {
   width: 95%;
   border: none;
   margin: 0;
+  background-color: white;
 }
 aside#mobile .predictive-search-form > div > input:focus-visible {
   outline: none;
@@ -472,6 +474,7 @@ aside#mobile .header-menu-item,
   align-items: center;
   gap: 0.25rem;
   margin-bottom: 0.5rem;
+  color: black;
 }
 
 .header-menu-mobile {
