@@ -48,6 +48,10 @@ async function loadCriticalData({context, params}) {
     throw new Response('Not Found', {status: 404});
   }
 
+  if (page.coming_soon.value === 'true' && !comingsoon) {
+    throw new Response('Not Found', {status: 404});
+  }
+
   return {
     page,
     comingsoon,
@@ -67,20 +71,26 @@ function loadDeferredData({context}) {
 export default function Page() {
   /** @type {LoaderReturnData} */
   const {page, comingsoon} = useLoaderData();
+  console.log(page.coming_soon);
   return (
     <div className={`page ${page.sections ? 'discover' : null}`}>
-      <ComingSoon comingsoon={comingsoon} />
-      <header>
-        <p className="page-title">{page.title}</p>
-      </header>
-      {page.faq || page.sections ? (
-        page.faq ? (
-          <FAQs faqs={page.faq?.references?.nodes} />
-        ) : (
-          <Sections sections={page.sections?.references?.nodes} />
-        )
+      {page.coming_soon.value === 'true' ? (
+        <ComingSoon comingsoon={comingsoon} />
       ) : (
-        <main dangerouslySetInnerHTML={{__html: page.body}} />
+        <>
+          <header>
+            <p className="page-title">{page.title}</p>
+          </header>
+          {page.faq || page.sections ? (
+            page.faq ? (
+              <FAQs faqs={page.faq?.references?.nodes} />
+            ) : (
+              <Sections sections={page.sections?.references?.nodes} />
+            )
+          ) : (
+            <main dangerouslySetInnerHTML={{__html: page.body}} />
+          )}
+        </>
       )}
     </div>
   );
@@ -365,6 +375,9 @@ const PAGE_QUERY = `#graphql
       id
       title
       body
+      coming_soon:metafield(key: "coming_soon", namespace: "custom"){
+        value
+      }
       faq:metafield(key: "faqs", namespace: "custom") {
         references(first: 10) {
           nodes {
