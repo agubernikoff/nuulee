@@ -148,9 +148,11 @@ function FooterColumn({title, links, publicStoreDomain, isMobile}) {
             key={link.id}
             to={url}
             onClick={(e) => {
-              if (link.title.toLowerCase() === 'subscribe') e.preventDefault();
-              if (!isMobile) open('subscribe');
-              else open('mobile', 'choose country');
+              if (link.title.toLowerCase() === 'subscribe') {
+                e.preventDefault();
+                if (!isMobile) open('subscribe');
+                else open('mobile', 'choose country');
+              }
             }}
           >
             {link.title.toLowerCase()}
