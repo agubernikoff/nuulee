@@ -32,6 +32,14 @@ export function Footer({footer: footerPromise, publicStoreDomain}) {
  * }}
  */
 export function FooterMenu({menu, publicStoreDomain}) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    window
+      .matchMedia('(max-width:500px)')
+      .addEventListener('change', (e) => setIsMobile(e.matches));
+    if (window.matchMedia('(max-width:500px)').matches) setIsMobile(true);
+  }, []);
+
   const {pathname} = useLocation();
   const [footerHeaderSubMenu, setFooterHeaderSubMenu] = useState(
     menu.items.find((sub) =>
@@ -88,6 +96,7 @@ export function FooterMenu({menu, publicStoreDomain}) {
                   title={item.title.toLowerCase()}
                   links={item.items}
                   publicStoreDomain={publicStoreDomain}
+                  isMobile={isMobile}
                 />
               );
             }
@@ -124,7 +133,7 @@ export function FooterMenu({menu, publicStoreDomain}) {
  *   links: Array<{id: string, title: string, url: string}>;
  * }}
  */
-function FooterColumn({title, links, publicStoreDomain}) {
+function FooterColumn({title, links, publicStoreDomain, isMobile}) {
   const {open} = useAside();
   return (
     <div className="footer-column">
@@ -140,7 +149,8 @@ function FooterColumn({title, links, publicStoreDomain}) {
             to={url}
             onClick={(e) => {
               if (link.title.toLowerCase() === 'subscribe') e.preventDefault();
-              open('subscribe');
+              if (!isMobile) open('subscribe');
+              else open('mobile', 'choose country');
             }}
           >
             {link.title.toLowerCase()}
