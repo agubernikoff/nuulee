@@ -903,6 +903,9 @@ aside#submenu .header-menu-item:hover {
   align-items: center;
   background: white;
 }
+.null > .coming-soon-container {
+  margin-top: calc(-2 * var(--header-height));
+}
 
 .coming-soon-content {
   display: flex;
