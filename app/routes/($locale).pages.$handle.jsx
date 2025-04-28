@@ -2,6 +2,7 @@ import {useLoaderData} from '@remix-run/react';
 import React, {useState, useEffect} from 'react';
 import {motion} from 'motion/react';
 import {Image} from '@shopify/hydrogen';
+import ComingSoon from '~/components/ComingSoon';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -33,12 +34,13 @@ async function loadCriticalData({context, params}) {
     throw new Error('Missing page handle');
   }
 
-  const [{page}] = await Promise.all([
+  const [{page}, comingsoon] = await Promise.all([
     context.storefront.query(PAGE_QUERY, {
       variables: {
         handle: params.handle,
       },
     }),
+    context.storefront.query(COMING_SOON_QUERY),
     // Add other queries here, so that they are loaded in parallel
   ]);
 
@@ -48,6 +50,7 @@ async function loadCriticalData({context, params}) {
 
   return {
     page,
+    comingsoon,
   };
 }
 
@@ -63,9 +66,10 @@ function loadDeferredData({context}) {
 
 export default function Page() {
   /** @type {LoaderReturnData} */
-  const {page} = useLoaderData();
+  const {page, comingsoon} = useLoaderData();
   return (
     <div className={`page ${page.sections ? 'discover' : null}`}>
+      <ComingSoon comingsoon={comingsoon} />
       <header>
         <p className="page-title">{page.title}</p>
       </header>
@@ -445,6 +449,29 @@ const PAGE_QUERY = `#graphql
     }
   }
 `;
+const COMING_SOON_QUERY = `#graphql
+  query ComingSoon {
+    metaobject(
+      handle: {handle: "coming-soon-image-hezp7ylm", type: "coming_soon_image"}
+    ) {
+      field(key: "comingsoon") {
+        value
+        reference {
+          ... on MediaImage {
+            id
+            alt
+            image {
+              altText
+              height
+              id
+              url
+              width
+            }
+          }
+        }
+      }
+    }
+  }`;
 
 /** @typedef {import('@shopify/remix-oxygen').LoaderFunctionArgs} LoaderFunctionArgs */
 /** @template T @typedef {import('@remix-run/react').MetaFunction<T>} MetaFunction */

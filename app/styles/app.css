@@ -891,6 +891,37 @@ aside#submenu .header-menu-item:hover {
 
 /*
 * --------------------------------------------------
+* COMING SOON
+* --------------------------------------------------
+*/
+
+.coming-soon-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+}
+
+.coming-soon-content {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.coming-text,
+.soon-text {
+  font-size: 18px !important;
+  text-transform: lowercase;
+  font-family: 'regular';
+}
+
+.coming-soon-image {
+  height: auto;
+}
+
+/*
+* --------------------------------------------------
 * routes/collections.$handle.tsx
 * --------------------------------------------------
 */
