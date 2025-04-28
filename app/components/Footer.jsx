@@ -116,7 +116,7 @@ export function FooterMenu({menu, publicStoreDomain}) {
         </p>
         <p>
           sustainability is at the heart of what we do. we prioritize{' '}
-          <a href="#" className="footer-link-underline">
+          <a href="/pages/sustainability" className="footer-link-underline">
             ethical practices
           </a>
           , from responsibly sourcing our cashmere from nomadic herders to
