@@ -300,6 +300,7 @@ input[type='checkbox']:checked {
   padding: 0;
   padding-left: 10px;
   width: 100%;
+  color: black;
 }
 .email-input-container input:focus-visible {
   outline: none;
@@ -311,6 +312,7 @@ input[type='checkbox']:checked {
 }
 .email-input-container button {
   padding: 0;
+  color: black;
 }
 
 .subscribe-subtext,
