@@ -32,7 +32,8 @@ img {
 }
 body,
 button,
-input::placeholder {
+input::placeholder,
+input {
   font-family: 'regular';
 }
 input[type='search' i]::-webkit-search-cancel-button {
