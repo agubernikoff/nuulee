@@ -1585,6 +1585,26 @@ MEDIA QUIERIES
   .footer-header-submenu-nav > .header-menu-item:first-of-type {
     padding-left: 0;
   }
+  .coming-soon-container {
+    margin-top: calc(-1.25 * var(--header-height)) !important;
+  }
+  .coming-soon-content {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 1rem;
+  }
+
+  .coming-soon-mobile-text {
+    font-size: 13px;
+    font-family: 'regular';
+    text-transform: lowercase;
+  }
+
+  .coming-soon-image-mobile {
+    width: 100%;
+    height: auto;
+  }
 
   .header-ctas > button {
     display: none;
