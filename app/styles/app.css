@@ -1591,7 +1591,7 @@ MEDIA QUIERIES
     padding-left: 0;
   }
   .coming-soon-container {
-    margin-top: calc(-1.5 * var(--header-height)) !important;
+    margin-top: calc(-1.6 * var(--header-height)) !important;
   }
   .coming-soon-content {
     flex-direction: column;
