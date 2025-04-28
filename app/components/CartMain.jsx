@@ -45,7 +45,7 @@ export function CartMain({layout, cart: originalCart}) {
 function CartEmpty({hidden = false}) {
   const {close} = useAside();
   return (
-    <div hidden={hidden}>
+    <div className="empty-cart-div" hidden={hidden}>
       <p className="empty-cart-message">your cart is empty.</p>
       {/* <Link to="/collections" onClick={close} prefetch="viewport">
         Continue shopping →
