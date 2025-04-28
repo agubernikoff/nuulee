@@ -193,18 +193,29 @@ function LocationForm({availableCountries, selectedLocale, close}) {
     setTimeout(() => setCountry(availableCountries.localization.country), 300);
   }, [type]);
 
-  const options = availableCountries.localization.availableCountries.map(
-    (c) => (
-      <p
-        className="country-option"
-        key={c.isoCode}
-        onClick={() => {
-          setCountry(c);
-          setOpen(false);
-        }}
-      >{`${c.name.toLowerCase()} / ${c.currency.isoCode.toLowerCase()}`}</p>
-    ),
-  );
+  // Prepare sorted country options
+  const sortedCountries = availableCountries.localization.availableCountries
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  // Move selected country to the top
+  const countryOptions = [
+    country,
+    ...sortedCountries.filter((c) => c.isoCode !== country.isoCode),
+  ];
+
+  const options = countryOptions.map((c) => (
+    <p
+      className="country-option"
+      key={c.isoCode}
+      onClick={() => {
+        setCountry(c);
+        setOpen(false);
+      }}
+    >
+      {`${c.name.toLowerCase()} / ${c.currency.isoCode.toLowerCase()}`}
+    </p>
+  ));
 
   const strippedPathname = pathname.includes('EN-')
     ? pathname
@@ -212,6 +223,7 @@ function LocationForm({availableCountries, selectedLocale, close}) {
         .filter((part) => !part.includes('EN-'))
         .join('/')
     : pathname;
+
   return (
     <div className="location-form">
       <p>
