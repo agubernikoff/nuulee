@@ -1163,6 +1163,7 @@ aside#submenu .header-menu-item:hover {
   border: 1px solid black;
   transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
   cursor: pointer;
+  color: black;
 }
 .add-to-cart-form-pdp:hover {
   background: black;
