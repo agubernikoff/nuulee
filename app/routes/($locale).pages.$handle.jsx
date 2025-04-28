@@ -71,7 +71,6 @@ function loadDeferredData({context}) {
 export default function Page() {
   /** @type {LoaderReturnData} */
   const {page, comingsoon} = useLoaderData();
-  console.log(page.coming_soon);
   return (
     <div className={`page ${page.sections ? 'discover' : null}`}>
       {page.coming_soon.value === 'true' ? (
