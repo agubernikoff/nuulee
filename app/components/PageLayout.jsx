@@ -170,7 +170,7 @@ function LocationAside({availableCountries, selectedLocale}) {
 }
 
 function LocationForm({availableCountries, selectedLocale, close}) {
-  const {pathname} = useLocation();
+  const {pathname, search} = useLocation();
   const {type} = useAside();
   const [open, setOpen] = useState(false);
   const [country, setCountry] = useState({
@@ -258,7 +258,11 @@ function LocationForm({availableCountries, selectedLocale, close}) {
       <Form method="post" action="/locale" preventScrollReset={true}>
         <input type="hidden" name="language" value={country.language} />
         <input type="hidden" name="country" value={country.isoCode} />
-        <input type="hidden" name="path" value={strippedPathname} />
+        <input
+          type="hidden"
+          name="path"
+          value={`${strippedPathname}${search}`}
+        />
         <button type="submit" onClick={close} className="add-to-cart-form-pdp">
           save
         </button>
