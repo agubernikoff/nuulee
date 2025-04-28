@@ -48,7 +48,7 @@ async function loadCriticalData({context, params}) {
     throw new Response('Not Found', {status: 404});
   }
 
-  if (page.coming_soon.value === 'true' && !comingsoon) {
+  if (page.coming_soon?.value === 'true' && !comingsoon) {
     throw new Response('Not Found', {status: 404});
   }
 
@@ -73,7 +73,7 @@ export default function Page() {
   const {page, comingsoon} = useLoaderData();
   return (
     <div className={`page ${page.sections ? 'discover' : null}`}>
-      {page.coming_soon.value === 'true' ? (
+      {page.coming_soon?.value === 'true' ? (
         <ComingSoon comingsoon={comingsoon} />
       ) : (
         <>
