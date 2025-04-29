@@ -246,12 +246,12 @@ function ImageAndBlurb({section}) {
           sizes="100vw"
         />
         {altMobilePhoto ? (
-          <img
-            altText={altMobilePhoto.reference.image.altText}
+          <Image
+            alt={altMobilePhoto.reference.image.altText}
             aspectRatio={`${altMobilePhoto.reference.image.width}/${altMobilePhoto.reference.image.height}`}
-            src={altMobilePhoto.reference.image.url}
+            data={altMobilePhoto.reference.image}
             loading={'eager'}
-            sizes="(min-width: 45em) 400px, 100vw"
+            sizes="100vw"
             className="alt-mobile-photo"
           />
         ) : null}
