@@ -1382,6 +1382,20 @@ aside#submenu .header-menu-item:hover {
 .mapped-indicators {
   display: none;
 }
+
+.route-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+  height: calc(100vh - (3 * var(--header-height)));
+}
+.route-error > h2 {
+  font-size: 240px;
+  margin-bottom: -2rem;
+}
 /* 
 MEDIA QUIERIES
 */
@@ -1628,5 +1642,8 @@ MEDIA QUIERIES
   }
   .overlay.expanded aside {
     transform: translateX(0);
+  }
+  .route-error > h2 {
+    font-size: 200px;
   }
 }
