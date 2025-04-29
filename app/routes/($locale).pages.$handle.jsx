@@ -227,37 +227,38 @@ function TitleAndBlurb({section}) {
 }
 
 function ImageAndBlurb({section}) {
+  console.log(section);
+  const photo = section.fields.find((f) => f.key === 'photo');
+  const photoWidth = section.fields.find((f) => f.key === 'photo_width');
+  const altMobilePhoto = section.fields.find(
+    (f) => f.key === 'alternate_mobile_image',
+  );
+  const blurb = section.fields.find((f) => f.key === 'blurb');
+  const blurbWidth = section.fields.find((f) => f.key === 'blurb_width');
   return (
     <div className="image-and-blurb">
       <div>
         <Image
-          alt={
-            section.fields.find((f) => f.type === 'file_reference').reference
-              .image.altText
-          }
-          aspectRatio={`${
-            section.fields.find((f) => f.type === 'file_reference').reference
-              .image.width
-          }/${
-            section.fields.find((f) => f.type === 'file_reference').reference
-              .image.height
-          }`}
-          data={
-            section.fields.find((f) => f.type === 'file_reference').reference
-              .image
-          }
+          alt={photo.reference.image.altText}
+          aspectRatio={`${photo.reference.image.width}/${photo.reference.image.height}`}
+          data={photo.reference.image}
           loading={'eager'}
-          sizes="(min-width: 45em) 400px, 100vw"
+          sizes="100vw"
         />
+        {altMobilePhoto ? (
+          <img
+            altText={altMobilePhoto.reference.image.altText}
+            aspectRatio={`${altMobilePhoto.reference.image.width}/${altMobilePhoto.reference.image.height}`}
+            src={altMobilePhoto.reference.image.url}
+            loading={'eager'}
+            sizes="(min-width: 45em) 400px, 100vw"
+            className="alt-mobile-photo"
+          />
+        ) : null}
       </div>
-      <div>
-        {mapRichText(
-          JSON.parse(
-            section.fields.find((f) => f.type === 'rich_text_field').value,
-          ),
-          'image-and-blurb',
-        )}
-      </div>
+      {blurb ? (
+        <div>{mapRichText(JSON.parse(blurb.value), 'image-and-blurb')}</div>
+      ) : null}
     </div>
   );
 }
@@ -411,6 +412,7 @@ const PAGE_QUERY = `#graphql
               fields {
                 type
                 value
+                key
                 reference{
                   ...on MediaImage{
                     id

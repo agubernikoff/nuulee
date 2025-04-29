@@ -1321,9 +1321,14 @@ aside#submenu .header-menu-item:hover {
 .page > main > div:last-of-type {
   margin-bottom: auto;
 }
-.title-and-blurb,
-.image-and-blurb > * {
+.title-and-blurb {
   width: 45%;
+}
+.image-and-blurb > * {
+  width: 100%;
+}
+.alt-mobile-photo {
+  display: none;
 }
 
 .image-and-blurb {
@@ -1573,10 +1578,17 @@ MEDIA QUIERIES
   .image-and-blurb,
   .page .section-container {
     margin-bottom: 4rem;
+    width: 100%;
   }
   .image-and-blurb {
     flex-direction: column;
     gap: 2rem;
+  }
+  .alt-mobile-photo {
+    display: block;
+  }
+  .image-and-blurb > div:has(.alt-mobile-photo) > img:first-of-type {
+    display: none;
   }
 
   .footer {
