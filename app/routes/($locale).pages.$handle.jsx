@@ -237,12 +237,13 @@ function ImageAndBlurb({section}) {
   const blurbWidth = section.fields.find((f) => f.key === 'blurb_width');
   return (
     <div className="image-and-blurb">
-      <div>
+      <div style={{width: `${photoWidth?.value}%` || '100%', margin: 'auto'}}>
         <Image
           alt={photo.reference.image.altText}
           aspectRatio={`${photo.reference.image.width}/${photo.reference.image.height}`}
           data={photo.reference.image}
           loading={'eager'}
+          width={photo.reference.image.width}
           sizes="100vw"
         />
         {altMobilePhoto ? (
@@ -257,7 +258,9 @@ function ImageAndBlurb({section}) {
         ) : null}
       </div>
       {blurb ? (
-        <div>{mapRichText(JSON.parse(blurb.value), 'image-and-blurb')}</div>
+        <div style={{width: `${blurbWidth?.value}%` || '100%', margin: 'auto'}}>
+          {mapRichText(JSON.parse(blurb.value), 'image-and-blurb')}
+        </div>
       ) : null}
     </div>
   );

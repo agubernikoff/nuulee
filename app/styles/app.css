@@ -1333,14 +1333,25 @@ aside#submenu .header-menu-item:hover {
 
 .image-and-blurb {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  gap: 2rem;
 }
 .image-and-blurb img,
 .page .section-container img {
   height: auto;
+  width: 100%;
 }
 .page .section-text-container > p:first-of-type {
   font-family: 'regular';
+}
+
+.page .section-text-container > div {
+  margin-top: 1rem;
+}
+
+.page .section-text-container ol {
+  margin-block: 1rem;
 }
 
 /*
@@ -1572,7 +1583,7 @@ MEDIA QUIERIES
   }
   .title-and-blurb,
   .image-and-blurb > * {
-    width: 100%;
+    width: 100% !important;
   }
   .title-and-blurb,
   .image-and-blurb,
