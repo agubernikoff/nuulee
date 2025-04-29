@@ -1396,6 +1396,10 @@ aside#submenu .header-menu-item:hover {
   font-size: 240px;
   margin-bottom: -2rem;
 }
+.route-error p,
+.route-error a {
+  font-size: 13px;
+}
 /* 
 MEDIA QUIERIES
 */
