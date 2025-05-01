@@ -1751,6 +1751,32 @@ MEDIA QUIERIES
   .overlay.expanded aside {
     transform: translateX(0);
   }
+  .overlay:has(> aside#size-guide) {
+    margin: 0;
+    background: var(--color-dimmer);
+  }
+  aside#size-guide {
+    bottom: -423px;
+    top: auto;
+    left: auto;
+    transform: translate(0%, 0%);
+    padding: 0;
+    min-width: 100vw;
+    max-width: 100vw;
+    height: min-content;
+  }
+  .size-guide-table {
+    width: 100%;
+  }
+  .size-guide-table td:first-of-type {
+    width: 13%;
+  }
+  .size-guide-table th {
+    width: 29%;
+  }
+  .overlay.expanded aside#size-guide {
+    transform: translateY(-423px);
+  }
   .route-error > h2 {
     font-size: 200px;
   }
