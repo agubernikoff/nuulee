@@ -1,5 +1,5 @@
 import {useLoaderData} from '@remix-run/react';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {motion} from 'motion/react';
 import {Image} from '@shopify/hydrogen';
 import ComingSoon from '~/components/ComingSoon';
@@ -72,25 +72,112 @@ export default function Page() {
   /** @type {LoaderReturnData} */
   const {page, comingsoon} = useLoaderData();
   return (
-    <div className={`page ${page.sections ? 'discover' : null}`}>
+    <div
+      className={`page ${
+        page.sections || page.gallery_images ? 'discover' : null
+      } `}
+    >
       {page.coming_soon?.value === 'true' ? (
         <ComingSoon comingsoon={comingsoon} />
       ) : (
         <>
-          <header>
-            <p className="page-title">{page.title}</p>
-          </header>
-          {page.faq || page.sections ? (
-            page.faq ? (
-              <FAQs faqs={page.faq?.references?.nodes} />
-            ) : (
-              <Sections sections={page.sections?.references?.nodes} />
-            )
+          {page.hide_page_header?.value !== 'true' ? (
+            <header>
+              <p className="page-title">{page.title}</p>
+            </header>
+          ) : null}
+          {page.faq || page.sections || page.gallery_images ? (
+            <>
+              {page.faq && <FAQs faqs={page.faq?.references?.nodes} />}
+
+              {page.sections && (
+                <Sections sections={page.sections?.references?.nodes} />
+              )}
+              {page.gallery_images && (
+                <Gallery
+                  gallery_images={page.gallery_images?.references?.nodes}
+                />
+              )}
+            </>
           ) : (
             <main dangerouslySetInnerHTML={{__html: page.body}} />
           )}
         </>
       )}
+    </div>
+  );
+}
+
+function Gallery({gallery_images}) {
+  const gallery = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(
+    Math.floor(gallery_images.length / 2),
+  );
+
+  useEffect(() => {
+    const element = gallery.current;
+    if (!element) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      centerCurrentIndex();
+    });
+
+    resizeObserver.observe(element);
+
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  function centerCurrentIndex() {
+    const initialValue = 0;
+    const sumWithInitial = gallery_images
+      .slice(0, currentIndex)
+      .reduce((accumulator, img, i) => {
+        const imageWidth =
+          (img.image.width * gallery.current.offsetHeight) / img.image.height;
+
+        const width =
+          i === currentIndex - 1
+            ? (window.innerWidth - imageWidth) / -2
+            : imageWidth;
+        return accumulator + width;
+      }, initialValue);
+
+    gallery.current.style.transform = `translateX(calc(${-sumWithInitial}px - ${
+      currentIndex - 1
+    }rem))`;
+  }
+  useEffect(() => {
+    centerCurrentIndex();
+  }, [currentIndex]);
+
+  function handleClick(index) {
+    setCurrentIndex(index + 1);
+  }
+
+  const images = gallery_images.map((img, i) => (
+    <motion.div
+      className="gallery-image"
+      initial={{opacity: 0}}
+      animate={{opacity: i === currentIndex - 1 ? 1 : 0.1}}
+      key={img.id}
+      transition={{duration: 0.75}}
+    >
+      <Image
+        data={img.image}
+        loading={'eager'}
+        sizes="100vw"
+        alt={img.altText}
+        aspectRatio={`${img.image.width} / ${img.image.height}`}
+      />
+      <button onClick={() => handleClick(i)}></button>
+    </motion.div>
+  ));
+
+  return (
+    <div className="gallery-container">
+      <motion.div className="gallery" ref={gallery}>
+        {images}
+      </motion.div>
     </div>
   );
 }
@@ -380,6 +467,26 @@ const PAGE_QUERY = `#graphql
       body
       coming_soon:metafield(key: "coming_soon", namespace: "custom"){
         value
+      }
+      hide_page_header:metafield(key: "hide_page_header", namespace: "custom"){
+        value
+      }
+      gallery_images: metafield(key: "gallery_images", namespace: "custom") {
+        references(first: 25) {
+          nodes {
+            ... on MediaImage {
+              id
+              __typename
+              image {
+                url
+                height
+                id
+                width
+                altText
+              }
+            }
+          }
+        }
       }
       faq:metafield(key: "faqs", namespace: "custom") {
         references(first: 10) {

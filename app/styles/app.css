@@ -1353,6 +1353,35 @@ aside#submenu .header-menu-item:hover {
 .page .section-text-container ol {
   margin-block: 1rem;
 }
+.gallery-container {
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+  margin-left: -10vw;
+}
+.gallery {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  height: calc(100vh - (3 * var(--header-height)));
+  transition: transform 750ms ease-in-out;
+}
+.gallery-image {
+  position: relative;
+  display: flex;
+}
+.gallery-image > img {
+  height: 100%;
+  width: auto !important;
+}
+.gallery-image > button {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
 
 /*
 * --------------------------------------------------
@@ -1599,6 +1628,26 @@ MEDIA QUIERIES
     display: block;
   }
   .image-and-blurb > div:has(.alt-mobile-photo) > img:first-of-type {
+    display: none;
+  }
+
+  .gallery-container {
+    width: 100%;
+    margin-left: auto;
+  }
+  .gallery {
+    flex-direction: column;
+    height: auto;
+    transform: translateX(0) !important;
+  }
+  .gallery-image {
+    opacity: 1 !important;
+  }
+  .gallery-image > img {
+    height: auto;
+    width: 100%;
+  }
+  .gallery-image > button {
     display: none;
   }
 
