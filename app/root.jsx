@@ -14,6 +14,7 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {COUNTRIES_QUERY, FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
+import {sanityClient} from './sanity/SanityClient';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -143,11 +144,17 @@ function loadDeferredData({context}) {
       console.error(error);
       return null;
     });
+
+  const sizeGuide = sanityClient
+    .fetch("*[_type == 'sizeGuide']{xs,s,m,l,xl}")
+    .then((response) => response);
+
   return {
     cart: cart.get(),
     isLoggedIn: customerAccount.isLoggedIn(),
     footer,
     availableCountries,
+    sizeGuide,
   };
 }
 

@@ -1226,6 +1226,34 @@ aside#submenu .header-menu-item:hover {
   font-size: 13px;
   margin-bottom: 2rem;
 }
+
+.size-guide-table,
+.size-guide-table th,
+.size-guide-table td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.size-guide-table {
+  text-align: center;
+  font-size: 13px;
+  margin-bottom: 3rem;
+}
+.size-guide-table th,
+.size-guide-table tr > td:first-of-type {
+  background: var(--color-stroke-color);
+}
+.size-guide-table th {
+  width: 125px;
+  height: 36px;
+}
+.size-guide-table th:first-of-type {
+  width: auto;
+  height: 36px;
+}
+.size-guide-table td:first-of-type {
+  width: 56px;
+  height: 36px;
+}
 /*
 * --------------------------------------------------
 * routes/pages.$handle.jsx

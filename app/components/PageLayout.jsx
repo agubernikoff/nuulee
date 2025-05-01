@@ -25,6 +25,7 @@ export function PageLayout({
   publicStoreDomain,
   availableCountries,
   selectedLocale,
+  sizeGuide,
 }) {
   return (
     <Aside.Provider>
@@ -41,7 +42,7 @@ export function PageLayout({
         availableCountries={availableCountries}
         selectedLocale={selectedLocale}
       />
-      <SizeGuideAside />
+      <SizeGuideAside sizeGuide={sizeGuide} />
       {header && (
         <Header
           header={header}
@@ -476,8 +477,54 @@ function MobileMenuAside({header, publicStoreDomain, availableCountries}) {
   );
 }
 
-function SizeGuideAside() {
-  return <Aside type="size-guide"></Aside>;
+function SizeGuideAside({sizeGuide}) {
+  console.log(sizeGuide);
+  return (
+    <Aside type="size-guide" heading="size guide">
+      <Suspense fallback={<div>Loading...</div>}>
+        <Await resolve={sizeGuide}>
+          {(sizeGuide) => {
+            const sizeOrder = ['xs', 's', 'm', 'l', 'xl'];
+
+            return (
+              <>
+                <table className="size-guide-table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>chest</th>
+                      <th>waist</th>
+                      <th>hip</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sizeOrder.map((size) => (
+                      <tr key={size}>
+                        <td>{size}</td>
+                        <td>{sizeGuide[0][size]?.chest}</td>
+                        <td>{sizeGuide[0][size]?.waist}</td>
+                        <td>{sizeGuide[0][size]?.hip}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p>
+                  For inquiries around sizing, please email us at:
+                  <br />{' '}
+                  <a
+                    href="mailto:contact@nuulee.nyc"
+                    style={{textDecoration: 'underline'}}
+                  >
+                    contact@nuulee.nyc
+                  </a>
+                </p>
+              </>
+            );
+          }}
+        </Await>
+      </Suspense>
+    </Aside>
+  );
 }
 
 /**
