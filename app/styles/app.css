@@ -1348,13 +1348,18 @@ aside#submenu .header-menu-item:hover {
 
 .title-and-blurb,
 .image-and-blurb,
-.page .section-container {
-  margin-bottom: 3rem !important;
+.page .section-container,
+.translations {
+  margin-bottom: 200px !important;
 }
 .page > main > div:last-of-type {
   margin-bottom: auto;
 }
-.title-and-blurb {
+.title-and-blurb:has(+ .translations) {
+  margin-bottom: 1rem !important;
+}
+.title-and-blurb,
+.translations {
   width: 45%;
 }
 .image-and-blurb > * {
@@ -1385,6 +1390,22 @@ aside#submenu .header-menu-item:hover {
 
 .page .section-text-container ol {
   margin-block: 1rem;
+}
+.translation {
+  border: 1px solid var(--color-stroke-color);
+  margin-bottom: 1rem;
+  padding-inline: 1rem;
+  padding-top: 0.5rem;
+}
+.translations .translation:last-of-type {
+  margin-bottom: 0;
+}
+.translation h4 > * {
+  font-weight: normal;
+  font-size: 17px !important;
+}
+.translation h4 > span {
+  opacity: 0.5;
 }
 .gallery-container {
   width: 100vw;

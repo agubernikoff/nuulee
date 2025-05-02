@@ -280,7 +280,7 @@ function Triangle() {
 
 function Sections({sections}) {
   const mapped = sections.map((section) => {
-    console.log(section.type);
+    // console.log(section.type);
     switch (section.type) {
       case 'title_and_blurb':
         return <TitleAndBlurb section={section} key={section.id} />;
@@ -288,6 +288,8 @@ function Sections({sections}) {
         return <ImageAndBlurb section={section} key={section.id} />;
       case 'offset_images_and_blurb':
         return <OffsetImagesAndBlurb section={section} key={section.id} />;
+      case 'translations':
+        return <Translations section={section} key={section.id} />;
     }
   });
   return <main>{mapped}</main>;
@@ -314,7 +316,6 @@ function TitleAndBlurb({section}) {
 }
 
 function ImageAndBlurb({section}) {
-  console.log(section);
   const photo = section.fields.find((f) => f.key === 'photo');
   const photoWidth = section.fields.find((f) => f.key === 'photo_width');
   const altMobilePhoto = section.fields.find(
@@ -401,6 +402,15 @@ function OffsetImagesAndBlurb({section}) {
   );
 }
 
+function Translations({section}) {
+  const mapped = section.fields[0]?.references?.nodes?.map((t) => (
+    <div key={t.id} className="translation">
+      {mapRichText(JSON.parse(t.fields[0].value), 'translations')}
+    </div>
+  ));
+  return <div className="translations">{mapped}</div>;
+}
+
 function mapRichText(richTextObject, index = 0) {
   // console.log(index, richTextObject);
   switch (richTextObject.type) {
@@ -419,6 +429,14 @@ function mapRichText(richTextObject, index = 0) {
             mapRichText(child, `${index}-${childIndex}`),
           )}
         </p>
+      );
+    case 'heading':
+      return (
+        <h4 key={index} style={{whiteSpace: 'pre-line'}}>
+          {richTextObject.children.map((child, childIndex) =>
+            mapRichText(child, `${index}-${childIndex}`),
+          )}
+        </h4>
       );
     case 'text':
       if (richTextObject.bold)
