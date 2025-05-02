@@ -853,9 +853,7 @@ aside#submenu .header-menu-item:hover {
   gap: 10%;
   margin-bottom: 8rem;
 }
-.section-container:nth-of-type(even) {
-  flex-direction: row-reverse;
-}
+
 .section-container:last-of-type {
   margin-bottom: 0;
 }
