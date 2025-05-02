@@ -96,6 +96,7 @@ function loadDeferredData({context}) {
 export default function Collection() {
   /** @type {LoaderReturnData} */
   const {collection, handle, tag} = useLoaderData();
+  console.log(collection);
   return (
     <div className="collection">
       {!tag ? (
@@ -111,7 +112,7 @@ export default function Collection() {
       ) : null}
       <Filter
         tag={tag}
-        handle={handle}
+        handle={collection.title.toLowerCase()}
         filters={collection?.products?.filters}
       />
       <motion.div layout="position">
