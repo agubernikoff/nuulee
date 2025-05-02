@@ -853,6 +853,9 @@ aside#submenu .header-menu-item:hover {
   gap: 10%;
   margin-bottom: 8rem;
 }
+.section-container:nth-of-type(even) {
+  flex-direction: row-reverse;
+}
 .section-container:last-of-type {
   margin-bottom: 0;
 }
@@ -1348,7 +1351,7 @@ aside#submenu .header-menu-item:hover {
 .title-and-blurb,
 .image-and-blurb,
 .page .section-container {
-  margin-bottom: 16rem;
+  margin-bottom: 3rem !important;
 }
 .page > main > div:last-of-type {
   margin-bottom: auto;
