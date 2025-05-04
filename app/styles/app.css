@@ -583,13 +583,17 @@ aside#submenu .header-menu-item:hover {
   width: 100vw;
   padding: 1rem 1.3rem;
   background: white;
+  overflow: scroll;
+  box-sizing: border-box;
 }
 .footer-header-submenu-nav {
   display: flex;
   grid-gap: 1rem;
+  width: fit-content;
 }
 .footer-header-submenu-nav > .header-menu-item {
   position: relative;
+  padding: 0;
 }
 .footer-header-submenu-nav > .header-menu-item > p {
   min-width: max-content;
@@ -603,6 +607,8 @@ aside#submenu .header-menu-item:hover {
   content: attr(data-text);
   font-family: 'medium'; /* Same as the active state */
   visibility: hidden;
+  font-size: 13px;
+  text-wrap: nowrap;
 }
 .footer-header-submenu-nav > .header-menu-item:hover {
   text-decoration: none;
@@ -1740,6 +1746,9 @@ MEDIA QUIERIES
   }
   .footer-header-submenu-nav > .header-menu-item:first-of-type {
     padding-left: 0;
+  }
+  .footer-header-submenu-nav > .header-menu-item:last-of-type {
+    padding-right: 0;
   }
   .coming-soon-container {
     margin-top: 0 !important;
