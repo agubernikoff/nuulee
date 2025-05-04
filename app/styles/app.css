@@ -679,7 +679,7 @@ aside#submenu .header-menu-item:hover {
   bottom: 0;
   padding-top: 0.75rem;
   position: absolute;
-  width: calc(var(--aside-width) - 40px);
+
   margin-bottom: 1rem;
 }
 
@@ -1522,6 +1522,9 @@ MEDIA QUIERIES
   .header-image {
     display: none;
   }
+  .cart-summary-aside {
+    width: calc(var(--aside-width) - 40px);
+  }
 }
 @media (max-width: 499px) {
   :root {
@@ -1776,6 +1779,9 @@ MEDIA QUIERIES
     display: none;
   }
 
+  #cart {
+    height: calc(100% - var(--header-height));
+  }
   aside {
     min-width: 100%;
     max-width: 100%;
