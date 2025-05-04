@@ -22,6 +22,8 @@ export function CartLineItem({layout, line}) {
   const {id: lineId, quantity, isOptimistic} = line;
   const prevQuantity = Number(Math.max(0, quantity - 1).toFixed(0));
   const nextQuantity = Number((quantity + 1).toFixed(0));
+
+  console.log(line);
   return (
     <li key={id} className="cart-line">
       {image && (
@@ -29,9 +31,9 @@ export function CartLineItem({layout, line}) {
           alt={title}
           aspectRatio="1/1.5"
           data={image}
-          height={100}
+          height={300}
           loading="lazy"
-          width={100}
+          width={300}
         />
       )}
 
@@ -48,7 +50,7 @@ export function CartLineItem({layout, line}) {
           >
             <p>{product.title}</p>
           </Link>
-          <ProductPrice price={line?.cost?.totalAmount} />
+          <ProductPrice price={line?.cost?.amountPerQuantity} />
           <div className="cart-middle-details">
             {selectedOptions.map((option) => (
               <p key={option.name}>

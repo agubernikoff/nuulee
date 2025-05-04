@@ -84,7 +84,7 @@ export function Aside({children, heading, type, id, closeOnMouseLeave}) {
                 x2="10"
                 y2="10"
                 stroke="black"
-                strokeWidthidth="1"
+                strokeWidth="1"
               />
               <line
                 x1="-3"
@@ -92,7 +92,7 @@ export function Aside({children, heading, type, id, closeOnMouseLeave}) {
                 x2="10"
                 y2="-2"
                 stroke="black"
-                strokeWidthidth="1"
+                strokeWidth="1"
               />
             </svg>
           </button>
