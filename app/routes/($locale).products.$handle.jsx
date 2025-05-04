@@ -170,6 +170,10 @@ export default function Product() {
           <ProductForm
             productOptions={productOptions}
             selectedVariant={selectedVariant}
+            hideSizeGuide={
+              product.tags?.includes('accessories') ||
+              product.tags?.includes('living')
+            }
           />
           <div className="divider" />
           <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
@@ -362,7 +366,7 @@ const PRODUCT_FRAGMENT = `#graphql
         }
       }
     }
-    
+    tags
     images(first: 10) {
       edges {
         node {

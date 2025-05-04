@@ -10,7 +10,7 @@ import {AnimatePresence, motion} from 'motion/react';
  *   selectedVariant: ProductFragment['selectedOrFirstAvailableVariant'];
  * }}
  */
-export function ProductForm({productOptions, selectedVariant}) {
+export function ProductForm({productOptions, selectedVariant, hideSizeGuide}) {
   const navigate = useNavigate();
   const {open} = useAside();
   const location = useLocation();
@@ -85,7 +85,7 @@ export function ProductForm({productOptions, selectedVariant}) {
                   </motion.span>
                 </AnimatePresence>
               </p>
-              {option.name === 'Size' ? (
+              {option.name === 'Size' && !hideSizeGuide ? (
                 <button onClick={() => open('size-guide')}>size guide</button>
               ) : null}
             </div>
