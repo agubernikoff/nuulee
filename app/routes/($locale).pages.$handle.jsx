@@ -355,6 +355,7 @@ function ImageAndBlurb({section}) {
 }
 
 function OffsetImagesAndBlurb({section}) {
+  console.log(section);
   const images = section.fields
     .find((f) => f.type === 'list.metaobject_reference')
     .references.nodes.map((node) => {
@@ -371,7 +372,14 @@ function OffsetImagesAndBlurb({section}) {
     .sort((a, b) => (b.isPrimary ? 1 : -1));
 
   return (
-    <div className="section-container">
+    <div
+      className="section-container"
+      style={
+        section?.fields?.find((f) => f.type === 'boolean')?.value
+          ? {flexDirection: 'row-reverse'}
+          : null
+      }
+    >
       <div className="section-text-container">
         {mapRichText(
           JSON.parse(
