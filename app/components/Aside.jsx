@@ -73,26 +73,26 @@ export function Aside({children, heading, type, id, closeOnMouseLeave}) {
           )}
           <button className="close reset" onClick={close} aria-label="Close">
             <svg
-              width="10"
-              height="11"
-              viewBox="0 0 10 11"
+              width="8.9"
+              height="7.7"
+              viewBox="0 0 8.9 7.7"
               xmlns="http://www.w3.org/2000/svg"
             >
               <line
-                x1="-2.5"
+                x1="-3"
                 y1="-4"
                 x2="10"
-                y2="11.8"
+                y2="10"
                 stroke="black"
-                stroke-width="1"
+                strokeWidthidth="1"
               />
               <line
-                x1="-.2"
+                x1="-3"
                 y1="12"
                 x2="10"
-                y2="-.8"
+                y2="-2"
                 stroke="black"
-                stroke-width="1"
+                strokeWidthidth="1"
               />
             </svg>
           </button>
