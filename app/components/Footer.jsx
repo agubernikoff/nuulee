@@ -112,9 +112,10 @@ export function FooterMenu({menu, publicStoreDomain}) {
 
       <div className="footer-info">
         <p className="footer-heading">
-          © nüülee new york 2025, all rights reserved / site credit
+          © nüülee new york 2025, all rights reserved /{' '}
+          <a href="https://www.swallstudios.com">site credit</a>
         </p>
-        <p>
+        <p style={{maxWidth: '342px'}}>
           sustainability is at the heart of what we do. we prioritize{' '}
           <a href="/pages/sustainability" className="footer-link-underline">
             ethical practices

@@ -566,6 +566,10 @@ aside#submenu .header-menu-item:hover {
   color: rgb(177, 177, 177);
   margin-bottom: 0.25rem;
 }
+.footer-heading > a {
+  color: inherit;
+  cursor: pointer;
+}
 
 .footer-link-underline {
   text-decoration: underline;
