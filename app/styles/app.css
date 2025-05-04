@@ -368,6 +368,9 @@ input[type='checkbox']:checked {
 .country-option:hover {
   background: var(--color-stroke-color);
 }
+.country-option:first-of-type {
+  font-family: 'medium' !important;
+}
 
 .close-dropdown {
   border: none;
