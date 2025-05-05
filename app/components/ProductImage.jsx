@@ -10,7 +10,12 @@ export function ProductImage({image}) {
     return <div className="product-image" />;
   }
   return (
-    <div className="product-image">
+    <div
+      className="product-image"
+      style={{
+        background: `center / cover no-repeat url("${image.url}&width=100")`,
+      }}
+    >
       <Image
         alt={image.altText || 'Product Image'}
         // aspectRatio="1/1"

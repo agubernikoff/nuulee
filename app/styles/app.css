@@ -1100,6 +1100,7 @@ aside#submenu .header-menu-item:hover {
   display: flex;
   flex-direction: column;
   margin-top: var(--main-margin-top);
+  min-width: 50vw;
 }
 .product-images img {
   height: auto;
