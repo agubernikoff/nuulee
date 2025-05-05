@@ -1785,6 +1785,9 @@ MEDIA QUIERIES
   .cart-summary-aside {
     width: 89%;
   }
+  .cart-details > div > ul {
+    margin-bottom: 4rem;
+  }
   aside {
     min-width: 100%;
     max-width: 100%;
