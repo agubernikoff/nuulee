@@ -14,6 +14,8 @@ import {SearchFormPredictive} from './SearchFormPredictive';
  *   children?: React.ReactNode;
  *   type: AsideType;
  *   heading: React.ReactNode;
+ *   id?: string;
+ *   closeOnMouseLeave?: boolean;
  * }}
  */
 export function Aside({children, heading, type, id, closeOnMouseLeave}) {
@@ -34,6 +36,7 @@ export function Aside({children, heading, type, id, closeOnMouseLeave}) {
         {signal: abortController.signal},
       );
     }
+
     return () => abortController.abort();
   }, [close, expanded]);
 
@@ -108,6 +111,30 @@ const AsideContext = createContext(null);
 Aside.Provider = function AsideProvider({children}) {
   const [type, setType] = useState('closed');
   const [subType, setSubType] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile screen
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 500px)');
+    const handleChange = (e) => setIsMobile(e.matches);
+
+    handleChange(mediaQuery);
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  // Scroll lock on mobile when aside is open
+  useEffect(() => {
+    if (isMobile && type !== 'closed') {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  }, [type, isMobile]);
 
   return (
     <AsideContext.Provider
@@ -118,7 +145,9 @@ Aside.Provider = function AsideProvider({children}) {
           setType(type);
           setSubType(subType);
         },
-        close: () => setType('closed'),
+        close: () => {
+          setType('closed');
+        },
       }}
     >
       {children}
@@ -138,7 +167,7 @@ export function useAside() {
 /**
  * @typedef {{
  *   type: AsideType;
- *   open: (mode: AsideType) => void;
+ *   open: (type: AsideType, subType?: string) => void;
  *   close: () => void;
  * }} AsideContextValue
  */

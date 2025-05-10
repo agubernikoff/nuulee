@@ -1831,4 +1831,9 @@ MEDIA QUIERIES
   .route-error > h2 {
     font-size: 200px;
   }
+  body.no-scroll {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
 }
