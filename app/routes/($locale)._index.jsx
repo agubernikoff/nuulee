@@ -75,11 +75,11 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
-  console.log(data.sanityData);
+
   return (
     <div className="home">
       <Hero data={data.sanityData.hero} />
-      <RecommendedProducts products={data.recommendedProducts} />
+      <RecommendedProducts products={data.featuredCollection} />
       <CollectionLinks
         collections={[data.womenCollection, data.menCollection]}
       />
@@ -91,7 +91,6 @@ export default function Homepage() {
 }
 
 function Hero({data}) {
-  console.log(data);
   const media = data.mediaItems
     .sort((a, b) => (b.isPrimary ? 1 : -1))
     .map((mi) => {
