@@ -40,7 +40,7 @@ async function loadCriticalData({context}) {
 
   const homePage = await sanityClient
     .fetch(
-      "*[_type == 'home'][0]{...,hero{...,mediaItems[]{...,video{...,asset->{url}},image{...,asset->{url},'dimensions': asset->metadata.dimensions}}},sections[]{...,images[]{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}}}}",
+      "*[_type == 'home'][0]{...,hero{...,mediaItems[]{...,video{...,asset->{url}},image{...,asset->{url},'dimensions': asset->metadata.dimensions}}},shopMensImage{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}},shopWomensImage{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}},sections[]{...,images[]{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}}}}",
     )
     .then((response) => response);
 
@@ -75,13 +75,15 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
-
+  console.log(data);
   return (
     <div className="home">
       <Hero data={data.sanityData.hero} />
       <RecommendedProducts products={data.featuredCollection} />
       <CollectionLinks
         collections={[data.womenCollection, data.menCollection]}
+        shopMenImage={data.sanityData.shopMensImage}
+        shopWomenImage={data.sanityData.shopWomensImage}
       />
       {data.sanityData.sections.map((section) => (
         <Section section={section} key={section._key} />
@@ -169,7 +171,8 @@ function RecommendedProducts({products}) {
   );
 }
 
-function CollectionLinks({collections}) {
+function CollectionLinks({collections, shopMenImage, shopWomenImage}) {
+  console.log(shopMenImage, shopWomenImage);
   return (
     <div className="collection-links-container">
       {collections.map((col) => (
@@ -178,12 +181,26 @@ function CollectionLinks({collections}) {
           prefetch="intent"
           to={`/collections/${col.handle}`}
         >
-          <Image
-            alt={col.image.altText || `shop ${col.handle}`}
-            aspectRatio="361/482"
-            data={col.image}
-            sizes="(min-width: 45em) 400px, 100vw"
-          />
+          <div style={{aspectRatio: '361/482'}}>
+            <img
+              altText={
+                col.handle === 'men'
+                  ? shopMenImage.alt
+                  : col.handle === 'women'
+                  ? shopWomenImage.alt
+                  : null || `shop ${col.handle}`
+              }
+              src={
+                col.handle === 'men'
+                  ? shopMenImage.image.asset.url
+                  : col.handle === 'women'
+                  ? shopWomenImage.image.asset.url
+                  : null
+              }
+              style={{width: '100%', height: '100%', objectFit: 'cover'}}
+              sizes="(min-width: 45em) 400px, 100vw"
+            />
+          </div>
           <p>{`shop ${col.handle}`}</p>
         </NavLink>
       ))}
