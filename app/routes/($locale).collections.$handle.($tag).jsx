@@ -1,5 +1,10 @@
 import {redirect} from '@shopify/remix-oxygen';
-import {useLoaderData, Link, useSearchParams} from '@remix-run/react';
+import {
+  useLoaderData,
+  Link,
+  useSearchParams,
+  useLocation,
+} from '@remix-run/react';
 import {
   getPaginationVariables,
   Image,
@@ -413,8 +418,23 @@ function FilterInput({
   isChecked,
   removeFilter,
 }) {
+  const [hide, setHide] = useState(false);
+  const {pathname} = useLocation();
+  useEffect(() => {
+    setHide(count === 0);
+  }, [pathname]);
+
   return (
-    <div style={count === 0 ? {opacity: '33%'} : null}>
+    <div
+      style={
+        count === 0
+          ? {
+              opacity: '33%',
+              display: hide ? 'none' : 'block',
+            }
+          : null
+      }
+    >
       <input
         type="checkbox"
         id={label}
