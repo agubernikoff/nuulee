@@ -340,7 +340,7 @@ function ImageAndBlurb({section}) {
             aspectRatio={`${altMobilePhoto.reference.image.width}/${altMobilePhoto.reference.image.height}`}
             data={altMobilePhoto.reference.image}
             loading={'eager'}
-            sizes="100vw"
+            sizes="500px"
             className="alt-mobile-photo"
           />
         ) : null}

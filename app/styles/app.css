@@ -1364,7 +1364,7 @@ aside#submenu .header-menu-item:hover {
 .image-and-blurb,
 .page .section-container,
 .translations {
-  margin-bottom: 200px !important;
+  margin-bottom: 200px;
 }
 .page > main > div:last-of-type {
   margin-bottom: auto;
@@ -1388,6 +1388,9 @@ aside#submenu .header-menu-item:hover {
   flex-direction: column;
   justify-content: space-between;
   gap: 2rem;
+}
+.image-and-blurb:has(+ .image-and-blurb) {
+  margin-bottom: 2rem;
 }
 .image-and-blurb img,
 .page .section-container img {
