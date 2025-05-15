@@ -1892,9 +1892,16 @@ MEDIA QUIERIES
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100dvh; /* handles mobile browser chrome */
+    height: 100dvh;
     overflow: hidden;
     z-index: 9999;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .comingsoon::-webkit-scrollbar {
+    display: none;
   }
 
   .comingsoon video {
