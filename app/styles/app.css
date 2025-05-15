@@ -1582,6 +1582,9 @@ MEDIA QUIERIES
     --grid-item-width: 150px;
     --main-margin-top: 20px;
   }
+  html {
+    max-height: 100dvh !important;
+  }
   body > main {
     margin: 0 1.3rem 4rem 1.3rem;
     min-height: calc(100vh - var(--header-height) - 1.3rem);
@@ -1840,6 +1843,10 @@ MEDIA QUIERIES
   .cart-details > div > ul {
     margin-bottom: 4rem;
   }
+  .cart-main {
+    height: calc(100dvh - var(--header-height));
+    max-height: calc(100dvh - var(--cart-aside-summary-height));
+  }
   aside {
     min-width: 100%;
     max-width: 100%;
@@ -1901,7 +1908,7 @@ MEDIA QUIERIES
   }
 
   .comingsoon::-webkit-scrollbar {
-    display: none;
+    display: none !important;
   }
 
   .comingsoon video {
