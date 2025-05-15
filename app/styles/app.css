@@ -1888,29 +1888,29 @@ MEDIA QUIERIES
     width: 100%;
   }
   .comingsoon {
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
+    height: 100vh !important;
+    overflow: hidden !important;
+    position: relative !important;
   }
 
   @supports (height: 100dvh) {
     .comingsoon {
-      height: 100dvh;
+      height: 100dvh !important;
     }
   }
 
   .comingsoon video {
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    object-fit: cover !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
   }
 
   @supports (height: 100dvh) {
     .comingsoon video {
-      height: 100dvh;
+      height: 100dvh !important;
     }
   }
 }
