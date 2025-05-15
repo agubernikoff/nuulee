@@ -1887,11 +1887,22 @@ MEDIA QUIERIES
     position: fixed;
     width: 100%;
   }
-  .comingsoon {
-    overflow: hidden !important;
-    height: 100vh !important;
+  .coming-soon-container {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 1rem;
   }
-  .comingsoon > video {
-    height: 100% !important;
+
+  @supports (height: 100dvh) {
+    .coming-soon-container {
+      height: 100dvh;
+    }
   }
 }
