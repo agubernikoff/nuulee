@@ -1876,4 +1876,8 @@ MEDIA QUIERIES
     position: fixed;
     width: 100%;
   }
+  .comingsoon {
+    overflow: hidden !important;
+    height: 100vh !important;
+  }
 }
