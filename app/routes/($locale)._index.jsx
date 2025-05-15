@@ -4,12 +4,17 @@ import {Image, Money} from '@shopify/hydrogen';
 import ProductGridItem from '~/components/ProductGridItem';
 import {sanityClient} from '~/sanity/SanityClient';
 import NavLink from '~/components/NavLink';
+import mobileIcon from '~/assets/NL_Social-Sharing.jpg';
 
 /**
  * @type {MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [
+    {title: 'nüülee | Home'},
+    {name: 'og:title', property: 'nüülee | Home'},
+    {property: 'og:image', content: mobileIcon},
+  ];
 };
 
 /**

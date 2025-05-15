@@ -8,7 +8,7 @@ import ComingSoon from '~/components/ComingSoon';
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.page.title ?? ''}`}];
+  return [{title: `nüülee | ${data?.page.title ?? ''}`}];
 };
 
 /**

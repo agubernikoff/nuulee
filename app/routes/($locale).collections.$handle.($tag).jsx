@@ -21,7 +21,7 @@ import {useState, useEffect, useRef} from 'react';
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
+  return [{title: `nüülee | ${data?.collection.title ?? ''} Collection`}];
 };
 
 /**

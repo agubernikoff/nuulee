@@ -9,7 +9,7 @@ import {
   ScrollRestoration,
   isRouteErrorResponse,
 } from '@remix-run/react';
-import favicon from '~/assets/favicon.svg';
+import favicon from '~/assets/favicon.png';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import {PageLayout} from '~/components/PageLayout';
@@ -115,7 +115,8 @@ async function loadCriticalData({context}) {
 
   return {
     header,
-    comingSoon: process.env.NODE_ENV === 'development' ? false : comingSoon,
+    comingSoon:
+      process.env.NODE_ENV === 'development' ? comingSoon : comingSoon,
   };
 }
 
@@ -178,6 +179,10 @@ export function Layout({children}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta
+          name="og:description"
+          content="something beautiful is in motion. be the first to experience it."
+        />
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />
