@@ -1925,4 +1925,13 @@ MEDIA QUIERIES
     object-fit: cover;
     z-index: -1;
   }
+
+  .hide-scrollbar-comingsoon {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+  }
+
+  .hide-scrollbar-comingsoon::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 }

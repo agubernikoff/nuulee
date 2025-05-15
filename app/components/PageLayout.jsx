@@ -77,6 +77,24 @@ function ComingSoon({video}) {
   const [error, setError] = useState('');
   const [width, setWidth] = useState('297px');
 
+  useEffect(() => {
+    function toggleNoScrollBar() {
+      if (window.innerWidth < 500) {
+        document.documentElement.classList.add('hide-scrollbar-comingsoon');
+      } else {
+        document.documentElement.classList.remove('hide-scrollbar-comingsoon');
+      }
+    }
+
+    toggleNoScrollBar();
+
+    window.addEventListener('resize', toggleNoScrollBar);
+    return () => {
+      window.removeEventListener('resize', toggleNoScrollBar);
+      document.documentElement.classList.remove('hide-scrollbar-comingsoon');
+    };
+  }, []);
+
   function subscribe() {
     if (!email) {
       setError('please enter a valid email');
