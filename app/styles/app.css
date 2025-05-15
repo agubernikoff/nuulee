@@ -1891,4 +1891,7 @@ MEDIA QUIERIES
     overflow: hidden !important;
     height: 100vh !important;
   }
+  .comingsoon > video {
+    height: 100% !important;
+  }
 }
