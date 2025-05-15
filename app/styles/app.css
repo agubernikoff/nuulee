@@ -1907,8 +1907,13 @@ MEDIA QUIERIES
     -ms-overflow-style: none;
   }
 
-  .comingsoon::-webkit-scrollbar {
+  .comingsoon::-webkit-scrollbar,
+  .cart-main::-webkit-scrollbar {
     display: none !important;
+  }
+  .cart-main {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   .comingsoon video {
