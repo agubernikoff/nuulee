@@ -184,22 +184,26 @@ function ComingSoon({video}) {
             {text[1]}
           </motion.p>
           {width !== '230px' && (
-            <motion.div
+            <motion.form
               initial={{y: 0, opacity: 0}}
               animate={{y: 0, opacity: 1}}
               exit={{y: '100%', opacity: 0}}
               className="email-input-container"
               transition={{ease: 'easeInOut'}}
+              onSubmit={(e) => {
+                e.preventDefault();
+                subscribe();
+              }}
             >
               <input
                 placeholder="enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <button className="reset" onClick={subscribe}>
+              <button className="reset" type="submit">
                 join us →
               </button>
-            </motion.div>
+            </motion.form>
           )}
         </AnimatePresence>
         <AnimatePresence mode="popLayout">
