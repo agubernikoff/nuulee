@@ -115,7 +115,7 @@ async function loadCriticalData({context}) {
 
   return {
     header,
-    comingSoon: process.env.NODE_ENV === 'develoopment' ? false : comingSoon,
+    comingSoon: process.env.NODE_ENV === 'development' ? false : comingSoon,
   };
 }
 
