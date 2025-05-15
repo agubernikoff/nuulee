@@ -346,7 +346,7 @@ input[type='checkbox']:checked {
   color: white;
 }
 .comingsoon .email-input-container button:hover {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 .subscribe-subtext,
 .subscribe-subtext > a {
