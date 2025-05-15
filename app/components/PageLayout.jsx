@@ -154,7 +154,7 @@ function ComingSoon({video}) {
       >
         <source src={video.url} type="video/mp4" />
       </video>
-      <div
+      <motion.div
         style={{
           position: 'absolute',
           top: '50%',
@@ -168,10 +168,12 @@ function ComingSoon({video}) {
           textAlign: 'center',
           width: '297px',
         }}
+        initial={{y: '-50%', x: '-50%'}}
+        animate={{y: width !== '230px' ? '-50%' : '0', x: '-50%'}}
+        transition={{ease: 'easeInOut'}}
       >
         <AnimatePresence mode="popLayout">
           <motion.p
-            layout="position"
             style={{fontSize: '20px'}}
             transition={{ease: 'easeInOut'}}
             key={text[0]}
@@ -183,29 +185,30 @@ function ComingSoon({video}) {
             <br />
             {text[1]}
           </motion.p>
-          {width !== '230px' && (
-            <motion.form
-              initial={{y: 0, opacity: 0}}
-              animate={{y: 0, opacity: 1}}
-              exit={{y: '100%', opacity: 0}}
-              className="email-input-container"
-              transition={{ease: 'easeInOut'}}
-              onSubmit={(e) => {
-                e.preventDefault();
-                subscribe();
-              }}
-            >
-              <input
-                placeholder="enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <button className="reset" type="submit">
-                join us →
-              </button>
-            </motion.form>
-          )}
         </AnimatePresence>
+
+        <motion.form
+          initial={{opacity: 0}}
+          animate={{opacity: width !== '230px' ? 1 : 0}}
+          className="email-input-container"
+          transition={{ease: 'easeInOut'}}
+          onSubmit={(e) => {
+            e.preventDefault();
+            subscribe();
+          }}
+          style={{pointerEvents: width !== '230px' ? 'auto' : 'none'}}
+        >
+          <input
+            placeholder="enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autocomplete="off"
+            disable={width === '230px'}
+          />
+          <button className="reset" type="submit" disable={width === '230px'}>
+            join us →
+          </button>
+        </motion.form>
         <AnimatePresence mode="popLayout">
           <motion.p
             key={error}
@@ -214,7 +217,7 @@ function ComingSoon({video}) {
             exit={{opacity: 0}}
             style={{
               position: 'absolute',
-              bottom: 0,
+              bottom: '-2rem',
               width: '100%',
               textAlign: 'left',
             }}
@@ -222,7 +225,7 @@ function ComingSoon({video}) {
             {error}
           </motion.p>
         </AnimatePresence>
-      </div>
+      </motion.div>
     </div>
   );
 }
