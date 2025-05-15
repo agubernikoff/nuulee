@@ -298,6 +298,10 @@ input[type='checkbox']:checked {
   justify-content: space-between;
   margin-block: 2rem;
 }
+.comingsoon {
+  overflow: hidden;
+  height: 100vh;
+}
 .comingsoon .email-input-container {
   border-color: white;
   margin: 0;
@@ -316,6 +320,11 @@ input[type='checkbox']:checked {
   flex: 1;
   background: transparent;
   color: white;
+}
+.comingsoon .email-input-container button,
+.comingsoon .email-input-container input {
+  text-decoration: none;
+  margin-bottom: 0.5rem;
 }
 .email-input-container input:focus-visible {
   outline: none;
