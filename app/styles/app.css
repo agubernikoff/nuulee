@@ -298,6 +298,10 @@ input[type='checkbox']:checked {
   justify-content: space-between;
   margin-block: 2rem;
 }
+.comingsoon .email-input-container {
+  border-color: white;
+  margin: 0;
+}
 .email-input-container input {
   border: none;
   margin: 0;
@@ -307,6 +311,12 @@ input[type='checkbox']:checked {
   width: 100%;
   color: black;
 }
+.comingsoon .email-input-container input {
+  width: auto;
+  flex: 1;
+  background: transparent;
+  color: white;
+}
 .email-input-container input:focus-visible {
   outline: none;
 }
@@ -315,9 +325,16 @@ input[type='checkbox']:checked {
 .subscribe-subtext > a {
   color: var(--color-hover);
 }
+.comingsoon .email-input-container input::placeholder {
+  color: white;
+  opacity: 0.5;
+}
 .email-input-container button {
   padding: 0;
   color: black;
+}
+.comingsoon .email-input-container button {
+  color: white;
 }
 
 .subscribe-subtext,

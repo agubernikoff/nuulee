@@ -75,7 +75,6 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
-  console.log(data);
   return (
     <div className="home">
       <Hero data={data.sanityData.hero} />
@@ -172,7 +171,6 @@ function RecommendedProducts({products}) {
 }
 
 function CollectionLinks({collections, shopMenImage, shopWomenImage}) {
-  console.log(shopMenImage, shopWomenImage);
   return (
     <div className="collection-links-container">
       {collections.map((col) => (
@@ -183,7 +181,7 @@ function CollectionLinks({collections, shopMenImage, shopWomenImage}) {
         >
           <div style={{aspectRatio: '361/482'}}>
             <img
-              altText={
+              alt={
                 col.handle === 'men'
                   ? shopMenImage.alt
                   : col.handle === 'women'

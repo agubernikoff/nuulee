@@ -26,38 +26,202 @@ export function PageLayout({
   availableCountries,
   selectedLocale,
   sizeGuide,
+  comingSoon,
 }) {
+  console.log(comingSoon);
   return (
-    <Aside.Provider>
-      <CartAside cart={cart} />
-      <SearchAside />
-      <MobileMenuAside
-        header={header}
-        publicStoreDomain={publicStoreDomain}
-        availableCountries={availableCountries}
-      />
-      <SubMenuAside header={header} publicStoreDomain={publicStoreDomain} />
-      <SubscribeAside />
-      <LocationAside
-        availableCountries={availableCountries}
-        selectedLocale={selectedLocale}
-      />
-      <SizeGuideAside sizeGuide={sizeGuide} />
-      {header && (
-        <Header
-          header={header}
-          cart={cart}
-          isLoggedIn={isLoggedIn}
-          publicStoreDomain={publicStoreDomain}
-        />
+    <>
+      {comingSoon ? (
+        <ComingSoon video={comingSoon.comingSoonVideo} />
+      ) : (
+        <Aside.Provider>
+          <CartAside cart={cart} />
+          <SearchAside />
+          <MobileMenuAside
+            header={header}
+            publicStoreDomain={publicStoreDomain}
+            availableCountries={availableCountries}
+          />
+          <SubMenuAside header={header} publicStoreDomain={publicStoreDomain} />
+          <SubscribeAside />
+          <LocationAside
+            availableCountries={availableCountries}
+            selectedLocale={selectedLocale}
+          />
+          <SizeGuideAside sizeGuide={sizeGuide} />
+          {header && (
+            <Header
+              header={header}
+              cart={cart}
+              isLoggedIn={isLoggedIn}
+              publicStoreDomain={publicStoreDomain}
+            />
+          )}
+          <main>{children}</main>
+          <Footer
+            footer={footer}
+            header={header}
+            publicStoreDomain={publicStoreDomain}
+          />
+        </Aside.Provider>
       )}
-      <main>{children}</main>
-      <Footer
-        footer={footer}
-        header={header}
-        publicStoreDomain={publicStoreDomain}
-      />
-    </Aside.Provider>
+    </>
+  );
+}
+
+function ComingSoon({video}) {
+  const [email, setEmail] = useState('');
+  const [text, setText] = useState([
+    'something beautiful is in motion.',
+    'be the first to experience it. ',
+  ]);
+  const [error, setError] = useState('');
+  const [width, setWidth] = useState('297px');
+
+  function subscribe() {
+    if (!email) {
+      setError('please enter a valid email');
+      setTimeout(() => {
+        setError();
+      }, 1500);
+      return;
+    }
+
+    const payload = {
+      data: {
+        type: 'subscription',
+        attributes: {
+          profile: {
+            data: {
+              type: 'profile',
+              attributes: {
+                email: `${email}`,
+              },
+            },
+          },
+        },
+        relationships: {
+          list: {
+            data: {
+              type: 'list',
+              id: 'TZPHtP',
+            },
+          },
+        },
+      },
+    };
+
+    var requestOptions = {
+      mode: 'cors',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        revision: '2025-04-15',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    fetch(
+      'https://a.klaviyo.com/client/subscriptions/?company_id=UzgZSP',
+      requestOptions,
+    ).then((result) => {
+      console.log(result);
+      if (result.ok) {
+        setText(['thank you for signing up.', 'you’ll hear from us soon.']);
+        setWidth('230px');
+      } else {
+        result.json().then((data) => {
+          setError(data.errors[0].detail);
+          setTimeout(() => {
+            setError();
+          }, 1500);
+        });
+      }
+    });
+  }
+  return (
+    <div className="comingsoon">
+      <video
+        height={1150}
+        width={1100}
+        autoPlay
+        muted
+        loop
+        playsInline
+        style={{
+          width: '100vw',
+          height: '100vh',
+          objectFit: 'cover',
+        }}
+      >
+        <source src={video.url} type="video/mp4" />
+      </video>
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%,-50%)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: '30px',
+          flexDirection: 'column',
+          color: 'white',
+          textAlign: 'center',
+          width: '297px',
+        }}
+      >
+        <AnimatePresence mode="popLayout">
+          <motion.p
+            layout="position"
+            style={{fontSize: '20px'}}
+            transition={{ease: 'easeInOut'}}
+            key={text[0]}
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+          >
+            {text[0]}
+            <br />
+            {text[1]}
+          </motion.p>
+          {width !== '230px' && (
+            <motion.div
+              initial={{y: 0, opacity: 0}}
+              animate={{y: 0, opacity: 1}}
+              exit={{y: '100%', opacity: 0}}
+              className="email-input-container"
+              transition={{ease: 'easeInOut'}}
+            >
+              <input
+                placeholder="enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <button className="reset" onClick={subscribe}>
+                join us →
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence mode="popLayout">
+          <motion.p
+            key={error}
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              width: '100%',
+              textAlign: 'left',
+            }}
+          >
+            {error}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+    </div>
   );
 }
 
@@ -478,7 +642,6 @@ function MobileMenuAside({header, publicStoreDomain, availableCountries}) {
 }
 
 function SizeGuideAside({sizeGuide}) {
-  console.log(sizeGuide);
   return (
     <Aside type="size-guide" heading="size guide">
       <Suspense fallback={<div>Loading...</div>}>

@@ -109,7 +109,17 @@ async function loadCriticalData({context}) {
     // Add other queries here, so that they are loaded in parallel
   ]);
 
-  return {header};
+  console.log(process.env.NODE_ENV);
+
+  const comingSoon = await sanityClient
+    .fetch("*[_type == 'home'][0]{comingSoon,comingSoonVideo{...asset->{url}}}")
+    .then((response) => response);
+  console.log(comingSoon.comingSoonVideo);
+
+  return {
+    header,
+    comingSoon: process.env.NODE_ENV === 'development' ? false : comingSoon,
+  };
 }
 
 /**
