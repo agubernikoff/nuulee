@@ -28,7 +28,6 @@ export function PageLayout({
   sizeGuide,
   comingSoon,
 }) {
-  console.log(comingSoon);
   return (
     <>
       {comingSoon ? (
@@ -125,7 +124,6 @@ function ComingSoon({video}) {
       'https://a.klaviyo.com/client/subscriptions/?company_id=UzgZSP',
       requestOptions,
     ).then((result) => {
-      console.log(result);
       if (result.ok) {
         setText(['thank you for signing up.', 'you’ll hear from us soon.']);
         setWidth('230px');
