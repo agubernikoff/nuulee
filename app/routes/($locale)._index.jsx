@@ -11,8 +11,8 @@ import mobileIcon from '~/assets/NL_Social-Sharing.jpg';
  */
 export const meta = () => {
   return [
-    {title: 'nüülee | Home'},
-    {name: 'og:title', property: 'nüülee | Home'},
+    {title: 'nüülee'},
+    {name: 'og:title', property: 'nüülee'},
     {property: 'og:image', content: mobileIcon},
   ];
 };
