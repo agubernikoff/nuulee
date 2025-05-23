@@ -112,8 +112,10 @@ export function HeaderMenu({
             end
             key={item.id}
             onClick={(e) => {
-              if (item.items && item.items.length > 0) e.preventDefault();
-              else close();
+              if (item.items && item.items.length > 0) {
+                e.preventDefault();
+                if (viewport === 'mobile') open('mobile', item.title);
+              } else close();
             }}
             prefetch="intent"
             // style={activeLinkStyle}
@@ -121,7 +123,6 @@ export function HeaderMenu({
             onMouseEnter={() => {
               if (item.items && item.items.length > 0) {
                 if (viewport !== 'mobile') open('submenu', item.title);
-                else open('mobile', item.title);
               } else if (item.items && viewport !== 'mobile') close();
             }}
             onMouseLeave={() => {}}
