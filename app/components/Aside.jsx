@@ -99,12 +99,12 @@ export function Aside({children, heading, type, id, closeOnMouseLeave}) {
                 strokeWidth="1"
               />
             </svg>
-            <img
+            {/* <img
               className="header-image"
               style={{width: '30%'}}
               src={x}
               alt="Menu"
-            />
+            /> */}
           </button>
         </header>
         <main>{children}</main>

@@ -454,12 +454,12 @@ button.reset:hover:not(:has(> *)) {
 
 .header-menu-mobile-toggle {
   padding: 0;
-  @media (min-width: 1050px) {
+  @media (min-width: 1150px) {
     display: none;
   }
 }
 
-@media (min-width: 1050px) {
+@media (min-width: 1150px) {
   .header-image {
     display: none;
   }
@@ -537,7 +537,7 @@ aside#mobile .header-menu-item,
 .header-menu-desktop {
   display: none;
   grid-gap: 1rem;
-  @media (min-width: 1050px) {
+  @media (min-width: 1150px) {
     display: flex;
     grid-gap: 1rem;
   }
@@ -1588,7 +1588,7 @@ MEDIA QUIERIES
     width: calc(var(--aside-width) - 40px);
   }
 }
-@media (max-width: 1050px) and (min-width: 500px) {
+@media (max-width: 1150px) and (min-width: 500px) {
   aside#mobile {
     left: calc(-1 * var(--aside-width));
   }

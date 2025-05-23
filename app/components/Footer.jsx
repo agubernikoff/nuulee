@@ -35,9 +35,9 @@ export function FooterMenu({menu, publicStoreDomain}) {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     window
-      .matchMedia('(max-width:1050px)')
+      .matchMedia('(max-width:1150px)')
       .addEventListener('change', (e) => setIsMobile(e.matches));
-    if (window.matchMedia('(max-width:1050px)').matches) setIsMobile(true);
+    if (window.matchMedia('(max-width:1150px)').matches) setIsMobile(true);
   }, []);
 
   const {pathname} = useLocation();
