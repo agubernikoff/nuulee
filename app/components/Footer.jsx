@@ -117,9 +117,9 @@ export function FooterMenu({menu, publicStoreDomain}) {
         </p>
         <p style={{maxWidth: '342px'}}>
           sustainability is at the heart of what we do. we prioritize{' '}
-          <a href="/pages/sustainability" className="footer-link-underline">
+          <NavLink to="/pages/sustainability" className="footer-link-underline">
             ethical practices
-          </a>
+          </NavLink>
           , from responsibly sourcing our cashmere from nomadic herders to
           crafting timeless pieces designed to last.
         </p>
