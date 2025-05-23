@@ -110,74 +110,116 @@ export default function Page() {
 
 function Gallery({gallery_images}) {
   const gallery = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(
-    Math.floor(gallery_images.length / 2),
-  );
+  const transitionRef = useRef(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const tripledImages = [
+    ...gallery_images,
+    ...gallery_images,
+    ...gallery_images,
+  ];
+  const middleStart = gallery_images.length;
+  const [currentIndex, setCurrentIndex] = useState(middleStart);
 
+  // Safe window check for initial mobile detection
   useEffect(() => {
-    const element = gallery.current;
-    if (!element) return;
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      centerCurrentIndex();
-    });
-
-    resizeObserver.observe(element);
-
-    return () => resizeObserver.disconnect();
+    const handleResize = () => {
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth < 500);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  function centerCurrentIndex() {
-    const initialValue = 0;
-    const sumWithInitial = gallery_images
-      .slice(0, currentIndex)
-      .reduce((accumulator, img, i) => {
-        const imageWidth =
-          (img.image.width * gallery.current.offsetHeight) / img.image.height;
-
-        const width =
-          i === currentIndex - 1
-            ? (window.innerWidth - imageWidth) / -2
-            : imageWidth;
-        return accumulator + width;
-      }, initialValue);
-
-    gallery.current.style.transform = `translateX(calc(${-sumWithInitial}px - ${
-      currentIndex - 1
-    }rem))`;
-  }
+  // Resize observer to center image on desktop
   useEffect(() => {
-    centerCurrentIndex();
-  }, [currentIndex]);
+    if (isMobile) return;
+    const resizeObserver = new ResizeObserver(centerCurrentIndex);
+    if (gallery.current) resizeObserver.observe(gallery.current);
+    return () => resizeObserver.disconnect();
+  }, [isMobile]);
 
-  function handleClick(index) {
-    setCurrentIndex(index + 1);
+  useEffect(() => {
+    if (isMobile) return;
+
+    if (gallery.current) {
+      gallery.current.style.transition = transitionRef.current
+        ? 'transform 0.3s ease'
+        : 'none';
+    }
+
+    centerCurrentIndex();
+
+    // Reset index if on a clone edge
+    if (
+      currentIndex <= gallery_images.length - 1 ||
+      currentIndex >= tripledImages.length - gallery_images.length
+    ) {
+      transitionRef.current = false;
+      const normalizedIndex =
+        middleStart + (currentIndex % gallery_images.length);
+
+      setTimeout(() => {
+        setCurrentIndex(normalizedIndex);
+      }, 300);
+    } else {
+      transitionRef.current = true;
+    }
+  }, [currentIndex, isMobile]);
+
+  function centerCurrentIndex() {
+    if (!gallery.current || isMobile) return;
+
+    const children = gallery.current.children;
+    const target = children[currentIndex];
+    if (!target) return;
+
+    const galleryWidth = gallery.current.offsetWidth;
+    const targetWidth = target.offsetWidth;
+    const leftOffset = target.offsetLeft;
+    const centerOffset = leftOffset - (galleryWidth / 2 - targetWidth / 2);
+
+    gallery.current.style.transform = `translateX(${-centerOffset}px)`;
   }
 
-  const images = gallery_images.map((img, i) => (
+  function handleClick(e) {
+    if (isMobile) return;
+    const center = window.innerWidth / 2;
+    if (e.clientX < center) {
+      setCurrentIndex((prev) => prev - 1);
+    } else {
+      setCurrentIndex((prev) => prev + 1);
+    }
+  }
+
+  const images = (isMobile ? gallery_images : tripledImages).map((img, i) => (
     <motion.div
       className="gallery-image"
+      key={`${img.id}-${i}`}
       initial={{opacity: 0}}
-      animate={{opacity: i === currentIndex - 1 ? 1 : 0.1}}
-      key={img.id}
-      transition={{duration: 0.75}}
+      animate={{opacity: !isMobile && i === currentIndex ? 1 : 0.1}}
+      transition={{duration: 0.5}}
     >
       <Image
         data={img.image}
-        loading={'eager'}
+        loading="eager"
         sizes="100vw"
         alt={img.altText}
         aspectRatio={`${img.image.width} / ${img.image.height}`}
       />
-      <button onClick={() => handleClick(i)}></button>
     </motion.div>
   ));
 
   return (
-    <div className="gallery-container">
-      <motion.div className="gallery" ref={gallery}>
+    <div className="gallery-container" onClick={handleClick}>
+      <div
+        className="gallery"
+        ref={gallery}
+        style={{display: 'flex', willChange: 'transform'}}
+      >
         {images}
-      </motion.div>
+      </div>
     </div>
   );
 }
