@@ -35,9 +35,9 @@ export function FooterMenu({menu, publicStoreDomain}) {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     window
-      .matchMedia('(max-width:500px)')
+      .matchMedia('(max-width:1050px)')
       .addEventListener('change', (e) => setIsMobile(e.matches));
-    if (window.matchMedia('(max-width:500px)').matches) setIsMobile(true);
+    if (window.matchMedia('(max-width:1050px)').matches) setIsMobile(true);
   }, []);
 
   const {pathname} = useLocation();
@@ -152,7 +152,7 @@ function FooterColumn({title, links, publicStoreDomain, isMobile}) {
               if (link.title.toLowerCase() === 'subscribe') {
                 e.preventDefault();
                 if (!isMobile) open('subscribe');
-                else open('mobile', 'choose country');
+                else open('mobile', 'subscribe to our newsletter');
               }
             }}
           >

@@ -542,11 +542,6 @@ aside#mobile .header-menu-item,
     grid-gap: 1rem;
   }
 }
-@media (max-width: 1050px) {
-  .header-ctas {
-    display: none !important;
-  }
-}
 
 .header-menu-item {
   cursor: pointer;
@@ -1614,11 +1609,15 @@ MEDIA QUIERIES
     margin: 0;
     width: 4.5%;
   }
-  .close.reset > img {
+  /* .close.reset > img {
     width: 100% !important;
+    display: block !important;
   }
   .close.reset > svg {
     display: none !important;
+  } */
+  .header-ctas > button {
+    display: none;
   }
 }
 
