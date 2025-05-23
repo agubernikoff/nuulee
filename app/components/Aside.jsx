@@ -1,5 +1,6 @@
 import {createContext, useContext, useEffect, useState, useId} from 'react';
 import {SearchFormPredictive} from './SearchFormPredictive';
+import x from '../assets/x.png';
 
 /**
  * A side bar component with Overlay
@@ -76,8 +77,8 @@ export function Aside({children, heading, type, id, closeOnMouseLeave}) {
           )}
           <button className="close reset" onClick={close} aria-label="Close">
             <svg
-              width="8.9"
-              height="7.7"
+              width="14"
+              height="12"
               viewBox="0 0 8.9 7.7"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -98,6 +99,12 @@ export function Aside({children, heading, type, id, closeOnMouseLeave}) {
                 strokeWidth="1"
               />
             </svg>
+            <img
+              className="header-image"
+              style={{width: '30%'}}
+              src={x}
+              alt="Menu"
+            />
           </button>
         </header>
         <main>{children}</main>

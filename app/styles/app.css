@@ -71,6 +71,13 @@ aside {
   top: 0;
   transition: transform 200ms ease-in-out;
 }
+aside#cart header > button > img,
+aside#search header > button > img,
+aside#location header > button > img,
+aside#subscribe header > button > img {
+  display: none !important;
+}
+
 aside * {
   font-size: 13px;
 }
@@ -447,7 +454,13 @@ button.reset:hover:not(:has(> *)) {
 
 .header-menu-mobile-toggle {
   padding: 0;
-  @media (min-width: 48em) {
+  @media (min-width: 1050px) {
+    display: none;
+  }
+}
+
+@media (min-width: 1050px) {
+  .header-image {
     display: none;
   }
 }
@@ -524,9 +537,14 @@ aside#mobile .header-menu-item,
 .header-menu-desktop {
   display: none;
   grid-gap: 1rem;
-  @media (min-width: 45em) {
+  @media (min-width: 1050px) {
     display: flex;
     grid-gap: 1rem;
+  }
+}
+@media (max-width: 1050px) {
+  .header-ctas {
+    display: none !important;
   }
 }
 
@@ -1570,13 +1588,40 @@ MEDIA QUIERIES
   .you-may-also-like-container .product-item:last-of-type {
     display: none;
   }
-  .header-image {
-    display: none;
-  }
+
   .cart-summary-aside {
     width: calc(var(--aside-width) - 40px);
   }
 }
+@media (max-width: 1050px) and (min-width: 500px) {
+  aside#mobile {
+    left: calc(-1 * var(--aside-width));
+  }
+  .overlay.expanded aside#mobile {
+    transform: translateX(calc(var(--aside-width) * 1));
+  }
+  aside main {
+    margin-top: 0 !important;
+  }
+  aside#mobile .aside-header {
+    display: flex !important;
+  }
+  aside#mobile .aside-header > p {
+    display: none !important;
+  }
+  .close.reset {
+    padding: 0;
+    margin: 0;
+    width: 4.5%;
+  }
+  .close.reset > img {
+    width: 100% !important;
+  }
+  .close.reset > svg {
+    display: none !important;
+  }
+}
+
 @media (max-width: 499px) {
   :root {
     --grid-item-width: 150px;
