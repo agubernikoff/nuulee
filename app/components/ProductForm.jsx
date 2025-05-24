@@ -86,7 +86,12 @@ export function ProductForm({productOptions, selectedVariant, hideSizeGuide}) {
                 </AnimatePresence>
               </p>
               {option.name === 'Size' && !hideSizeGuide ? (
-                <button onClick={() => open('size-guide')}>size guide</button>
+                <button
+                  style={{fontSize: '11px !important'}}
+                  onClick={() => open('size-guide')}
+                >
+                  size guide
+                </button>
               ) : null}
             </div>
 

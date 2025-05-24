@@ -77,8 +77,8 @@ export function Aside({children, heading, type, id, closeOnMouseLeave}) {
           )}
           <button className="close reset" onClick={close} aria-label="Close">
             <svg
-              width="14"
-              height="12"
+              width="10"
+              height="8"
               viewBox="0 0 8.9 7.7"
               xmlns="http://www.w3.org/2000/svg"
             >

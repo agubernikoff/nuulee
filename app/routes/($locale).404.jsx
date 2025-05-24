@@ -6,7 +6,7 @@ export default function fourohfour() {
       <h2>404</h2>
       <div>
         <p>we're sorry, the page you're looking for doesn't exist</p>
-        <NavLink to="/" prefetch="intent">
+        <NavLink style={{textDecoration: 'underline'}} to="/" prefetch="intent">
           return home
         </NavLink>
       </div>

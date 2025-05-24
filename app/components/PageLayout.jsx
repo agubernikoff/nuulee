@@ -330,7 +330,8 @@ function SubscribeForm() {
       </div>
       <p className="subscribe-subtext">
         by subscribing to our newsletter, you agree to receive promotional
-        content from nüülee in accordance with our <a>privacy policy.</a>
+        content from nüülee in accordance with our{' '}
+        <a href="/pages/privacy-policy">privacy policy.</a>
       </p>
     </div>
   );

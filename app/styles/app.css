@@ -96,6 +96,9 @@ aside#subscribe {
   height: auto;
   border-top: 1px solid var(--color-dimmer);
 }
+aside#subscribe > header > p {
+  font-family: 'medium' !important;
+}
 aside#subscribe,
 aside#location {
   min-width: var(--aside-width-small);
@@ -594,7 +597,7 @@ aside#submenu .header-menu-item:hover {
 
 .footer-info {
   text-align: left;
-  max-width: 22%;
+  width: 330px;
 }
 .footer-info > p {
   font-family: 'regular';
@@ -622,7 +625,7 @@ aside#submenu .header-menu-item:hover {
   left: 0;
   border-block: 1px solid var(--color-dimmer);
   width: 100vw;
-  padding: 1rem 1.3rem;
+  padding: 1rem 1.7rem;
   background: white;
   overflow: scroll;
   box-sizing: border-box;
@@ -1004,6 +1007,9 @@ aside#submenu .header-menu-item:hover {
 .search {
   margin-top: var(--main-margin-top);
 }
+.search > p {
+  text-align: center;
+}
 .collection * {
   font-size: 13px;
 }
@@ -1063,6 +1069,12 @@ aside#submenu .header-menu-item:hover {
   width: 100%;
   flex-direction: row;
   gap: clamp(20px, calc(10vw - 3rem), 200px);
+}
+.filter-columns,
+.sort-column-container,
+.filter-column-container,
+.filter-column > div > label {
+  cursor: pointer !important;
 }
 .bold-filter-header {
   font-family: 'medium';
@@ -1190,7 +1202,7 @@ aside#submenu .header-menu-item:hover {
 .product-options-grid {
   display: flex;
   flex-wrap: wrap;
-  grid-gap: 1.5rem;
+  grid-gap: 23px;
   font-family: 'regular' !important;
   font-size: 13px !important;
   margin-top: 0.5rem;
@@ -1207,7 +1219,7 @@ aside#submenu .header-menu-item:hover {
   border: none;
 }
 .product-options-item:not(:has(div)) {
-  padding: 3px 5px 4px;
+  /* padding: 3px 5px 4px; */
 }
 
 .product-option-label-swatch {
