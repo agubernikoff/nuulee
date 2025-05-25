@@ -146,6 +146,20 @@ export default function Product() {
         ))
       : null;
 
+  const rawMetafields = Array.isArray(product.metafields)
+    ? product.metafields
+    : [];
+
+  const metafields = rawMetafields.filter(Boolean);
+
+  const detailsMetafield = metafields.find(
+    (m) => m.namespace === 'custom' && m.key === 'details',
+  );
+
+  const sustainabilityMetafield = metafields.find(
+    (m) => m.namespace === 'custom' && m.key === 'sustainability',
+  );
+
   return (
     <div>
       <div className="product">
@@ -178,17 +192,19 @@ export default function Product() {
           <div className="divider" />
           <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
           <div className="divider" />
-          {/* this needs to be pulled properly */}
+
           <div className="dropdown-container">
             {[
               {
                 title: 'details',
                 details:
+                  detailsMetafield?.value?.trim() ||
                   'this product is made from high-quality materials and designed for durability.',
               },
               {
                 title: 'sustainability',
                 details:
+                  sustainabilityMetafield?.value?.trim() ||
                   'we use eco-friendly materials and sustainable practices in our production.',
               },
             ].map((section) => (
@@ -378,7 +394,14 @@ const PRODUCT_FRAGMENT = `#graphql
         }
       }
     }
-    
+    metafields(identifiers: [
+      {namespace: "custom", key: "details"},
+      {namespace: "custom", key: "sustainability"}
+    ]) {
+      key
+      namespace
+      value
+    }
     selectedOrFirstAvailableVariant(
       selectedOptions: $selectedOptions
       ignoreUnknownOptions: true

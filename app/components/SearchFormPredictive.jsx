@@ -55,6 +55,16 @@ export function SearchFormPredictive({
     return null;
   }
 
+  useEffect(() => {
+    function handleFocusEvent() {
+      inputRef.current?.focus();
+    }
+
+    window.addEventListener('focusSearchInput', handleFocusEvent);
+    return () =>
+      window.removeEventListener('focusSearchInput', handleFocusEvent);
+  }, []);
+
   return (
     <fetcher.Form {...props} className={className} onSubmit={resetInput}>
       {children({inputRef, fetcher, fetchResults, goToSearch})}

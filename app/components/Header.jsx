@@ -210,17 +210,21 @@ function SearchToggle() {
   const [isOpen, setIsOpen] = useState(false);
 
   function toggle() {
-    setIsOpen(!isOpen);
+    const newState = !isOpen;
+    setIsOpen(newState);
+
+    if (newState) {
+      open('search');
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('focusSearchInput'));
+      }, 50);
+    } else {
+      close();
+    }
   }
+
   return (
-    <button
-      className="reset header-menu-item"
-      onClick={() => {
-        toggle();
-        if (isOpen) close();
-        else open('search');
-      }}
-    >
+    <button className="reset header-menu-item" onClick={toggle}>
       <svg
         width="19"
         height="16"
