@@ -1597,15 +1597,6 @@ aside#submenu .header-menu-item:hover {
 /* 
 MEDIA QUIERIES
 */
-@media (min-width: 500px) {
-  .you-may-also-like-container .product-item:last-of-type {
-    display: none;
-  }
-
-  .cart-summary-aside {
-    width: calc(var(--aside-width) - 40px);
-  }
-}
 @media (max-width: 1150px) and (min-width: 500px) {
   aside#mobile {
     left: calc(-1 * var(--aside-width));
@@ -1635,6 +1626,11 @@ MEDIA QUIERIES
     display: none !important;
   } */
   .header-ctas > button {
+    display: none;
+  }
+}
+@media (min-width: 1150px) {
+  .you-may-also-like-container .product-item:last-of-type {
     display: none;
   }
 }
@@ -1693,6 +1689,12 @@ MEDIA QUIERIES
     bottom: 1rem;
     left: 1rem;
     position: absolute;
+  }
+}
+
+@media (min-width: 500px) {
+  .cart-summary-aside {
+    width: calc(var(--aside-width) - 40px);
   }
 }
 
