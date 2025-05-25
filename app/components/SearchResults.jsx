@@ -56,7 +56,7 @@ function SearchResultsProducts({term, products}) {
 }
 
 function SearchResultsEmpty() {
-  return <p>No results, try a different search.</p>;
+  return <p className="no-results">No results, try a different search.</p>;
 }
 
 /** @typedef {RegularSearchReturn['result']['items']} SearchItems */

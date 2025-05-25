@@ -835,7 +835,12 @@ aside#submenu .header-menu-item:hover {
   align-items: center;
   gap: 1rem;
 }
-
+.no-results {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 /*
 * --------------------------------------------------
 * routes/__index
