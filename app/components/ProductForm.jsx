@@ -76,7 +76,7 @@ export function ProductForm({productOptions, selectedVariant, hideSizeGuide}) {
                     initial={false}
                     animate={{opacity: 1}}
                     exit={{opacity: 0}}
-                    style={{display: 'inline-block', width: '10rem'}}
+                    style={{display: 'inline-block', width: '6.2rem'}}
                   >
                     {formatSize(
                       selectedOptions[option.name]?.toLowerCase(),
