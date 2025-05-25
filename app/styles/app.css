@@ -1640,6 +1640,12 @@ MEDIA QUIERIES
 }
 
 @media (max-width: 499px) {
+  input {
+    font-size: 16px;
+  }
+  input::placeholder {
+    font-size: 13px;
+  }
   :root {
     --grid-item-width: 150px;
     --main-margin-top: 20px;
