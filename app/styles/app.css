@@ -1791,6 +1791,9 @@ MEDIA QUIERIES
     width: 100%;
     margin-top: var(--main-margin-top);
   }
+  .page.null {
+    margin-top: calc(var(--main-margin-top) + var(--header-height));
+  }
   .title-and-blurb,
   .image-and-blurb > *,
   .translations {
