@@ -12,6 +12,7 @@ import {
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
 import {useAside} from './Aside';
 import {AnimatePresence, motion} from 'motion/react';
+import NavLink from './NavLink';
 
 /**
  * @param {PageLayoutProps}
@@ -331,7 +332,7 @@ function SubscribeForm() {
       <p className="subscribe-subtext">
         by subscribing to our newsletter, you agree to receive promotional
         content from nüülee in accordance with our{' '}
-        <a href="/pages/privacy-policy">privacy policy.</a>
+        <NavLink to="/pages/privacy-policy">privacy policy.</NavLink>
       </p>
     </div>
   );
