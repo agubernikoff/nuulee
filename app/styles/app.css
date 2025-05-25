@@ -1047,6 +1047,7 @@ aside#submenu .header-menu-item:hover {
   cursor: pointer;
   width: 5rem;
   text-align: right;
+  position: relative;
 }
 .filter-body {
   display: flex;
@@ -1284,7 +1285,7 @@ aside#submenu .header-menu-item:hover {
 }
 
 .icon.open {
-  transform: rotate(45deg);
+  transform: rotate(-45deg);
 }
 
 .dropdown-content {

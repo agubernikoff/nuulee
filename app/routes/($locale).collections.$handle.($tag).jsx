@@ -244,18 +244,43 @@ export function Filter({handle, tag, filters, term}) {
             </>
           )}
         </motion.p>
-        <p onClick={toggleOpen} className="filter-toggle">
+        <p onClick={toggleOpen} className="filter-toggle" layout={false}>
           <AnimatePresence mode="popLayout">
-            <motion.span
+            {/* <motion.span
               key={`toggle-${open}`}
               initial={{opacity: init ? 1 : 0}}
               animate={{opacity: 1}}
               exit={{opacity: 0}}
               transition={{duration: 0.5}}
               style={{marginRight: '.25rem'}}
+              layout={false}
             >
               {!open ? 'filter/sort' : 'close'}
-            </motion.span>
+            </motion.span> */}
+            {
+              <span
+                style={{
+                  marginRight: '.25rem',
+                  opacity: !open ? 1 : 0,
+                  transition: 'opacity 500ms ease-in-out',
+                }}
+              >
+                filter/sort
+              </span>
+            }
+            {
+              <span
+                style={{
+                  opacity: open ? 1 : 0,
+                  transition: 'opacity 500ms ease-in-out',
+                  position: 'absolute',
+                  top: 0,
+                  right: '.75rem',
+                }}
+              >
+                close
+              </span>
+            }
           </AnimatePresence>
           <span className={`icon ${open ? 'open' : ''}`}>+</span>
         </p>
