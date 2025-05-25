@@ -1,5 +1,5 @@
 import {useLoaderData, Await} from '@remix-run/react';
-import {useState, useEffect, Suspense} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -13,6 +13,14 @@ import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {motion, AnimatePresence} from 'motion/react';
 import ProductGridItem from '~/components/ProductGridItem';
+
+function useIsFirstRender() {
+  const isFirst = useRef(true);
+  useEffect(() => {
+    isFirst.current = false;
+  }, []);
+  return isFirst.current;
+}
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -160,6 +168,8 @@ export default function Product() {
     (m) => m.namespace === 'custom' && m.key === 'sustainability',
   );
 
+  const isFirstRender = useIsFirstRender();
+
   return (
     <div>
       <div className="product">
@@ -214,10 +224,11 @@ export default function Product() {
                 toggleSection={toggleSection}
                 title={section.title}
                 details={section.details}
+                isFirstRender={isFirstRender}
               />
             ))}
           </div>
-          <motion.div className="divider" layout />
+          <motion.div className="divider" layout={!isFirstRender} />
         </div>
         <Analytics.ProductView
           data={{
@@ -240,18 +251,24 @@ export default function Product() {
   );
 }
 
-function Expandable({openSection, toggleSection, title, details}) {
+function Expandable({
+  openSection,
+  toggleSection,
+  title,
+  details,
+  isFirstRender,
+}) {
   return (
     <motion.div
       key={title}
       className="dropdown"
-      layout="position"
+      layout={!isFirstRender ? 'position' : false}
       initial={{height: '1rem'}}
       animate={{height: openSection === title ? 'auto' : '1rem'}}
       style={{overflow: 'hidden'}}
     >
       <motion.p
-        layout="position"
+        layout={!isFirstRender ? 'position' : false}
         className={`dropdown-header ${openSection === title ? 'open' : ''}`}
         onClick={() => toggleSection(title)}
       >
