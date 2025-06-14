@@ -117,7 +117,14 @@ export default function Product() {
 
   const {title, descriptionHtml} = product;
 
-  const productImage = product.images.edges.map((edge) => (
+  const filteredImages = product.images.edges.filter((i) => {
+    if (!i?.node?.altText) return true;
+    else
+      return selectedVariant.title
+        .toLowerCase()
+        .includes(i?.node?.altText?.toLowerCase());
+  });
+  const productImage = filteredImages.map((edge) => (
     <ProductImage key={edge.node.id} image={edge.node} />
   ));
 
