@@ -152,10 +152,15 @@ export function ProductForm({productOptions, selectedVariant, hideSizeGuide}) {
                             ? '1px solid black'
                             : '1px solid transparent',
                         opacity: available ? 1 : 0.3,
-                        textDecoration: selected ? 'underline' : 'none',
+                        textDecoration:
+                          selected || !available ? 'underline' : 'none',
+                        textUnderlineOffset: available ? 'auto' : '-0.3em',
+                        textDecorationSkipInk: available ? 'auto' : 'none',
                       }}
                       disabled={!exists}
-                      onClick={onClickHandler}
+                      onClick={() => {
+                        if (!selected) onClickHandler();
+                      }}
                     >
                       <ProductOptionSwatch swatch={swatch} name={name} />
                     </button>

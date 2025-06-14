@@ -127,6 +127,9 @@ export default function Product() {
   const productImage = filteredImages.map((edge) => (
     <ProductImage key={edge.node.id} image={edge.node} />
   ));
+  const hiddenImages = product.images.edges.map((edge) => (
+    <ProductImage key={edge.node.id} image={edge.node} hidden={true} />
+  ));
 
   const [openSection, setOpenSection] = useState(null);
 
@@ -188,11 +191,12 @@ export default function Product() {
             }
           >
             {productImage}
+            {hiddenImages}
           </div>
           <div className="mapped-indicators">{mappedIndicators}</div>
         </div>
         <div className="product-main">
-          <p>{title}</p>
+          <p>{title.toLowerCase()}</p>
           <ProductPrice
             price={selectedVariant?.price}
             compareAtPrice={selectedVariant?.compareAtPrice}
