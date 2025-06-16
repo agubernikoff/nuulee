@@ -16,6 +16,7 @@ export function ProductImage({image, hidden}) {
         background: `center / cover no-repeat url("${image.url}&width=100")`,
         position: hidden ? 'absolute' : 'static',
         opacity: hidden ? 0 : 1,
+        top: 0,
       }}
     >
       <Image
