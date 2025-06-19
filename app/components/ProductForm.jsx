@@ -95,7 +95,9 @@ export function ProductForm({productOptions, selectedVariant, hideSizeGuide}) {
               ) : null}
             </div>
 
-            <div className="product-options-grid">
+            <div
+              className={`product-options-grid ${option.name.toLowerCase()}`}
+            >
               {option.optionValues.map((value) => {
                 const {
                   name,
