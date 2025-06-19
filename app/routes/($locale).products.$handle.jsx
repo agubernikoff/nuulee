@@ -117,8 +117,14 @@ export default function Product() {
 
   const {title, descriptionHtml} = product;
 
+  const isThereAMatchingImage = product.images.edges.find((img) =>
+    selectedVariant.title
+      .toLowerCase()
+      .includes(img?.node?.altText?.toLowerCase()),
+  );
+
   const filteredImages = product.images.edges.filter((i) => {
-    if (!i?.node?.altText) return true;
+    if (!isThereAMatchingImage || !i?.node?.altText) return true;
     else
       return selectedVariant.title
         .toLowerCase()

@@ -17,6 +17,7 @@ export function ProductImage({image, hidden}) {
         position: hidden ? 'absolute' : 'static',
         opacity: hidden ? 0 : 1,
         top: 0,
+        zIndex: hidden ? '-1' : 0,
       }}
     >
       <Image
