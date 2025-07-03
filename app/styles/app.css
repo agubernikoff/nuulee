@@ -1174,7 +1174,7 @@ aside#submenu .header-menu-item:hover {
   position: sticky;
   margin-top: var(--main-margin-top);
   width: 285px;
-  top: calc(var(--header-height) + var(--main-margin-top));
+  top: calc(var(--header-height) + 34px);
 }
 .product-main * {
   font-family: 'regular' !important;
@@ -1618,6 +1618,10 @@ MEDIA QUIERIES
 @media (max-width: 1150px) and (min-width: 500px) {
   aside#mobile {
     left: calc(-1 * var(--aside-width));
+    margin-top: var(--header-height);
+  }
+  .overlay:has(> aside#mobile) {
+    top: var(--header-height);
   }
   .overlay.expanded aside#mobile {
     transform: translateX(calc(var(--aside-width) * 1));
@@ -1626,7 +1630,7 @@ MEDIA QUIERIES
     margin-top: 0 !important;
   }
   aside#mobile .aside-header {
-    display: flex !important;
+    /* display: flex !important; */
   }
   aside#mobile .aside-header > p {
     display: none !important;
