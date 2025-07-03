@@ -68,11 +68,12 @@ async function loadCriticalData({context, params, request}) {
   if (searchParams.has('reverse'))
     reverse = searchParams.get('reverse') === 'true';
 
-  const [{collection}] = await Promise.all([
+  const [{collection}, {metaobjects}] = await Promise.all([
     storefront.query(COLLECTION_QUERY, {
       variables: {handle, filters, reverse, sortKey, ...paginationVariables},
       // Add other queries here, so that they are loaded in parallel
     }),
+    storefront.query(COLOR_PATTERNS_QUERY),
   ]);
 
   if (!collection) {
@@ -85,6 +86,7 @@ async function loadCriticalData({context, params, request}) {
     collection,
     tag,
     handle,
+    colorPatterns: metaobjects.edges,
   };
 }
 
@@ -100,14 +102,13 @@ function loadDeferredData({context}) {
 
 export default function Collection() {
   /** @type {LoaderReturnData} */
-  const {collection, handle, tag} = useLoaderData();
-  console.log(collection);
+  const {collection, handle, tag, colorPatterns} = useLoaderData();
   return (
     <div className="collection">
-      {!tag ? (
+      {!tag && collection.image ? (
         <>
           <Image
-            alt={collection.image.altText}
+            alt={collection.image?.altText}
             aspectRatio={`${collection?.image?.width} / ${collection?.image?.height}`}
             data={collection.image}
             sizes="100vw"
@@ -126,10 +127,11 @@ export default function Collection() {
           resourcesClassName="products-grid"
         >
           {({node: product, index}) => (
-            <ProductGridItem
-              key={product.id}
+            <ProductColorVariants
               product={product}
-              loading={index < 8 ? 'eager' : undefined}
+              index={index}
+              colorPatterns={colorPatterns}
+              key={product.id}
             />
           )}
         </PaginatedResourceSection>
@@ -144,6 +146,60 @@ export default function Collection() {
       />
     </div>
   );
+}
+
+function ProductColorVariants({product, index, colorPatterns}) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const colors = product.options
+    .find((o) => o.name === 'Color')
+    ?.optionValues.map((v) => {
+      return {
+        hex: v.swatch.color,
+        name: v.name,
+        colorPattern: colorPatterns.find(
+          (pat) =>
+            pat.node.handle === v.name.replace(' ', '-').replace('/', '-'),
+        ),
+      };
+    });
+
+  return colors.map((color) => {
+    const shouldDisplay =
+      searchParams
+        .getAll('filter')
+        .map((filter) => JSON.parse(filter))
+        .filter((filter) => filter.taxonomyMetafield?.key === 'color-pattern')
+        .length === 0 ||
+      searchParams
+        .getAll('filter')
+        .map((filter) => JSON.parse(filter))
+        .filter((filter) => filter.taxonomyMetafield?.key === 'color-pattern')
+        .map((filter) => filter.taxonomyMetafield?.value)
+        .includes(
+          color?.colorPattern?.node.fields
+            .find((field) => field.key === 'color_taxonomy_reference')
+            .value.replace('["', '')
+            .replace('"]', ''),
+        );
+    return (
+      <div
+        key={`${product.id}-${color.name.replace(' ', '-').replace('/', '-')}`}
+        style={{display: shouldDisplay ? 'block' : 'none'}}
+      >
+        <ProductGridItem
+          product={{
+            ...product,
+            images: {
+              nodes: product.images.nodes.filter(
+                (n) => n.altText?.toLowerCase() === color.name.toLowerCase(),
+              ),
+            },
+          }}
+          loading={index < 8 ? 'eager' : undefined}
+        />
+      </div>
+    );
+  });
 }
 
 export function Filter({handle, tag, filters, term}) {
@@ -436,7 +492,6 @@ function FilterInput({
   useEffect(() => {
     setHide(count === 0);
   }, [pathname]);
-
   return (
     <div
       style={
@@ -501,7 +556,7 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
     id
     handle
     title
-    images(first: 2) {
+    images(first: 20) {
       nodes {
         id
         url
@@ -523,6 +578,17 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
       }
       maxVariantPrice {
         ...MoneyProductItem
+      }
+    }
+    options(first:30){
+      id
+      name
+      optionValues{
+        id
+        name
+        swatch{
+          color
+        }
       }
     }
   }
@@ -591,6 +657,24 @@ const COLLECTION_QUERY = `#graphql
       }
     }
   }
+`;
+
+const COLOR_PATTERNS_QUERY = `#graphql
+query GetColorPatternMetaobjects {
+  metaobjects(first: 100, type: "shopify--color-pattern") {
+    edges {
+      node {
+        id
+        handle
+        type
+        fields {
+          key
+          value
+        }
+      }
+    }
+  }
+}
 `;
 
 /** @typedef {import('@shopify/remix-oxygen').LoaderFunctionArgs} LoaderFunctionArgs */
