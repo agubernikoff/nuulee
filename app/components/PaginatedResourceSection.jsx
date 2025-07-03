@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {Pagination} from '@shopify/hydrogen';
-import {useNavigate} from '@remix-run/react';
+import {useNavigate, useLocation} from '@remix-run/react';
 
 export function PaginatedResourceSection({
   connection,
@@ -10,6 +10,7 @@ export function PaginatedResourceSection({
   const loadMoreRef = useRef(null);
   const [isIntersecting, setIsIntersecting] = useState(false);
 
+  const {search} = useLocation();
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setIsIntersecting(entry.isIntersecting),
@@ -25,7 +26,7 @@ export function PaginatedResourceSection({
         observer.unobserve(loadMoreRef.current);
       }
     };
-  }, []);
+  }, [search]);
 
   const nav = useNavigate();
 

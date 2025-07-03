@@ -1,5 +1,5 @@
 import {Suspense} from 'react';
-import {Await, useAsyncValue} from '@remix-run/react';
+import {Await, useAsyncValue, useLocation} from '@remix-run/react';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import {useState} from 'react';
@@ -58,6 +58,7 @@ export function HeaderMenu({
 }) {
   const className = `header-menu-${viewport}`;
   const {close, open} = useAside();
+  const {pathname} = useLocation();
 
   return (
     <nav className={className} role="navigation">
@@ -112,6 +113,10 @@ export function HeaderMenu({
             end
             key={item.id}
             onClick={(e) => {
+              if (url === pathname) {
+                e.preventDefault();
+                window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+              }
               if (item.items && item.items.length > 0) {
                 e.preventDefault();
                 if (viewport === 'mobile') open('mobile', item.title);

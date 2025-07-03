@@ -163,6 +163,8 @@ export function Filter({handle, tag, filters, term}) {
         if (prev.has('filter')) {
           prev.append('filter', input);
         } else prev.set('filter', input);
+        prev.delete('direction');
+        prev.delete('cursor');
         return prev;
       },
       {preventScrollReset: true},
@@ -175,6 +177,8 @@ export function Filter({handle, tag, filters, term}) {
         const newParams = new URLSearchParams(prev); // Clone to avoid mutation
         const filters = newParams.getAll('filter'); // Get all filter values
         newParams.delete('filter'); // Remove all instances
+        newParams.delete('direction');
+        newParams.delete('cursor');
 
         // Re-add only the filters that are NOT being removed
         filters
@@ -244,44 +248,28 @@ export function Filter({handle, tag, filters, term}) {
             </>
           )}
         </motion.p>
-        <p onClick={toggleOpen} className="filter-toggle" layout={false}>
-          <AnimatePresence mode="popLayout">
-            {/* <motion.span
-              key={`toggle-${open}`}
-              initial={{opacity: init ? 1 : 0}}
-              animate={{opacity: 1}}
-              exit={{opacity: 0}}
-              transition={{duration: 0.5}}
-              style={{marginRight: '.25rem'}}
-              layout={false}
-            >
-              {!open ? 'filter/sort' : 'close'}
-            </motion.span> */}
-            {
-              <span
-                style={{
-                  marginRight: '.25rem',
-                  opacity: !open ? 1 : 0,
-                  transition: 'opacity 500ms ease-in-out',
-                }}
-              >
-                filter/sort
-              </span>
-            }
-            {
-              <span
-                style={{
-                  opacity: open ? 1 : 0,
-                  transition: 'opacity 500ms ease-in-out',
-                  position: 'absolute',
-                  top: 0,
-                  right: '.75rem',
-                }}
-              >
-                close
-              </span>
-            }
-          </AnimatePresence>
+        <p onClick={toggleOpen} className="filter-toggle">
+          <span
+            style={{
+              marginRight: '.25rem',
+              opacity: !open ? 1 : 0,
+              transition: 'opacity 500ms ease-in-out',
+            }}
+          >
+            filter/sort
+          </span>
+          <span
+            style={{
+              opacity: open ? 1 : 0,
+              transition: 'opacity 500ms ease-in-out',
+              position: 'absolute',
+              top: 0,
+              right: '.75rem',
+            }}
+          >
+            close
+          </span>
+
           <span className={`icon ${open ? 'open' : ''}`}>+</span>
         </p>
       </div>
