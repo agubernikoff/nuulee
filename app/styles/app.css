@@ -1174,7 +1174,7 @@ aside#submenu .header-menu-item:hover {
   position: sticky;
   margin-top: var(--main-margin-top);
   width: 285px;
-  top: calc(var(--header-height) + 34px);
+  top: calc(var(--header-height) + var(--main-margin-top));
 }
 .product-main * {
   font-family: 'regular' !important;
