@@ -146,7 +146,7 @@ export default function Product() {
   const [imageIndex, setImageIndex] = useState(0);
 
   function handleScroll(scrollWidth, scrollLeft) {
-    const widthOfAnImage = scrollWidth / product?.images?.edges.length;
+    const widthOfAnImage = scrollWidth / filteredImages.length;
     const dividend = scrollLeft / widthOfAnImage;
     const rounded = parseFloat((scrollLeft / widthOfAnImage).toFixed(0));
 
@@ -154,8 +154,8 @@ export default function Product() {
   }
 
   const mappedIndicators =
-    product?.images?.edges.length > 1
-      ? product?.images?.edges.map((e, i) => (
+    filteredImages.length > 1
+      ? filteredImages.map((e, i) => (
           <div
             key={e.node.id}
             className="circle"
