@@ -181,20 +181,33 @@ function ProductColorVariants({product, index, colorPatterns}) {
             .value.replace('["', '')
             .replace('"]', ''),
         );
+    const newHandle = `${product.handle}?${product.options
+      .filter((o) => o.name !== 'Color')
+      .map((o) => `${o.name}=${o.optionValues[0].name}`)
+      .join('&')}&Color=${color.name}`;
+
     return (
       <div
         key={`${product.id}-${color.name.replace(' ', '-').replace('/', '-')}`}
         style={{display: shouldDisplay ? 'block' : 'none'}}
       >
         <ProductGridItem
-          product={{
-            ...product,
-            images: {
-              nodes: product.images.nodes.filter(
-                (n) => n.altText?.toLowerCase() === color.name.toLowerCase(),
-              ),
-            },
-          }}
+          product={
+            product.images.nodes.find(
+              (n) => n?.altText?.toLowerCase() === color.name.toLowerCase(),
+            )
+              ? {
+                  ...product,
+                  images: {
+                    nodes: product.images.nodes.filter(
+                      (n) =>
+                        n?.altText?.toLowerCase() === color.name.toLowerCase(),
+                    ),
+                  },
+                  handle: newHandle,
+                }
+              : product
+          }
           loading={index < 8 ? 'eager' : undefined}
         />
       </div>
