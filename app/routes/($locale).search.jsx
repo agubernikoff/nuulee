@@ -1,5 +1,6 @@
-import {useLoaderData} from '@remix-run/react';
+import {useLoaderData, useLocation} from '@remix-run/react';
 import {getPaginationVariables, Analytics} from '@shopify/hydrogen';
+import {useState, useEffect} from 'react';
 import {SearchForm} from '~/components/SearchForm';
 import {SearchResults} from '~/components/SearchResults';
 import {getEmptyPredictiveSearchResult} from '~/lib/search';
@@ -26,7 +27,12 @@ export async function loader({request, context}) {
     return {term: '', result: null, error: error.message};
   });
 
-  return await searchPromise;
+  const colorPatterns = await context.storefront.query(COLOR_PATTERNS_QUERY);
+
+  return {
+    searchPromise: await searchPromise,
+    colorPatterns: colorPatterns.metaobjects.edges,
+  };
 }
 
 /**
@@ -34,8 +40,18 @@ export async function loader({request, context}) {
  */
 export default function SearchPage() {
   /** @type {LoaderReturnData} */
-  const {type, term, result, error} = useLoaderData();
+  const {searchPromise, colorPatterns} = useLoaderData();
+  const {type, term, result, error} = searchPromise;
   if (type === 'predictive') return null;
+
+  const [colorVsTotal, setColorVsTotal] = useState(' ');
+  const {search} = useLocation();
+
+  useEffect(() => {
+    fetch(`/api/color-variant-count${search}`)
+      .then((r) => r.json())
+      .then((d) => setColorVsTotal(d.totalColorVariants));
+  }, [term]);
 
   return (
     <div className="search">
@@ -46,7 +62,12 @@ export default function SearchPage() {
         <SearchResults result={result} term={term}>
           {({products, term}) => (
             <div>
-              <SearchResults.Products products={products} term={term} />
+              <SearchResults.Products
+                products={products}
+                term={term}
+                colorPatterns={colorPatterns}
+                total={colorVsTotal}
+              />
             </div>
           )}
         </SearchResults>
@@ -73,7 +94,7 @@ fragment MoneyProductItem on MoneyV2 {
     title
     trackingParameters
     vendor
-    images(first: 2) {
+    images(first: 20) {
       nodes {
         id
         url
@@ -88,6 +109,17 @@ fragment MoneyProductItem on MoneyV2 {
       }
       maxVariantPrice {
         ...MoneyProductItem
+      }
+    }
+    options(first:30){
+      id
+      name
+      optionValues{
+        id
+        name
+        swatch{
+          color
+        }
       }
     }
     selectedOrFirstAvailableVariant(
@@ -184,6 +216,24 @@ export const SEARCH_QUERY = `#graphql
   }
   ${SEARCH_PRODUCT_FRAGMENT}
   ${PAGE_INFO_FRAGMENT}
+`;
+
+const COLOR_PATTERNS_QUERY = `#graphql
+query GetColorPatternMetaobjects {
+  metaobjects(first: 100, type: "shopify--color-pattern") {
+    edges {
+      node {
+        id
+        handle
+        type
+        fields {
+          key
+          value
+        }
+      }
+    }
+  }
+}
 `;
 
 /**

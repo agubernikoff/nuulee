@@ -1,4 +1,4 @@
-import {Link} from '@remix-run/react';
+import {Link, useSearchParams} from '@remix-run/react';
 import {Image, Money, Pagination} from '@shopify/hydrogen';
 import {urlWithTrackingParams} from '~/lib/search';
 import {PaginatedResourceSection} from './PaginatedResourceSection';
@@ -24,18 +24,17 @@ SearchResults.Empty = SearchResultsEmpty;
 /**
  * @param {PartialSearchResult<'products'>}
  */
-function SearchResultsProducts({term, products}) {
+function SearchResultsProducts({term, products, colorPatterns, total}) {
   if (!products?.nodes.length) {
     return null;
   }
-
   return (
     <div className="search-result">
       <Filter
         tag={''}
         handle={''}
         filters={products?.productFilters}
-        term={`"${term}" (${products.totalCount})`}
+        term={`"${term}" (${total})`}
       />
       <motion.div layout="position">
         <PaginatedResourceSection
@@ -43,10 +42,11 @@ function SearchResultsProducts({term, products}) {
           resourcesClassName="products-grid"
         >
           {({node: product, index}) => (
-            <ProductGridItem
-              key={product.id}
+            <ProductColorVariants
               product={product}
-              loading={index < 8 ? 'eager' : undefined}
+              index={index}
+              colorPatterns={colorPatterns}
+              key={product.id}
             />
           )}
         </PaginatedResourceSection>
@@ -75,3 +75,70 @@ function SearchResultsEmpty() {
  */
 
 /** @typedef {import('~/lib/search').RegularSearchReturn} RegularSearchReturn */
+
+function ProductColorVariants({product, index, colorPatterns}) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const colors = product.options
+    .find((o) => o.name === 'Color')
+    ?.optionValues.map((v) => {
+      return {
+        hex: v.swatch.color,
+        name: v.name,
+        colorPattern: colorPatterns.find(
+          (pat) =>
+            pat.node.handle === v.name.replace(' ', '-').replace('/', '-'),
+        ),
+      };
+    });
+
+  return colors.map((color) => {
+    const shouldDisplay =
+      searchParams
+        .getAll('filter')
+        .map((filter) => JSON.parse(filter))
+        .filter((filter) => filter.taxonomyMetafield?.key === 'color-pattern')
+        .length === 0 ||
+      searchParams
+        .getAll('filter')
+        .map((filter) => JSON.parse(filter))
+        .filter((filter) => filter.taxonomyMetafield?.key === 'color-pattern')
+        .map((filter) => filter.taxonomyMetafield?.value)
+        .includes(
+          color?.colorPattern?.node.fields
+            .find((field) => field.key === 'color_taxonomy_reference')
+            .value.replace('["', '')
+            .replace('"]', ''),
+        );
+    const newHandle = `${product.handle}?${product.options
+      .filter((o) => o.name !== 'Color')
+      .map((o) => `${o.name}=${o.optionValues[0].name}`)
+      .join('&')}&Color=${color.name}`;
+
+    return (
+      <div
+        key={`${product.id}-${color.name.replace(' ', '-').replace('/', '-')}`}
+        style={{display: shouldDisplay ? 'block' : 'none'}}
+      >
+        <ProductGridItem
+          product={
+            product.images.nodes.find(
+              (n) => n?.altText?.toLowerCase() === color.name.toLowerCase(),
+            )
+              ? {
+                  ...product,
+                  images: {
+                    nodes: product.images.nodes.filter(
+                      (n) =>
+                        n?.altText?.toLowerCase() === color.name.toLowerCase(),
+                    ),
+                  },
+                  handle: newHandle,
+                }
+              : product
+          }
+          loading={index < 8 ? 'eager' : undefined}
+        />
+      </div>
+    );
+  });
+}
