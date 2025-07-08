@@ -1675,11 +1675,6 @@ aside#submenu .header-menu-item:hover {
   background: black;
   color: white;
   font-size: 11px;
-  padding: 0.6rem 1.5rem;
-  white-space: nowrap;
-  position: absolute;
-  right: 0.5%;
-  top: 28%;
   border-radius: 0;
 }
 
@@ -1724,10 +1719,34 @@ MEDIA QUIERIES
   .header-ctas > button {
     display: none;
   }
+  #shopify-pc__banner__btn-accept {
+    background: #000;
+    color: #fff;
+    width: 100%;
+    font-size: 11px;
+    padding: 0.6rem 1.5rem;
+    white-space: nowrap;
+    position: absolute;
+    right: 0.5%;
+    top: 28%;
+    border-radius: 0;
+  }
 }
 @media (min-width: 1150px) {
   .you-may-also-like-container .product-item:last-of-type {
     display: none;
+  }
+  #shopify-pc__banner__btn-accept {
+    background: #000;
+    color: #fff;
+    width: 100%;
+    font-size: 11px;
+    padding: 0.6rem 1.5rem;
+    white-space: nowrap;
+    position: absolute;
+    right: 0.5%;
+    top: 28%;
+    border-radius: 0;
   }
 }
 
