@@ -1625,17 +1625,13 @@ Cookies
 #shopify-pc__banner.shopify-pc__banner__dialog {
   background-color: white !important;
   color: black !important;
-  border-radius: 10px;
   padding: 1.5rem 2rem;
-  max-width: 900px;
-  margin: 1.5rem auto;
+
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   position: fixed !important;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
+
   z-index: 9999;
-  font-family: 'Syndicat Grotesk', sans-serif;
+  font-family: 'regular';
 }
 
 /* Text */
@@ -1668,7 +1664,7 @@ button[id^='shopify-pc__banner__btn-'] {
   padding: 0.6rem 1.5rem;
   text-transform: uppercase;
   font-size: 12px;
-  font-family: inherit;
+  font-family: 'regular';
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -1679,6 +1675,9 @@ button[id^='shopify-pc__banner__btn-']:hover {
   color: white !important;
 }
 
+#shopify-pc__banner__body-policy-link {
+  display: none;
+}
 /* 
 MEDIA QUIERIES
 */
