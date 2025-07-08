@@ -1636,6 +1636,11 @@ aside#submenu .header-menu-item:hover {
   max-width: 100%;
 }
 
+#shopify-pc__banner {
+  padding: 0;
+  display: block;
+}
+
 /* Buttons area (bottom row) */
 .shopify-pc__banner__btns-granular {
   display: flex;
@@ -1664,6 +1669,10 @@ aside#submenu .header-menu-item:hover {
   font-size: 11px;
   padding: 0.6rem 1.5rem;
   white-space: nowrap;
+  position: absolute;
+  right: 1%;
+  top: 30%;
+  border-radius: 0;
 }
 
 #shopify-pc__banner__body-policy-link {
