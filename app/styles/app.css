@@ -1617,31 +1617,55 @@ aside#submenu .header-menu-item:hover {
   font-size: 13px;
 }
 
-/* 
-Cookies
-*/
-
-.shopify-pc__banner__body > p {
-  font-family: 'regular';
-  font-size: 11px;
+/* Style the banner wrapper to create space between left/right */
+.shopify-pc__banner__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  flex-wrap: wrap; /* allow wrapping */
 }
-#shopify-pc__banner__body-policy-link {
-  display: none;
+
+/* Stack the message and secondary buttons */
+.shopify-pc__banner__body {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+/* Position the cookie message */
+.shopify-pc__banner__body > p {
+  font-size: 11px;
+  margin: 0;
+}
+
+/* Style the "settings" and "reject" buttons */
+.shopify-pc__banner__btns-granular {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 #shopify-pc__banner__btn-manage-prefs,
 #shopify-pc__banner__btn-decline {
-  background-color: transparent;
+  background: none;
   border: none;
   color: #acacac;
-  text-decoration: none;
   font-size: 11px;
+  padding: 0;
 }
 
+/* Style the "accept all" button */
 #shopify-pc__banner__btn-accept {
   background: black;
-  font-size: 11px;
   color: white;
+  font-size: 11px;
+  padding: 0.6rem 1.5rem;
+  margin-left: auto;
+  white-space: nowrap;
 }
 /* 
 MEDIA QUIERIES
