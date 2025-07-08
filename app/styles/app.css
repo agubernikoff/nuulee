@@ -1637,7 +1637,7 @@ aside#submenu .header-menu-item:hover {
 }
 
 .shopify-pc__banner__wrapper {
-  padding: 0 !important;
+  display: block !important;
   padding: 16px !important;
 }
 
