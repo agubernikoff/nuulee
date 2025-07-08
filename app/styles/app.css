@@ -1818,22 +1818,47 @@ MEDIA QUIERIES
   #shopify-pc__banner__btn-accept {
     width: 100%;
   }
-
   .shopify-pc__banner__btns.shopify-pc__banner__btns-granular {
-    display: flex !important;
-    flex-direction: column-reverse !important;
-    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     gap: 1rem;
   }
 
-  #shopify-pc__banner__btn-manage-prefs,
-  #shopify-pc__banner__btn-decline {
+  /* Force top row: cookie settings + reject all */
+  .shopify-pc__banner__btns.shopify-pc__banner__btns-granular > :first-child,
+  .shopify-pc__banner__btns.shopify-pc__banner__btns-granular > :last-child {
     display: inline-block;
-    margin-right: 1rem;
+    font-size: 11px;
+    color: #acacac;
+    padding: 0;
+    margin: 0;
   }
 
-  #shopify-pc__banner__btn-accept {
+  /* Put those two into a flex line */
+  .shopify-pc__banner__btns.shopify-pc__banner__btns-granular > :first-child,
+  .shopify-pc__banner__btns.shopify-pc__banner__btns-granular > :last-child {
+    width: auto;
+  }
+
+  .shopify-pc__banner__btns.shopify-pc__banner__btns-granular {
+    flex-wrap: wrap;
+  }
+
+  /* Row layout trick: group first and last together using margin auto */
+  .shopify-pc__banner__btns.shopify-pc__banner__btns-granular > :nth-child(2) {
+    order: 2;
+    width: 100%;
     text-align: center;
+    background: black;
+    color: white;
+    font-size: 11px;
+    padding: 0.6rem 1.5rem;
+  }
+
+  /* Optional spacing between cookie settings & reject */
+  .shopify-pc__banner__btns.shopify-pc__banner__btns-granular > :first-child {
+    margin-right: 1.5rem;
   }
   input {
     font-size: 16px;
