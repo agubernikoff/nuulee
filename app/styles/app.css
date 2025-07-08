@@ -1630,7 +1630,7 @@ Cookies
   display: none;
 }
 
-.shopify-pc__banner__btns.shopify-pc__banner__btns-granular {
+.shopify-pc__banner__btns.shopify-pc__banner__btns-granular > button {
   background-color: transparent;
   border: none;
   color: #acacac;
@@ -1640,6 +1640,7 @@ Cookies
 #shopify-pc__banner__btn-accept {
   background: black;
   font-size: 10px;
+  color: white;
 }
 /* 
 MEDIA QUIERIES
