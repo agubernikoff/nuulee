@@ -1618,37 +1618,34 @@ aside#submenu .header-menu-item:hover {
 }
 
 /* Style the banner wrapper to create space between left/right */
+/* --- COOKIE BANNER LAYOUT FIX --- */
 .shopify-pc__banner__wrapper {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  flex-wrap: wrap; /* allow wrapping */
-}
-
-/* Stack the message and secondary buttons */
-.shopify-pc__banner__body {
-  flex: 1;
-  min-width: 250px;
-  display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   gap: 0.5rem;
+  padding: 1rem 2rem;
 }
 
-/* Position the cookie message */
+.shopify-pc__banner__body {
+  width: 100%;
+}
+
 .shopify-pc__banner__body > p {
   font-size: 11px;
   margin: 0;
+  max-width: 100%;
 }
 
-/* Style the "settings" and "reject" buttons */
+/* Buttons area (bottom row) */
 .shopify-pc__banner__btns-granular {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
+/* Left-side (settings + reject all) */
 #shopify-pc__banner__btn-manage-prefs,
 #shopify-pc__banner__btn-decline {
   background: none;
@@ -1656,16 +1653,20 @@ aside#submenu .header-menu-item:hover {
   color: #acacac;
   font-size: 11px;
   padding: 0;
+  margin-right: 1rem;
 }
 
-/* Style the "accept all" button */
+/* Right-side (accept all) */
 #shopify-pc__banner__btn-accept {
   background: black;
   color: white;
   font-size: 11px;
   padding: 0.6rem 1.5rem;
-  margin-left: auto;
   white-space: nowrap;
+}
+
+#shopify-pc__banner__body-policy-link {
+  display: none;
 }
 /* 
 MEDIA QUIERIES
