@@ -1654,6 +1654,7 @@ aside#submenu .header-menu-item:hover {
   font-size: 11px;
   padding: 0;
   margin-right: 1rem;
+  text-decoration: none;
 }
 
 /* Right-side (accept all) */
