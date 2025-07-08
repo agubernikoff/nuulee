@@ -1731,6 +1731,9 @@ MEDIA QUIERIES
     top: 28%;
     border-radius: 0;
   }
+  #shopify-pc__banner__btn-manage-prefs {
+    display: none;
+  }
 }
 @media (min-width: 1150px) {
   .you-may-also-like-container .product-item:last-of-type {
@@ -1747,6 +1750,9 @@ MEDIA QUIERIES
     right: 0.5%;
     top: 28%;
     border-radius: 0;
+  }
+  #shopify-pc__banner__btn-manage-prefs {
+    display: none;
   }
 }
 
