@@ -1621,11 +1621,9 @@ aside#submenu .header-menu-item:hover {
 Cookies
 */
 
-/* Main banner wrapper */
-
 .shopify-pc__banner__body > p {
   font-family: 'regular';
-  font-size: 10px;
+  font-size: 11px;
 }
 #shopify-pc__banner__body-policy-link {
   display: none;
@@ -1637,12 +1635,12 @@ Cookies
   border: none;
   color: #acacac;
   text-decoration: none;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 #shopify-pc__banner__btn-accept {
   background: black;
-  font-size: 10px;
+  font-size: 11px;
   color: white;
 }
 /* 
