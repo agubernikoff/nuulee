@@ -10,7 +10,12 @@ import {AnimatePresence, motion} from 'motion/react';
  *   selectedVariant: ProductFragment['selectedOrFirstAvailableVariant'];
  * }}
  */
-export function ProductForm({productOptions, selectedVariant, hideSizeGuide}) {
+export function ProductForm({
+  productOptions,
+  selectedVariant,
+  hideSizeGuide,
+  resetScroll,
+}) {
   const navigate = useNavigate();
   const {open} = useAside();
   const location = useLocation();
@@ -33,6 +38,7 @@ export function ProductForm({productOptions, selectedVariant, hideSizeGuide}) {
   );
 
   const handleOptionChange = (optionName, value) => {
+    if (optionName.toLowerCase() === 'color') resetScroll();
     setSelectedOptions((prev) => ({
       ...prev,
       [optionName]: value,

@@ -1830,7 +1830,7 @@ MEDIA QUIERIES
     opacity: 1 !important;
   }
   .product-image img {
-    width: calc(100vw - 2rem) !important;
+    width: calc(100vw - 2.6rem) !important;
     max-width: calc(999px * 0.5 + 2rem);
     aspect-ratio: auto !important;
     height: auto !important;

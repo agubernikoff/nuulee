@@ -186,6 +186,13 @@ export default function Product() {
 
   const isFirstRender = useIsFirstRender();
 
+  function resetScroll() {
+    productImages.current.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+    window.scrollTo(0, 0);
+  }
+
+  const productImages = useRef(null);
+
   return (
     <div>
       <div className="product">
@@ -195,6 +202,7 @@ export default function Product() {
             onScroll={(e) =>
               handleScroll(e.target.scrollWidth, e.target.scrollLeft)
             }
+            ref={productImages}
           >
             {productImage}
             {hiddenImages}
@@ -215,6 +223,7 @@ export default function Product() {
               product.tags?.includes('accessories') ||
               product.tags?.includes('living')
             }
+            resetScroll={resetScroll}
           />
           <div className="divider" />
           <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
