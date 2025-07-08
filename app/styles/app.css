@@ -1636,9 +1636,13 @@ aside#submenu .header-menu-item:hover {
   max-width: 100%;
 }
 
-#shopify-pc__banner {
-  padding: 0;
-  display: block;
+.shopify-pc__banner__wrapper {
+  padding: 0 !important;
+  display: block !important;
+}
+
+.shopify-pc__banner__btns.shopify-pc__banner__btns-granular {
+  display: block !important;
 }
 
 /* Buttons area (bottom row) */
