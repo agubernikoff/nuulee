@@ -1818,11 +1818,24 @@ MEDIA QUIERIES
   #shopify-pc__banner__btn-accept {
     width: 100%;
   }
+
   .shopify-pc__banner__btns.shopify-pc__banner__btns-granular {
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-start;
+    gap: 1rem;
   }
+
+  #shopify-pc__banner__btn-manage-prefs,
+  #shopify-pc__banner__btn-decline {
+    display: inline-block;
+    margin-right: 1rem;
+  }
+
+  #shopify-pc__banner__btn-accept {
+    text-align: center;
+  }
+}
   input {
     font-size: 16px;
   }
