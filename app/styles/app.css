@@ -1616,6 +1616,63 @@ aside#submenu .header-menu-item:hover {
 .route-error a {
   font-size: 13px;
 }
+
+/* 
+Cookies
+*/
+
+/* Override Shopify Cookie Banner styles */
+#shopify-cookie-banner,
+.shopify-policy-banner {
+  background-color: white !important;
+  color: black !important;
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  max-width: 900px;
+  margin: 1.5rem auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Syndicat Grotesk', sans-serif;
+  z-index: 9999 !important;
+}
+
+/* Make the cookie banner fixed to bottom */
+#shopify-cookie-banner:has(button),
+.shopify-policy-banner {
+  position: fixed !important;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Button styles */
+#shopify-cookie-banner button,
+.shopify-policy-banner button {
+  background-color: transparent !important;
+  border: 1px solid black !important;
+  color: black !important;
+  padding: 0.5rem 1.25rem;
+  margin-right: 0.5rem;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#shopify-cookie-banner button:hover,
+.shopify-policy-banner button:hover {
+  background-color: black !important;
+  color: white !important;
+}
+
+/* Optional: smaller, muted privacy link */
+#shopify-cookie-banner a,
+.shopify-policy-banner a {
+  color: #888 !important;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
 /* 
 MEDIA QUIERIES
 */
