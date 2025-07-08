@@ -150,6 +150,12 @@ export default function Collection() {
 
 function ProductColorVariants({product, index, colorPatterns}) {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const colorFilter = searchParams
+    .getAll('filter')
+    .map((filter) => JSON.parse(filter))
+    .filter((filter) => filter.taxonomyMetafield?.key === 'color-pattern');
+
   const colors = product.options
     .find((o) => o.name === 'Color')
     ?.optionValues.map((v) => {
@@ -164,23 +170,20 @@ function ProductColorVariants({product, index, colorPatterns}) {
     });
 
   return colors.map((color) => {
+    const colorTaxonomyReferences = JSON.parse(
+      color.colorPattern.node.fields.find(
+        (field) => field.key === 'color_taxonomy_reference',
+      ).value,
+    );
+
     const shouldDisplay =
-      searchParams
-        .getAll('filter')
-        .map((filter) => JSON.parse(filter))
-        .filter((filter) => filter.taxonomyMetafield?.key === 'color-pattern')
-        .length === 0 ||
-      searchParams
-        .getAll('filter')
-        .map((filter) => JSON.parse(filter))
-        .filter((filter) => filter.taxonomyMetafield?.key === 'color-pattern')
-        .map((filter) => filter.taxonomyMetafield?.value)
-        .includes(
-          color?.colorPattern?.node.fields
-            .find((field) => field.key === 'color_taxonomy_reference')
-            .value.replace('["', '')
-            .replace('"]', ''),
-        );
+      colorFilter.length === 0 ||
+      colorTaxonomyReferences.find((ref) =>
+        colorFilter
+          .map((filter) => filter.taxonomyMetafield?.value)
+          .includes(ref),
+      );
+
     const newHandle = `${product.handle}?${product.options
       .filter((o) => o.name !== 'Color')
       .map((o) => `${o.name}=${o.optionValues[0].name}`)
