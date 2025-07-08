@@ -1642,7 +1642,7 @@ aside#submenu .header-menu-item:hover {
 }
 
 #shopify-pc__banner {
-  padding: 16px !important;
+  padding: 1.3rem !important;
 }
 
 .shopify-pc__banner__btns.shopify-pc__banner__btns-granular {
@@ -1678,8 +1678,8 @@ aside#submenu .header-menu-item:hover {
   padding: 0.6rem 1.5rem;
   white-space: nowrap;
   position: absolute;
-  right: 1%;
-  top: 30%;
+  right: 0.5%;
+  top: 28%;
   border-radius: 0;
 }
 
