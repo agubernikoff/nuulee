@@ -1623,60 +1623,23 @@ Cookies
 
 /* Main banner wrapper */
 #shopify-pc__banner.shopify-pc__banner__dialog {
-  background-color: white !important;
-  color: black !important;
-  padding: 1.5rem 2rem;
-
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  position: fixed !important;
-
-  z-index: 9999;
   font-family: 'regular';
-}
-
-/* Text */
-.shopify-pc__banner__body p {
-  margin: 0 0 1rem;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-/* Link styling */
-#shopify-pc__banner__body-policy-link {
-  color: #333 !important;
-  text-decoration: underline !important;
-  font-size: 13px;
-  opacity: 0.7;
-}
-
-/* Button wrapper */
-.shopify-pc__banner__btns {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
-}
-
-/* All cookie buttons */
-button[id^='shopify-pc__banner__btn-'] {
-  background-color: transparent !important;
-  color: black !important;
-  border: 1px solid black !important;
-  padding: 0.6rem 1.5rem;
-  text-transform: uppercase;
-  font-size: 12px;
-  font-family: 'regular';
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-/* Hover effect */
-button[id^='shopify-pc__banner__btn-']:hover {
-  background-color: black !important;
-  color: white !important;
 }
 
 #shopify-pc__banner__body-policy-link {
   display: none;
+}
+
+.shopify-pc__banner__btns.shopify-pc__banner__btns-granular {
+  background-color: transparent;
+  border: none;
+  color: #acacac;
+  text-decoration: none;
+}
+
+#shopify-pc__banner__btn-accept {
+  background: black;
+  font-size: 10px;
 }
 /* 
 MEDIA QUIERIES
