@@ -285,6 +285,68 @@ function SubscribeAside() {
 function SubscribeForm() {
   const [email, setEmail] = useState();
   const [gender, setGender] = useState();
+  const [text, setText] = useState();
+  const [error, setError] = useState();
+
+  function subscribe() {
+    if (!email) {
+      setError('please enter a valid email');
+      setTimeout(() => {
+        setError();
+      }, 1500);
+      return;
+    }
+
+    const payload = {
+      data: {
+        type: 'subscription',
+        attributes: {
+          profile: {
+            data: {
+              type: 'profile',
+              attributes: {
+                email: `${email}`,
+              },
+            },
+          },
+        },
+        relationships: {
+          list: {
+            data: {
+              type: 'list',
+              id: 'TZPHtP',
+            },
+          },
+        },
+      },
+    };
+
+    var requestOptions = {
+      mode: 'cors',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        revision: '2025-04-15',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    fetch(
+      'https://a.klaviyo.com/client/subscriptions/?company_id=UzgZSP',
+      requestOptions,
+    ).then((result) => {
+      if (result.ok) {
+        setText(['thank you for signing up.']);
+      } else {
+        result.json().then((data) => {
+          setError(data.errors[0].detail);
+          setTimeout(() => {
+            setError();
+          }, 1500);
+        });
+      }
+    });
+  }
   return (
     <div>
       <p>
@@ -321,13 +383,37 @@ function SubscribeForm() {
           <label htmlFor="mens">mens</label>
         </div>
       </div>
-      <div className="email-input-container">
-        <input
-          placeholder="enter email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        ></input>
-        <button className="reset">submit</button>
+      <div className={`email-input-container ${text ? 'no-border' : ''}`}>
+        {text ? (
+          <p>{text}</p>
+        ) : (
+          <>
+            <input
+              placeholder="enter email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            ></input>
+            <button className="reset" onClick={subscribe}>
+              submit
+            </button>
+          </>
+        )}
+        <AnimatePresence mode="popLayout">
+          <motion.p
+            key={error}
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+            style={{
+              position: 'absolute',
+              bottom: '-1.5rem',
+              width: '100%',
+              textAlign: 'left',
+            }}
+          >
+            {error}
+          </motion.p>
+        </AnimatePresence>
       </div>
       <p className="subscribe-subtext">
         by subscribing to our newsletter, you agree to receive promotional

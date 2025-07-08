@@ -307,6 +307,10 @@ input[type='checkbox']:checked {
   display: flex;
   justify-content: space-between;
   margin-block: 2rem;
+  position: relative;
+}
+.no-border {
+  border: none;
 }
 .comingsoon {
   overflow: hidden;
