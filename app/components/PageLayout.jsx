@@ -766,9 +766,9 @@ function SizeGuideAside({sizeGuide}) {
                   <thead>
                     <tr>
                       <th></th>
-                      <th>chest</th>
-                      <th>waist</th>
-                      <th>hip</th>
+                      <th>chest (in)</th>
+                      <th>waist (in)</th>
+                      <th>hip (in)</th>
                     </tr>
                   </thead>
                   <tbody>
