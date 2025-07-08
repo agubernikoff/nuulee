@@ -1622,19 +1622,22 @@ Cookies
 */
 
 /* Main banner wrapper */
-#shopify-pc__banner.shopify-pc__banner__dialog {
-  font-family: 'regular';
-}
 
+.shopify-pc__banner__body > p {
+  font-family: 'regular';
+  font-size: 10px;
+}
 #shopify-pc__banner__body-policy-link {
   display: none;
 }
 
-.shopify-pc__banner__btns.shopify-pc__banner__btns-granular > button {
+#shopify-pc__banner__btn-manage-prefs,
+#shopify-pc__banner__btn-decline {
   background-color: transparent;
   border: none;
   color: #acacac;
   text-decoration: none;
+  font-size: 10px;
 }
 
 #shopify-pc__banner__btn-accept {
