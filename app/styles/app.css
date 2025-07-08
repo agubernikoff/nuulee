@@ -1722,7 +1722,6 @@ MEDIA QUIERIES
   #shopify-pc__banner__btn-accept {
     background: #000;
     color: #fff;
-    width: 100%;
     font-size: 11px;
     padding: 0.6rem 1.5rem;
     white-space: nowrap;
@@ -1742,7 +1741,6 @@ MEDIA QUIERIES
   #shopify-pc__banner__btn-accept {
     background: #000;
     color: #fff;
-    width: 100%;
     font-size: 11px;
     padding: 0.6rem 1.5rem;
     white-space: nowrap;
@@ -1750,9 +1748,6 @@ MEDIA QUIERIES
     right: 0.5%;
     top: 28%;
     border-radius: 0;
-  }
-  #shopify-pc__banner__btn-manage-prefs {
-    display: none;
   }
 }
 
@@ -1820,6 +1815,9 @@ MEDIA QUIERIES
 }
 
 @media (max-width: 499px) {
+  #shopify-pc__banner__btn-manage-prefs {
+    display: none;
+  }
   input {
     font-size: 16px;
   }
