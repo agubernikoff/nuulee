@@ -1638,6 +1638,10 @@ aside#submenu .header-menu-item:hover {
 
 .shopify-pc__banner__wrapper {
   display: block !important;
+  padding: 0px !important;
+}
+
+#shopify-pc__banner {
   padding: 16px !important;
 }
 
