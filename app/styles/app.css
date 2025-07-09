@@ -1825,6 +1825,7 @@ MEDIA QUIERIES
     border-radius: 0;
     background-color: white;
     border: 1px solid #a2a2a2;
+    margin-right: 0 !important;
   }
 
   .shopify-pc__banner__btns.shopify-pc__banner__btns-granular {
