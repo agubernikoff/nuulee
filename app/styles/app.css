@@ -1815,27 +1815,14 @@ MEDIA QUIERIES
 }
 
 @media (max-width: 499px) {
-  #shopify-pc__banner__btn-accept,
-  #shopify-pc__banner__btn-decline {
+  #shopify-pc__banner__btn-accept {
     width: 100%;
-  }
-
-  #shopify-pc__banner__btn-decline {
-    padding: 10px 25px;
-    border-radius: 0;
-    background-color: white;
-    border: 1px solid #a2a2a2;
-    margin-right: 0 !important;
-    color: black !important;
   }
 
   .shopify-pc__banner__btns.shopify-pc__banner__btns-granular {
     display: flex !important;
-    flex-direction: row;
-  }
-
-  .shopify-pc__banner__btn-manage-prefs {
-    display: none;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
   }
 
   input {
