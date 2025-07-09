@@ -1825,7 +1825,7 @@ MEDIA QUIERIES
     display: flex !important;
     flex-direction: row-reverse;
     flex-wrap: wrap;
-    margin-top: 0;
+    margin-top: 0 !important;
   }
 
   #shopify-pc__banner__btn-manage-prefs {
@@ -1841,7 +1841,7 @@ MEDIA QUIERIES
   }
 
   .shopify-pc__banner__body {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
   }
 
   input {
