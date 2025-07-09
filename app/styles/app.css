@@ -1821,8 +1821,7 @@ MEDIA QUIERIES
   }
 
   #shopify-pc__banner__btn-decline {
-    background: white;
-    border: 1px solid #a2a2a2;
+    background: none;
     color: black;
   }
 
