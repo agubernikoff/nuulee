@@ -1837,6 +1837,7 @@ MEDIA QUIERIES
     order: 2;
     flex-basis: 15%;
     margin-right: 0;
+    text-align: left;
   }
 
   .shopify-pc__banner__body {
