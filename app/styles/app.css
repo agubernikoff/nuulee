@@ -1818,6 +1818,7 @@ MEDIA QUIERIES
   #shopify-pc__banner__btn-accept {
     width: 100%;
     order: 3;
+    flex-basis: 100%;
   }
 
   .shopify-pc__banner__btns.shopify-pc__banner__btns-granular {
