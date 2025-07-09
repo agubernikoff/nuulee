@@ -150,7 +150,7 @@ export default function Product() {
     const dividend = scrollLeft / widthOfAnImage;
     const rounded = parseFloat((scrollLeft / widthOfAnImage).toFixed(0));
 
-    if (Math.abs(dividend - rounded) < 0.001) setImageIndex(rounded);
+    if (Math.abs(dividend - rounded) < 0.01) setImageIndex(rounded);
   }
 
   const mappedIndicators =
