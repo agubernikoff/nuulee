@@ -1834,7 +1834,8 @@ MEDIA QUIERIES
 
   #shopify-pc__banner__btn-decline {
     order: 2;
-    flex-basis: 30%;
+    flex-basis: 15%;
+    margin-right: 0;
   }
 
   input {
