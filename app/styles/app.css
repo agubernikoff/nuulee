@@ -1131,6 +1131,20 @@ aside#submenu .header-menu-item:hover {
   }
 }
 
+.product-item {
+  position: relative;
+}
+.product-item:has(> .product-item-img-container + .product-item-img-container)
+  > .product-item-img-container:nth-of-type(2) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+.product-item-img-container {
+  width: 100%;
+  transition: opacity 300ms ease-in-out;
+}
 .product-item img {
   height: auto;
   width: 100%;
@@ -1140,6 +1154,19 @@ aside#submenu .header-menu-item:hover {
 }
 .product-item > div > div {
   font-size: 12px !important;
+}
+.product-item-title-price {
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+}
+.product-item:hover .product-item-title-price {
+  opacity: 1;
+}
+.product-item:hover:has(
+    > .product-item-img-container + .product-item-img-container
+  )
+  > .product-item-img-container:nth-of-type(2) {
+  opacity: 1;
 }
 
 /*
@@ -1947,6 +1974,9 @@ MEDIA QUIERIES
   }
   .product-item > div:last-of-type {
     opacity: 1 !important;
+  }
+  .product-item > .product-item-img-container:nth-of-type(2) {
+    opacity: 0 !important;
   }
   .product-image img {
     width: calc(100vw - 2.6rem) !important;
