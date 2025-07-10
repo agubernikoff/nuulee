@@ -39,7 +39,10 @@ function ProductGridItem({product, productUrl, loading}) {
             sizes="(min-width: 45em) 400px, 100vw"
           />
         </motion.div>
-        <div style={{display: 'none'}} key={'idk'}>
+        <div
+          style={{display: 'none'}}
+          key={`idk-${product.images.nodes[1].id}`}
+        >
           <Image
             alt={product.images.nodes[1]?.altText || product.title}
             aspectRatio="361/482"
