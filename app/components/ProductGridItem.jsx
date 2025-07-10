@@ -17,7 +17,7 @@ function ProductGridItem({product, productUrl, loading}) {
       prefetch="intent"
       to={productUrl || variantUrl}
     >
-      {product?.images?.nodes.map((n) => (
+      {product?.images?.nodes.slice(0, 2).map((n) => (
         <div className="product-item-img-container">
           <Image
             alt={n.altText || product.title}
