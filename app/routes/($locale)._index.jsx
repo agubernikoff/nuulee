@@ -223,9 +223,7 @@ function Section({section}) {
       <div className="section-text-container">
         <p>{section.title}</p>
         <p>{section.description}</p>
-        <NavLink to={`/pages/${section.title.split(' ').join('-')}`}>
-          learn more
-        </NavLink>
+        <NavLink to={`/pages/${section.handle}`}>learn more</NavLink>
         {section.images.length > 1 ? (
           <div>
             <img
