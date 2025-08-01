@@ -28,6 +28,26 @@ export const meta = ({data}) => {
  * @param {LoaderFunctionArgs} args
  */
 export async function loader(args) {
+  const url = new URL(args.request.url);
+  const isHardRefresh =
+    args.request.method === 'GET' &&
+    args.request.headers.get('sec-fetch-dest') === 'document';
+
+  if (isHardRefresh) {
+    const paginationKeys = ['cursor', 'direction'];
+    let shouldRedirect = false;
+
+    for (const key of paginationKeys) {
+      if (url.searchParams.has(key)) {
+        url.searchParams.delete(key);
+        shouldRedirect = true;
+      }
+    }
+
+    if (shouldRedirect) {
+      return redirect(`${url.pathname}?${url.searchParams.toString()}`);
+    }
+  }
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
