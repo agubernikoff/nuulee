@@ -8,7 +8,6 @@ function ProductGridItem({product, productUrl, loading}) {
   const [image, setImage] = useState(product?.images?.nodes[0]);
   const [hovered, setHovered] = useState(false);
   const variantUrl = useVariantUrl(product.handle);
-  console.log(product.images.nodes);
 
   return (
     <Link
