@@ -72,7 +72,7 @@ async function loadCriticalData({context, params, request}) {
   });
   const filters = [];
   let reverse = false;
-  let sortKey = null;
+  let sortKey = 'BEST_SELLING';
 
   if (!handle) {
     throw redirect('/collections');
@@ -293,6 +293,8 @@ export function Filter({handle, tag, filters, term}) {
       (prev) => {
         prev.set('reverse', Boolean(parsed.reverse));
         prev.set('sortKey', parsed.sortKey);
+        prev.delete('direction');
+        prev.delete('cursor');
         return prev;
       },
       {preventScrollReset: true},
@@ -304,6 +306,8 @@ export function Filter({handle, tag, filters, term}) {
       (prev) => {
         prev.delete('reverse');
         prev.delete('sortKey');
+        prev.delete('direction');
+        prev.delete('cursor');
         return prev;
       },
       {preventScrollReset: true},

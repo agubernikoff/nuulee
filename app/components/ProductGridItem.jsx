@@ -17,7 +17,7 @@ function ProductGridItem({product, productUrl, loading}) {
       to={productUrl || variantUrl}
     >
       {product?.images?.nodes.slice(0, 2).map((n) => (
-        <div className="product-item-img-container">
+        <div className="product-item-img-container" key={n.id}>
           <Image
             alt={n.altText || product.title}
             aspectRatio="361/482"
