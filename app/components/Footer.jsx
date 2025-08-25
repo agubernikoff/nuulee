@@ -8,7 +8,7 @@ import {useAside} from './Aside';
 /**
  * @param {FooterProps}
  */
-export function Footer({footer: footerPromise, publicStoreDomain}) {
+export function Footer({footer: footerPromise, publicStoreDomain, header}) {
   return (
     <Suspense fallback={<div>Loading footer...</div>}>
       <Await resolve={footerPromise}>
@@ -17,6 +17,7 @@ export function Footer({footer: footerPromise, publicStoreDomain}) {
             <FooterMenu
               menu={footer.menu}
               publicStoreDomain={publicStoreDomain}
+              primaryDomainUrl={header.shop.primaryDomain.url}
             />
           );
         }}
@@ -31,7 +32,7 @@ export function Footer({footer: footerPromise, publicStoreDomain}) {
  *   publicStoreDomain: string;
  * }}
  */
-export function FooterMenu({menu, publicStoreDomain}) {
+export function FooterMenu({menu, publicStoreDomain, primaryDomainUrl}) {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     window
@@ -45,7 +46,9 @@ export function FooterMenu({menu, publicStoreDomain}) {
     menu.items.find((sub) =>
       sub.items
         .map((link) => {
-          link.url.includes(publicStoreDomain)
+          link.url.includes('myshopify.com') ||
+          link.url.includes(publicStoreDomain) ||
+          link.url.includes(primaryDomainUrl)
             ? new URL(link.url).pathname
             : link.url;
         })
@@ -66,7 +69,9 @@ export function FooterMenu({menu, publicStoreDomain}) {
           (sub) =>
             sub.items
               .map((link) =>
-                link.url.includes(publicStoreDomain)
+                link.url.includes('myshopify.com') ||
+                link.url.includes(publicStoreDomain) ||
+                link.url.includes(primaryDomainUrl)
                   ? new URL(link.url).pathname
                   : link.url,
               )
@@ -97,6 +102,7 @@ export function FooterMenu({menu, publicStoreDomain}) {
                   links={item.items}
                   publicStoreDomain={publicStoreDomain}
                   isMobile={isMobile}
+                  primaryDomainUrl={primaryDomainUrl}
                 />
               );
             }
@@ -106,6 +112,7 @@ export function FooterMenu({menu, publicStoreDomain}) {
           <FooterHeaderSubMenu
             links={footerHeaderSubMenu}
             publicStoreDomain={publicStoreDomain}
+            primaryDomainUrl={primaryDomainUrl}
           />
         ) : null}
       </div>
@@ -134,15 +141,25 @@ export function FooterMenu({menu, publicStoreDomain}) {
  *   links: Array<{id: string, title: string, url: string}>;
  * }}
  */
-function FooterColumn({title, links, publicStoreDomain, isMobile}) {
+function FooterColumn({
+  title,
+  links,
+  publicStoreDomain,
+  isMobile,
+  primaryDomainUrl,
+}) {
   const {open} = useAside();
   return (
     <div className="footer-column">
       <p className="footer-heading">{title}</p>
       {links.map((link) => {
-        const url = link.url.includes(publicStoreDomain)
-          ? new URL(link.url).pathname
-          : link.url;
+        // if the url is internal, we strip the domain
+        const url =
+          link.url.includes('myshopify.com') ||
+          link.url.includes(publicStoreDomain) ||
+          link.url.includes(primaryDomainUrl)
+            ? new URL(link.url).pathname
+            : link.url;
 
         return (
           <NavLink
@@ -164,15 +181,18 @@ function FooterColumn({title, links, publicStoreDomain, isMobile}) {
   );
 }
 
-function FooterHeaderSubMenu({links, publicStoreDomain}) {
+function FooterHeaderSubMenu({links, publicStoreDomain, primaryDomainUrl}) {
   if (links === undefined || links?.items?.length === 0) return null;
   return (
     <div className="footer-header-submenu">
       <nav className="footer-header-submenu-nav">
         {links?.items?.map((link) => {
-          const url = link.url.includes(publicStoreDomain)
-            ? new URL(link.url).pathname
-            : link.url;
+          const url =
+            link.url.includes('myshopify.com') ||
+            link.url.includes(publicStoreDomain) ||
+            link.url.includes(primaryDomainUrl)
+              ? new URL(link.url).pathname
+              : link.url;
 
           return (
             <NavLink
