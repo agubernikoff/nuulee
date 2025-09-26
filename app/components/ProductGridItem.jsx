@@ -8,6 +8,7 @@ function ProductGridItem({product, productUrl, loading}) {
   const [image, setImage] = useState(product?.images?.nodes[0]);
   const [hovered, setHovered] = useState(false);
   const variantUrl = useVariantUrl(product.handle);
+  console.log(product.availableForSale);
 
   return (
     <Link
@@ -30,10 +31,14 @@ function ProductGridItem({product, productUrl, loading}) {
       <AnimatePresence mode="popLayout">
         <div className="product-item-title-price">
           <p>{product.title.toLowerCase()}</p>
-          <Money
-            data={product.priceRange.minVariantPrice}
-            withoutTrailingZeros
-          />
+          {product.availableForSale ? (
+            <Money
+              data={product.priceRange.minVariantPrice}
+              withoutTrailingZeros
+            />
+          ) : (
+            <div style={{color: 'rgb(177, 177, 177)'}}>sold out</div>
+          )}
         </div>
       </AnimatePresence>
     </Link>

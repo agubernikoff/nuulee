@@ -400,6 +400,7 @@ const PRODUCT_VARIANT_FRAGMENT = `#graphql
 
 const PRODUCT_FRAGMENT = `#graphql
   fragment Product on Product {
+    availableForSale
     id
     title
     vendor
@@ -496,6 +497,7 @@ $language: LanguageCode
     id
     handle
     title
+    availableForSale
     priceRange {
       minVariantPrice {
         amount
@@ -523,6 +525,7 @@ $language: LanguageCode
     id
     handle
     title
+    availableForSale
     priceRange {
       minVariantPrice {
         amount

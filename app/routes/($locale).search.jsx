@@ -94,6 +94,7 @@ fragment MoneyProductItem on MoneyV2 {
     title
     trackingParameters
     vendor
+    availableForSale
     images(first: 20) {
       nodes {
         id
@@ -296,6 +297,7 @@ const PREDICTIVE_SEARCH_PRODUCT_FRAGMENT = `#graphql
     title
     handle
     trackingParameters
+    availableForSale
     selectedOrFirstAvailableVariant(
       selectedOptions: []
       ignoreUnknownOptions: true

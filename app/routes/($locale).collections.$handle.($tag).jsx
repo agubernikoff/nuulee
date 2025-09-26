@@ -170,7 +170,7 @@ export default function Collection() {
 
 export function ProductColorVariants({product, index, colorPatterns}) {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  console.log(product);
   const colorFilter = searchParams
     .getAll('filter')
     .map((filter) => JSON.parse(filter))
@@ -596,6 +596,7 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
     id
     handle
     title
+    availableForSale
     images(first: 20) {
       nodes {
         id

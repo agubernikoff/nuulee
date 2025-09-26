@@ -324,6 +324,7 @@ const WOMENS_COLLECTION_QUERY = `#graphql
 
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   fragment RecommendedProduct on Product {
+    availableForSale
     id
     title
     handle
@@ -362,6 +363,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
 
 const PRODUCT_ITEM_FRAGMENT = `#graphql
   fragment ProductItem on Product {
+    availableForSale
     id
     title
     handle
