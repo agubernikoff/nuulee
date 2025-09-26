@@ -168,9 +168,9 @@ export default function Collection() {
   );
 }
 
-function ProductColorVariants({product, index, colorPatterns}) {
+export function ProductColorVariants({product, index, colorPatterns}) {
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(product);
+
   const colorFilter = searchParams
     .getAll('filter')
     .map((filter) => JSON.parse(filter))
