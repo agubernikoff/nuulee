@@ -81,12 +81,12 @@ function ProductColorVariants({product, index, colorPatterns}) {
 
   const colorFilter = searchParams
     .getAll('filter')
-    .map((filter) => JSON.parse(filter))
+    ?.map((filter) => JSON.parse(filter))
     .filter((filter) => filter.taxonomyMetafield?.key === 'color-pattern');
 
   const colors = product.options
     .find((o) => o.name === 'Color')
-    ?.optionValues.map((v) => {
+    ?.optionValues?.map((v) => {
       return {
         hex: v.swatch.color,
         name: v.name,
@@ -97,7 +97,7 @@ function ProductColorVariants({product, index, colorPatterns}) {
       };
     });
 
-  return colors.map((color) => {
+  return colors?.map((color) => {
     const colorTaxonomyReferences = JSON.parse(
       color.colorPattern.node.fields.find(
         (field) => field.key === 'color_taxonomy_reference',
