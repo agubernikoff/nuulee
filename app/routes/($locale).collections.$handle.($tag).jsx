@@ -184,7 +184,8 @@ export function ProductColorVariants({product, index, colorPatterns}) {
         name: v.name,
         colorPattern: colorPatterns.find(
           (pat) =>
-            pat.node.handle === v.name.replace(' ', '-').replace('/', '-'),
+            pat.node.handle.toLowerCase() ===
+            v.name.replace(' ', '-').replace('/', '-').toLowerCase(),
         ),
       };
     });
