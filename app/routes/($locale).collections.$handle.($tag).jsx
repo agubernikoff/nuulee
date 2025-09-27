@@ -192,16 +192,16 @@ export function ProductColorVariants({product, index, colorPatterns}) {
 
   return colors?.map((color) => {
     const colorTaxonomyReferences = JSON.parse(
-      color.colorPattern.node.fields.find(
+      color?.colorPattern?.node?.fields?.find(
         (field) => field.key === 'color_taxonomy_reference',
-      ).value,
+      )?.value || '[]',
     );
 
     const shouldDisplay =
       colorFilter.length === 0 ||
-      colorTaxonomyReferences.find((ref) =>
+      colorTaxonomyReferences?.find((ref) =>
         colorFilter
-          .map((filter) => filter.taxonomyMetafield?.value)
+          ?.map((filter) => filter?.taxonomyMetafield?.value)
           .includes(ref),
       );
 
