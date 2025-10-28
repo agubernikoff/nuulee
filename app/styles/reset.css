@@ -1,6 +1,7 @@
 html,
 body {
   overscroll-behavior: none;
+  color: #2a0e39 !important;
 }
 
 body {
@@ -48,7 +49,7 @@ p {
 }
 
 a {
-  color: #000;
+  color: #2a0e39 !important;
   text-decoration: none;
 }
 
