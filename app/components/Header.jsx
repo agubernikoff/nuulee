@@ -11,7 +11,7 @@ import NavLink from './NavLink';
 /**
  * @param {HeaderProps}
  */
-export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
+export function Header({header, isLoggedIn, cart, publicStoreDomain, isDev}) {
   const {shop, menu} = header;
   const {close} = useAside();
   return (

@@ -1,4 +1,4 @@
-import {useLoaderData, Await} from '@remix-run/react';
+import {useLoaderData, Await, useRouteLoaderData} from '@remix-run/react';
 import {useState, useEffect, useRef} from 'react';
 import {
   getSelectedProductOptions,
@@ -102,6 +102,8 @@ function loadDeferredData({context, params}) {
 export default function Product() {
   /** @type {LoaderReturnData} */
   const {product, recs, compliments} = useLoaderData();
+
+  const {isDev} = useRouteLoaderData('root');
 
   const selectedVariant = useOptimisticVariant(
     product.selectedOrFirstAvailableVariant,

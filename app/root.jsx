@@ -71,7 +71,10 @@ export async function loader(args) {
 
   const {storefront, env} = args.context;
 
+  const isDev = process.env.NODE_ENV === 'development';
+
   return {
+    isDev,
     ...deferredData,
     ...criticalData,
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,

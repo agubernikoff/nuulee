@@ -4,6 +4,7 @@ import {
   Link,
   useSearchParams,
   useLocation,
+  useRouteLoaderData,
 } from '@remix-run/react';
 import {
   getPaginationVariables,
@@ -123,6 +124,8 @@ function loadDeferredData({context}) {
 export default function Collection() {
   /** @type {LoaderReturnData} */
   const {collection, handle, tag, colorPatterns} = useLoaderData();
+
+  const {isDev} = useRouteLoaderData('root');
   return (
     <div className="collection">
       {!tag && collection.image ? (

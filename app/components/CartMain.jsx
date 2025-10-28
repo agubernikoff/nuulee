@@ -9,7 +9,7 @@ import {CartSummary} from './CartSummary';
  * It is used by both the /cart route and the cart aside dialog.
  * @param {CartMainProps}
  */
-export function CartMain({layout, cart: originalCart}) {
+export function CartMain({layout, cart: originalCart, isDev}) {
   const cart = useOptimisticCart(originalCart);
 
   const linesExist = cart?.lines?.nodes?.length > 0;

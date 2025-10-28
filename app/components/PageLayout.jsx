@@ -28,6 +28,7 @@ export function PageLayout({
   selectedLocale,
   sizeGuide,
   comingSoon,
+  isDev,
 }) {
   return (
     <>
@@ -35,7 +36,7 @@ export function PageLayout({
         <ComingSoon video={comingSoon.comingSoonVideo} />
       ) : (
         <Aside.Provider>
-          <CartAside cart={cart} />
+          <CartAside cart={cart} isDev={isDev} />
           <SearchAside />
           <MobileMenuAside
             header={header}
@@ -55,6 +56,7 @@ export function PageLayout({
               cart={cart}
               isLoggedIn={isLoggedIn}
               publicStoreDomain={publicStoreDomain}
+              isDev={isDev}
             />
           )}
           <main>{children}</main>
@@ -550,7 +552,7 @@ function LocationForm({availableCountries, selectedLocale, close}) {
 /**
  * @param {{cart: PageLayoutProps['cart']}}
  */
-function CartAside({cart}) {
+function CartAside({cart, isDev}) {
   return (
     <Suspense fallback={<p>Loading cart ...</p>}>
       <Await resolve={cart}>
@@ -559,7 +561,7 @@ function CartAside({cart}) {
             type="cart"
             heading={`shopping bag (${cartData?.totalQuantity || 0})`}
           >
-            <CartMain cart={cartData} layout="aside" />
+            <CartMain cart={cartData} layout="aside" isDev={isDev} />
           </Aside>
         )}
       </Await>

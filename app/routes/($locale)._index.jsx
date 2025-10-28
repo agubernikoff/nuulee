@@ -1,4 +1,4 @@
-import {Await, useLoaderData} from '@remix-run/react';
+import {Await, useLoaderData, useRouteLoaderData} from '@remix-run/react';
 import {Suspense} from 'react';
 import {Image, Money} from '@shopify/hydrogen';
 import ProductGridItem from '~/components/ProductGridItem';
@@ -80,6 +80,8 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
+
+  const {isDev} = useRouteLoaderData('root');
   return (
     <div className="home">
       <Hero data={data.sanityData.hero} />
