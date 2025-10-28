@@ -178,6 +178,10 @@ export default function Product() {
 
   const metafields = rawMetafields.filter(Boolean);
 
+  const storyMetafield = metafields.find(
+    (m) => m.namespace === 'custom' && m.key === 'story',
+  );
+
   const detailsMetafield = metafields.find(
     (m) => m.namespace === 'custom' && m.key === 'details',
   );
@@ -212,7 +216,9 @@ export default function Product() {
           <div className="mapped-indicators">{mappedIndicators}</div>
         </div>
         <div className="product-main">
-          <p>{title.toLowerCase()}</p>
+          <p className={isDev ? 'product-title-pdp' : ''}>
+            {title.toLowerCase()}
+          </p>
           <ProductPrice
             price={selectedVariant?.price}
             compareAtPrice={selectedVariant?.compareAtPrice}
@@ -233,6 +239,12 @@ export default function Product() {
 
           <div className="dropdown-container">
             {[
+              isDev
+                ? {
+                    title: 'story',
+                    details: storyMetafield?.value?.trim() || '',
+                  }
+                : null,
               {
                 title: 'details',
                 details:
@@ -245,16 +257,19 @@ export default function Product() {
                   sustainabilityMetafield?.value?.trim() ||
                   'we use eco-friendly materials and sustainable practices in our production.',
               },
-            ].map((section) => (
-              <Expandable
-                key={section.title}
-                openSection={openSection}
-                toggleSection={toggleSection}
-                title={section.title}
-                details={section.details}
-                isFirstRender={isFirstRender}
-              />
-            ))}
+            ].map((section) => {
+              if (!section) return null;
+              return (
+                <Expandable
+                  key={section.title}
+                  openSection={openSection}
+                  toggleSection={toggleSection}
+                  title={section.title}
+                  details={section.details}
+                  isFirstRender={isFirstRender}
+                />
+              );
+            })}
           </div>
           <motion.div className="divider" layout={!isFirstRender} />
         </div>
@@ -441,6 +456,7 @@ const PRODUCT_FRAGMENT = `#graphql
       }
     }
     metafields(identifiers: [
+      {namespace: "custom", key: "story"},
       {namespace: "custom", key: "details"},
       {namespace: "custom", key: "sustainability"}
     ]) {
