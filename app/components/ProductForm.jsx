@@ -141,6 +141,7 @@ export function ProductForm({
                             ? '1px solid black'
                             : '1px solid transparent',
                         opacity: available ? 1 : 0.3,
+                        borderRadius: '10px',
                       }}
                     >
                       <ProductOptionSwatch swatch={swatch} name={name} />
@@ -164,6 +165,7 @@ export function ProductForm({
                           selected || !available ? 'underline' : 'none',
                         textUnderlineOffset: available ? 'auto' : '-0.3em',
                         textDecorationSkipInk: available ? 'auto' : 'none',
+                        borderRadius: '10px',
                       }}
                       disabled={!exists}
                       onClick={() => {
@@ -215,6 +217,7 @@ function ProductOptionSwatch({swatch, name}) {
       className="product-option-label-swatch"
       style={{
         backgroundColor: color || 'transparent',
+        borderRadius: '10px',
       }}
     >
       {!!image && <img src={image} alt={name} />}

@@ -15,7 +15,19 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain, isDev}) {
   const {shop, menu} = header;
   const {close} = useAside();
   return (
-    <header className="header">
+    <header
+      className="header"
+      style={
+        isDev
+          ? {
+              display: 'flex',
+              alignItems: 'flex-end',
+              paddingTop: '10px',
+              paddingBottom: '10px',
+            }
+          : {}
+      }
+    >
       <HeaderMenu
         menu={menu}
         viewport="desktop"
@@ -34,7 +46,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain, isDev}) {
         end
         onClick={close}
       >
-        <Logo />
+        <Logo isDev={isDev} />
       </NavLink>
       <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
     </header>
@@ -117,10 +129,19 @@ export function HeaderMenu({
                 e.preventDefault();
                 window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
               }
+
+              // Handle submenu logic differently depending on viewport and isDev
               if (item.items && item.items.length > 0) {
-                e.preventDefault();
-                if (viewport === 'mobile') open('mobile', item.title);
-              } else close();
+                if (viewport === 'mobile' || isDev) {
+                  e.preventDefault();
+                  open('mobile', item.title);
+                } else {
+                  // Allow normal navigation on desktop unless in dev mode
+                  close();
+                }
+              } else {
+                close();
+              }
             }}
             prefetch="intent"
             // style={activeLinkStyle}
@@ -319,11 +340,11 @@ function CartBanner() {
   return <CartBadge count={cart?.totalQuantity ?? 0} />;
 }
 
-function Logo() {
+function Logo({isDev}) {
   return (
     <svg
-      width="75"
-      height="36"
+      width={isDev ? 105 : 75}
+      height={isDev ? 51 : 36}
       viewBox="0 0 75 36"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
