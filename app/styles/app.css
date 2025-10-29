@@ -945,6 +945,9 @@ aside#submenu .header-menu-item:hover {
 .section-img-container {
   width: 45%;
 }
+.isDev > .section-img-container:has(> img + img) > img {
+  width: 45%;
+}
 .section-text-container:has(img) {
   width: 45%;
 }

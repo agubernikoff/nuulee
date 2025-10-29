@@ -81,7 +81,7 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
-
+  console.log(data);
   const {isDev} = useRouteLoaderData('root');
   return (
     <div className="home">
@@ -95,9 +95,13 @@ export default function Homepage() {
       {isDev && (
         <CollectionsGrid collections={data.sanityData.collectionsGrid} />
       )}
-      {data.sanityData.sections.map((section) => (
-        <Section section={section} key={section._key} />
-      ))}
+      {data.sanityData.sections.map((section) => {
+        return isDev ? (
+          <Section2 section={section} key={section._key} />
+        ) : (
+          <Section section={section} key={section._key} />
+        );
+      })}
     </div>
   );
 }
@@ -275,6 +279,65 @@ function Section({section}) {
           }}
         />
       </div>
+    </div>
+  );
+}
+
+function Section2({section}) {
+  return (
+    <div
+      className="section-container isDev"
+      style={{
+        justifyContent:
+          section.images.length === 1 ? 'center' : 'space-between',
+        flexWrap: section.images.length > 1 ? 'wrap' : 'nowrap',
+      }}
+    >
+      <div
+        className="section-text-container"
+        style={
+          section.images.length > 1
+            ? {
+                width: '100%',
+                marginBottom: '56px',
+              }
+            : {width: '20%'}
+        }
+      >
+        <p>{section.title}</p>
+        <p>{section.description}</p>
+        <NavLink to={`/pages/${section.handle}`}>learn more</NavLink>
+      </div>
+      <div
+        className="section-img-container"
+        style={
+          section.images.length > 1
+            ? {
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+              }
+            : {flexShrink: 0}
+        }
+      >
+        {section.images
+          .sort((a, b) => a.isPrimary - b.isPrimary)
+          .map((img) => (
+            <img src={img.image.asset.url} alt={img.alt} key={img._key} />
+          ))}
+      </div>
+      {section.title2 && section.description2 && section.handle2 && (
+        <div
+          className="section-text-container hasTwo"
+          style={{
+            width: section.images.length > 1 ? '100%' : '20%',
+          }}
+        >
+          <p>{section.title2}</p>
+          <p>{section.description2}</p>
+          <NavLink to={`/pages/${section.handle2}`}>care guide</NavLink>
+        </div>
+      )}
     </div>
   );
 }
