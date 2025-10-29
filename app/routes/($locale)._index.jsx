@@ -86,7 +86,7 @@ export default function Homepage() {
   return (
     <div className="home">
       <Hero data={data.sanityData.hero} />
-      <RecommendedProducts products={data.featuredCollection} />
+      {!isDev && <RecommendedProducts products={data.featuredCollection} />}
       <CollectionLinks
         collections={[data.womenCollection, data.menCollection]}
         shopMenImage={data.sanityData.shopMensImage}
