@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from '@remix-run/react';
 
 function CollectionGridItem({collection}) {
-  console.log(collection);
   return (
     <Link
       className="product-item"
