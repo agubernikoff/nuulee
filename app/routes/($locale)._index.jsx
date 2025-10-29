@@ -5,6 +5,7 @@ import ProductGridItem from '~/components/ProductGridItem';
 import {sanityClient} from '~/sanity/SanityClient';
 import NavLink from '~/components/NavLink';
 import mobileIcon from '~/assets/NL_Social-Sharing.jpg';
+import CollectionGridItem from '~/components/CollectionGridItem';
 
 /**
  * @type {MetaFunction}
@@ -45,7 +46,7 @@ async function loadCriticalData({context}) {
 
   const homePage = await sanityClient
     .fetch(
-      "*[_type == 'home'][0]{...,hero{...,mediaItems[]{...,video{...,asset->{url}},image{...,asset->{url},'dimensions': asset->metadata.dimensions}}},shopMensImage{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}},shopWomensImage{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}},sections[]{...,images[]{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}}}}",
+      "*[_type == 'home'][0]{...,hero{...,mediaItems[]{...,video{...,asset->{url}},image{...,asset->{url},'dimensions': asset->metadata.dimensions}}},shopMensImage{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}},shopWomensImage{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}},collectionsGrid[]{...,image{...,asset->{url}}},sections[]{...,images[]{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}}}}",
     )
     .then((response) => response);
 
@@ -91,6 +92,9 @@ export default function Homepage() {
         shopMenImage={data.sanityData.shopMensImage}
         shopWomenImage={data.sanityData.shopWomensImage}
       />
+      {isDev && (
+        <CollectionsGrid collections={data.sanityData.collectionsGrid} />
+      )}
       {data.sanityData.sections.map((section) => (
         <Section section={section} key={section._key} />
       ))}
@@ -173,6 +177,18 @@ function RecommendedProducts({products}) {
         </Await>
       </Suspense>
       <br />
+    </div>
+  );
+}
+
+function CollectionsGrid({collections}) {
+  return (
+    <div className="recommended-products">
+      <div className="products-grid">
+        {collections.map((c, index) => (
+          <CollectionGridItem key={c._key} collection={c} />
+        ))}
+      </div>
     </div>
   );
 }
