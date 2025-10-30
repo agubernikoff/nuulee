@@ -636,6 +636,7 @@ aside#submenu .header-menu-item:hover {
 .footer-header-submenu {
   position: fixed;
   top: var(--header-height);
+  /* top: calc(var(--header-height) + 20px); */
   left: 0;
   border-block: 1px solid var(--color-dimmer);
   width: 100vw;
@@ -707,13 +708,56 @@ aside#submenu .header-menu-item:hover {
   flex-direction: column;
   justify-content: space-between;
 }
-.cart-line-quantity > form {
-  display: none;
+
+.cart-product-details div a p {
+  text-transform: lowercase;
 }
-.cart-line-quantity > form:last-of-type {
-  display: block;
+
+.cart-line-quantity {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid black;
+  width: fit-content;
 }
-.cart-line-quantity > form:last-of-type > button {
+
+.cart-line-quantity form {
+  display: flex;
+}
+
+.cart-line-quantity button {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+  padding: 0;
+  font-size: 18px;
+}
+
+.cart-line-quantity button:disabled {
+  cursor: not-allowed;
+}
+
+.cart-line-quantity p {
+  width: 52px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  background: white;
+  flex-shrink: 0;
+}
+
+.cart-product-details > form:last-of-type > button {
   all: unset;
   color: black;
   text-decoration: underline;
@@ -721,7 +765,8 @@ aside#submenu .header-menu-item:hover {
   cursor: pointer;
 }
 .cart-middle-details {
-  margin-top: 1rem;
+  margin-top: 18px;
+  margin-bottom: 18px;
 }
 .cart-middle-details > p {
   text-transform: lowercase;
@@ -1413,6 +1458,7 @@ aside#submenu .header-menu-item:hover {
 .discover {
   width: 100%;
   margin-top: var(--header-height);
+  /* margin-top: calc(var(--header-height) + 20px); */
 }
 .page > main p:first-of-type {
   padding-top: 0;
@@ -1732,9 +1778,11 @@ MEDIA QUIERIES
   aside#mobile {
     left: calc(-1 * var(--aside-width));
     margin-top: var(--header-height);
+    /* margin-top: calc(var(--header-height) + 20px); */
   }
   .overlay:has(> aside#mobile) {
     top: var(--header-height);
+    /* top: calc(var(--header-height) + 20px); */
   }
   .overlay.expanded aside#mobile {
     transform: translateX(calc(var(--aside-width) * 1));
@@ -2126,6 +2174,7 @@ MEDIA QUIERIES
     min-width: 100%;
     max-width: 100%;
     margin-top: var(--header-height);
+    /* margin-top: calc(var(--header-height) + 20px); */
     right: auto;
   }
   .overlay {
