@@ -1250,6 +1250,11 @@ aside#submenu .header-menu-item:hover {
   margin-top: var(--main-margin-top);
   min-width: 50vw;
 }
+.product-images.isDev {
+  flex-direction: row;
+  max-width: 50vw;
+  flex-wrap: wrap;
+}
 .product-images img {
   height: auto;
   width: 100%;
@@ -1257,6 +1262,15 @@ aside#submenu .header-menu-item:hover {
 }
 .product-image {
   display: flex;
+}
+.isDev > .product-image {
+  width: 50%;
+}
+.isDev > .product-image:nth-of-type(3n) {
+  width: 100%;
+}
+.isDev > .product-image:last-child:nth-child(3n + 1) {
+  width: 100%;
 }
 .product-main {
   align-self: start;
@@ -1867,6 +1881,8 @@ MEDIA QUIERIES
 
   .product-images {
     width: 100%;
+    max-width: none !important;
+    flex-wrap: nowrap !important;
     /* height: 69vh; */
     position: relative;
     flex-direction: row;
@@ -1882,6 +1898,7 @@ MEDIA QUIERIES
   .product-image {
     height: auto;
     scroll-snap-align: start;
+    width: 100% !important;
   }
   .product-image img {
     width: calc(100vw - 20vw) !important;

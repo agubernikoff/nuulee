@@ -203,15 +203,15 @@ export default function Product() {
     <div>
       <div className="product">
         <div style={{position: 'relative'}}>
+          {hiddenImages}
           <div
-            className="product-images"
+            className={`product-images ${isDev ? 'isDev' : ''}`}
             onScroll={(e) =>
               handleScroll(e.target.scrollWidth, e.target.scrollLeft)
             }
             ref={productImages}
           >
             {productImage}
-            {hiddenImages}
           </div>
           <div className="mapped-indicators">{mappedIndicators}</div>
         </div>
