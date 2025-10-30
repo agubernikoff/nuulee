@@ -1,14 +1,26 @@
 import {Image} from '@shopify/hydrogen';
+import {useRef} from 'react';
 
 /**
  * @param {{
  *   image: ProductVariantFragment['image'];
  * }}
  */
-export function ProductImage({image, hidden}) {
+export function ProductImage({image, hidden, onHover, onLeave}) {
   if (!image) {
     return <div className="product-image" />;
   }
+  const ref = useRef(null);
+
+  function handleMouseMove(e) {
+    const rect = ref.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // send image, cursor position, and rect size up to parent
+    onHover(image.url, {x, y, width: rect.width, height: rect.height});
+  }
+
   return (
     <div
       className="product-image"
@@ -19,6 +31,10 @@ export function ProductImage({image, hidden}) {
         top: 0,
         zIndex: hidden ? '-1' : 0,
       }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseMove}
+      onMouseLeave={onLeave}
+      ref={ref}
     >
       <Image
         alt={image.altText || 'Product Image'}

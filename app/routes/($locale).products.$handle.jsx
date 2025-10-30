@@ -1,5 +1,5 @@
 import {useLoaderData, Await, useRouteLoaderData} from '@remix-run/react';
-import {useState, useEffect, useRef} from 'react';
+import {useState, useEffect, useRef, forwardRef} from 'react';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -101,6 +101,10 @@ function loadDeferredData({context, params}) {
 
 export default function Product() {
   /** @type {LoaderReturnData} */
+  const [hoveredImg, setHoveredImg] = useState(null);
+  const [cursorPos, setCursorPos] = useState({x: 0, y: 0});
+  const [imgCursorPos, setImgCursorPos] = useState({x: 0, y: 0});
+  const magnifierRef = useRef(null);
   const {product, recs, compliments} = useLoaderData();
 
   const {isDev} = useRouteLoaderData('root');
@@ -132,8 +136,28 @@ export default function Product() {
         .toLowerCase()
         .includes(i?.node?.altText?.toLowerCase());
   });
+
+  function handleHover(imgUrl, data) {
+    if (isDev) {
+      setHoveredImg(imgUrl);
+      setImgCursorPos(data);
+    }
+  }
+
+  function handleLeave() {
+    if (isDev) {
+      setHoveredImg(null);
+      setImgCursorPos(null);
+    }
+  }
+
   const productImage = filteredImages.map((edge) => (
-    <ProductImage key={edge.node.id} image={edge.node} />
+    <ProductImage
+      key={edge.node.id}
+      image={edge.node}
+      onHover={handleHover}
+      onLeave={handleLeave}
+    />
   ));
   const hiddenImages = product.images.edges.map((edge) => (
     <ProductImage key={edge.node.id} image={edge.node} hidden={true} />
@@ -199,11 +223,35 @@ export default function Product() {
 
   const productImages = useRef(null);
 
+  useEffect(() => {
+    const container = productImages.current;
+    if (!container || !isDev) return;
+
+    function handleMouseMove(e) {
+      const rect = container.getBoundingClientRect();
+      setCursorPos({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      });
+    }
+
+    container.addEventListener('mousemove', handleMouseMove);
+    return () => container.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <div>
       <div className="product">
         <div style={{position: 'relative'}}>
           {hiddenImages}
+          {hoveredImg && isDev && (
+            <Magnifier
+              bg={hoveredImg}
+              pos={cursorPos}
+              imgPos={imgCursorPos}
+              ref={magnifierRef}
+            />
+          )}
           <div
             className={`product-images ${isDev ? 'isDev' : ''}`}
             onScroll={(e) =>
@@ -293,6 +341,28 @@ export default function Product() {
     </div>
   );
 }
+
+const Magnifier = forwardRef(({bg, pos, imgPos}, ref) => {
+  const zoom = 3; // how much to zoom
+
+  const backgroundPosX = ((imgPos.x / imgPos.width) * 100).toFixed(2);
+  const backgroundPosY = ((imgPos.y / imgPos.height) * 100).toFixed(2);
+  return (
+    <div
+      ref={ref}
+      className="magnify-glass"
+      style={{
+        backgroundImage: `url(${bg})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: `${imgPos.width * zoom}px ${imgPos.height * zoom}px`,
+        backgroundPosition: `${backgroundPosX}% ${backgroundPosY}%`,
+        left: `${pos.x}px`,
+        top: `${pos.y}px`,
+        transform: 'translate(-50%, -20%)',
+      }}
+    />
+  );
+});
 
 function Expandable({
   openSection,

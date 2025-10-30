@@ -1254,6 +1254,7 @@ aside#submenu .header-menu-item:hover {
   flex-direction: row;
   max-width: 50vw;
   flex-wrap: wrap;
+  cursor: none;
 }
 .product-images img {
   height: auto;
@@ -1271,6 +1272,17 @@ aside#submenu .header-menu-item:hover {
 }
 .isDev > .product-image:last-child:nth-child(3n + 1) {
   width: 100%;
+}
+.magnify-glass {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid white;
+  pointer-events: none;
+  background-position: center;
+  z-index: 10;
 }
 .product-main {
   align-self: start;
@@ -1880,6 +1892,7 @@ MEDIA QUIERIES
   }
 
   .product-images {
+    cursor: auto !important;
     width: 100%;
     max-width: none !important;
     flex-wrap: nowrap !important;
@@ -1915,6 +1928,9 @@ MEDIA QUIERIES
     bottom: 1rem;
     left: 1rem;
     position: absolute;
+  }
+  .magnify-glass {
+    display: none;
   }
 }
 
