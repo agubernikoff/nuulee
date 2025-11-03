@@ -841,6 +841,362 @@ aside#submenu .header-menu-item:hover {
   font-family: 'regular';
   font-size: var(--font-size);
 }
+.cart-dedicated {
+  margin-top: var(--header-height);
+  max-width: 1150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cart-dedicated-header {
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: lowercase;
+  margin-bottom: 42px;
+}
+
+/* Cart Dedicated Page Overrides */
+
+/* Reset the drawer-specific styles for the page layout */
+.cart-dedicated .cart-main {
+  height: auto;
+  max-height: none;
+  overflow-y: visible;
+  width: 100%;
+  padding: 0;
+}
+
+/* Remove the with-discount height constraint */
+.cart-dedicated .cart-main.with-discount {
+  max-height: none;
+}
+
+/* Cart lines container - Grid layout */
+.cart-dedicated .cart-details {
+  display: grid;
+  grid-template-columns: 1fr 400px; /* Main content + Checkout sidebar */
+  gap: 4rem;
+  align-items: start;
+}
+
+/* Column headers - Image is outside the grid */
+.cart-dedicated-columns {
+  display: grid;
+  grid-template-columns: 180px 1fr 200px;
+  gap: 19px;
+  margin-bottom: 15px;
+}
+
+.cart-dedicated-columns > div {
+  font-size: 15px !important;
+  font-weight: bold;
+  text-transform: lowercase;
+}
+
+.cart-dedicated-columns > div:first-child {
+  /* Empty space for image */
+  visibility: hidden;
+}
+
+/* Cart lines section (left side) */
+.cart-dedicated .cart-details > div[aria-labelledby='cart-lines'] {
+  margin-bottom: 0;
+}
+
+.cart-dedicated .cart-details > div > ul {
+  margin-left: 0 !important;
+  padding: 0;
+  list-style: none;
+}
+
+/* Individual cart line items - Grid layout matching headers */
+.cart-dedicated .cart-line {
+  display: grid;
+  grid-template-columns: 180px 1fr 200px; /* Image + Item + Subtotal columns */
+  gap: 19px;
+  padding: 2rem 0;
+  align-items: start;
+}
+
+.cart-dedicated .cart-line:first-child {
+  padding-top: 0;
+}
+
+.cart-dedicated ul {
+  margin-left: 0;
+}
+
+/* NO border between items */
+.cart-dedicated .cart-line:last-child {
+  border-bottom: none;
+}
+
+/* Product image styling for page layout */
+.cart-dedicated .cart-line img {
+  width: 100%;
+  height: auto;
+  margin-right: 0;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* Product details - Item column */
+.cart-dedicated .cart-product-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cart-dedicated .cart-product-details > div {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cart-dedicated .cart-product-details div a p {
+  text-transform: lowercase;
+  margin: 0;
+}
+
+/* Subtotal column - contains price AND remove button */
+.cart-line-subtotal-column {
+  text-align: right;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.cart-line-subtotal-column .price {
+  margin: 0;
+}
+
+/* Middle details (size, color, etc) */
+.cart-dedicated .cart-middle-details {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cart-dedicated .cart-middle-details > p {
+  text-transform: lowercase;
+  font-size: 15px !important;
+  margin: 0;
+}
+
+/* Quantity controls */
+.cart-dedicated .cart-line-quantity {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid black;
+  width: fit-content;
+  margin-top: 0.5rem;
+}
+
+/* Remove button - now in subtotal column */
+.cart-dedicated .cart-line-remove-button {
+  all: unset;
+  color: black;
+  text-decoration: underline;
+  text-transform: lowercase;
+  cursor: pointer;
+  font-size: 15px !important;
+  text-align: right;
+}
+
+/* Old styles - no longer needed since remove is in subtotal column */
+.cart-dedicated .cart-product-details > form:last-of-type {
+  display: none;
+}
+
+.cart-dedicated .cart-product-details > form:last-of-type > button {
+  display: none;
+}
+
+/* Checkout sidebar (right side) */
+.cart-dedicated-checkout-section {
+  position: sticky;
+  top: calc(var(--header-height) + 2rem);
+}
+
+.cart-dedicated-checkout-header {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Cart Summary for page layout - with border */
+.cart-dedicated .cart-summary-page {
+  position: static;
+  background: white;
+  border: 1px solid #e5e5e5;
+  padding: 30px;
+  margin: 0;
+}
+
+/* Total row */
+.cart-dedicated .cart-summary-page .cart-subtotal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  font-family: 'medium';
+  text-transform: lowercase;
+  font-size: 15px !important;
+  margin-bottom: 0px;
+  align-items: start;
+  font-weight: 400 !important;
+}
+
+.cart-dedicated .cart-summary-page .cart-subtotal dt {
+  font-weight: 400;
+  margin: 0;
+}
+
+.cart-dedicated .cart-summary-page .cart-subtotal dd {
+  font-weight: 400;
+  margin: 0;
+  text-align: right;
+}
+
+/* Tax and shipping text */
+.cart-dedicated .cart-summary-page .cart-tax-shipping-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 18px;
+}
+
+.cart-dedicated .cart-summary-page .cart-tax-shipping-wrapper p:first-child {
+  text-transform: lowercase;
+  margin: 0;
+}
+
+.cart-dedicated .cart-summary-page .cart-tax-shipping-wrapper p:last-child {
+  text-transform: lowercase;
+  margin: 0;
+  text-align: right;
+}
+
+/* Order total */
+.cart-dedicated .cart-summary-page .cart-order-total {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  font-family: 'medium';
+  text-transform: lowercase;
+  font-size: 15px !important;
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+
+.cart-dedicated .cart-summary-page .cart-order-total > div:last-child {
+  text-align: right;
+}
+
+.cart-dedicated .checkout-button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-family: 'regular';
+  text-transform: lowercase;
+  text-decoration: none;
+  border: none;
+  background: #2d1b4e;
+  color: white !important;
+  cursor: pointer;
+  margin-top: 0;
+  transition: background-color 0.2s;
+}
+
+.cart-dedicated .checkout-button:hover {
+  background: #1f1236;
+}
+
+/* Keep original aside styles */
+.cart-summary-aside {
+  background: white;
+  border-top: 1px solid var(--color-dark);
+  bottom: 0;
+  padding-top: 0.75rem;
+  position: absolute;
+  margin-bottom: 1rem;
+}
+
+/* Empty cart state */
+.cart-dedicated .empty-cart-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 2rem;
+}
+
+.cart-dedicated .empty-cart-message {
+  font-family: 'regular';
+  font-size: 15px !important;
+  text-transform: lowercase;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .cart-dedicated .cart-details {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .cart-dedicated-checkout-section {
+    position: static;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-dedicated {
+    padding: 1rem;
+  }
+
+  .cart-dedicated .cart-line {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .cart-dedicated-columns {
+    display: none;
+  }
+
+  .cart-line-subtotal-column {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .cart-dedicated .cart-line img {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .cart-dedicated .cart-summary-page,
+  .cart-dedicated .cart-summary-aside {
+    padding: 2rem;
+  }
+
+  .cart-dedicated .cart-subtotal,
+  .cart-dedicated .cart-tax-shipping-wrapper,
+  .cart-order-total {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .cart-dedicated .cart-subtotal dd,
+  .cart-dedicated .cart-tax-shipping-wrapper p:last-child,
+  .cart-order-total > div:last-child {
+    text-align: left;
+  }
+}
 
 /*
 * --------------------------------------------------
@@ -1971,7 +2327,6 @@ MEDIA QUIERIES
   }
 
   input {
-    font-size: 16px;
   }
   input::placeholder {
     font-size: var(--font-size);

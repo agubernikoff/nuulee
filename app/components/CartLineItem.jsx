@@ -24,6 +24,58 @@ export function CartLineItem({layout, line}) {
   const nextQuantity = Number((quantity + 1).toFixed(0));
 
   console.log(line);
+
+  // Page layout (grid with image, item, and subtotal columns)
+  if (layout === 'page') {
+    return (
+      <li key={id} className="cart-line">
+        {/* Image column */}
+        {image && (
+          <Image
+            alt={title}
+            aspectRatio="1/1.5"
+            data={image}
+            height={300}
+            loading="lazy"
+            width={300}
+          />
+        )}
+
+        {/* Item column (details only) */}
+        <div className="cart-product-details">
+          <div>
+            <Link
+              prefetch="intent"
+              to={lineItemUrl}
+              onClick={() => {
+                if (layout === 'aside') {
+                  close();
+                }
+              }}
+            >
+              <p style={{fontWeight: 'bold'}}>{product.title}</p>
+            </Link>
+            <div className="cart-middle-details">
+              {selectedOptions.map((option) => (
+                <p key={option.name}>
+                  {option.name}: {option.value}
+                </p>
+              ))}
+            </div>
+            <CartLineQuantity line={line} />
+          </div>
+        </div>
+
+        {/* Subtotal column (price + remove button) */}
+        <div className="cart-line-subtotal-column">
+          <ProductPrice price={line?.cost?.totalAmount} />
+          <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} />
+        </div>
+      </li>
+    );
+  }
+
+  // Aside layout (original vertical layout)
   return (
     <li key={id} className="cart-line">
       {image && (
@@ -54,12 +106,11 @@ export function CartLineItem({layout, line}) {
           <div className="cart-middle-details">
             {selectedOptions.map((option) => (
               <p key={option.name}>
-                <small>
+                <p>
                   {option.name}: {option.value}
-                </small>
+                </p>
               </p>
             ))}
-            {/* <p>quantity: {quantity} &nbsp;&nbsp;</p> */}
           </div>
           <CartLineQuantity line={line} />
         </div>
@@ -86,7 +137,7 @@ function CartLineQuantity({line}) {
     <div>
       <p style={{marginBottom: '5px'}}>qty:</p>
       <div className="cart-line-quantity">
-        {/* <small>Quantity: {quantity} &nbsp;&nbsp;</small> */}
+        {/* <p>Quantity: {quantity} &nbsp;&nbsp;</p> */}
         <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
           <button
             aria-label="Increase quantity"
@@ -129,8 +180,12 @@ function CartLineRemoveButton({lineIds, disabled}) {
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button disabled={disabled} type="submit">
-        Remove
+      <button
+        disabled={disabled}
+        type="submit"
+        className="cart-line-remove-button"
+      >
+        remove
       </button>
     </CartForm>
   );

@@ -8,6 +8,49 @@ export function CartSummary({cart, layout}) {
   const className =
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
 
+  // Page layout (cart dedicated page)
+  if (layout === 'page') {
+    return (
+      <div aria-labelledby="cart-summary" className={className}>
+        {/* Total */}
+        <div
+          className="cart-tax-shipping-wrapper"
+          style={{marginBottom: '0px'}}
+        >
+          <p>total</p>
+          <p>
+            {cart.cost?.subtotalAmount?.amount ? (
+              <Money data={cart.cost?.subtotalAmount} />
+            ) : (
+              '-'
+            )}
+          </p>
+        </div>
+
+        {/* Tax and shipping info */}
+        <div className="cart-tax-shipping-wrapper">
+          <p>tax and shipping</p>
+          <p>calculated at checkout</p>
+        </div>
+
+        {/* Order Total */}
+        <div className="cart-order-total">
+          <div>order total</div>
+          <div>
+            {cart.cost?.subtotalAmount?.amount ? (
+              <Money data={cart.cost?.subtotalAmount} />
+            ) : (
+              '-'
+            )}
+          </div>
+        </div>
+
+        <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
+      </div>
+    );
+  }
+
+  // Aside layout (drawer) - original styling
   return (
     <div aria-labelledby="cart-summary" className={className}>
       <dl className="cart-subtotal">
@@ -21,12 +64,11 @@ export function CartSummary({cart, layout}) {
         </dd>
       </dl>
       <p>shipping,taxes, and discount codes are calculated at checkout.</p>
-      {/* <CartDiscounts discountCodes={cart.discountCodes} /> */}
-      {/* <CartGiftCard giftCardCodes={cart.appliedGiftCards} /> */}
       <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
     </div>
   );
 }
+
 /**
  * @param {{checkoutUrl?: string}}
  */
@@ -36,7 +78,7 @@ function CartCheckoutActions({checkoutUrl}) {
   return (
     <div>
       <a href={checkoutUrl} target="_self" className="checkout-button">
-        proceed to checkout
+        continue to checkout
       </a>
     </div>
   );
