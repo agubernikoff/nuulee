@@ -23,6 +23,35 @@ function useIsFirstRender() {
 }
 
 /**
+ * Hook to manage gender view context (URL param + sessionStorage)
+ */
+function useGenderView() {
+  const [view, setView] = useState(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // 1. Check URL parameter first
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlView = urlParams.get('view');
+
+    if (urlView === 'womens' || urlView === 'mens') {
+      // Store in sessionStorage for persistence
+      sessionStorage.setItem('productView', urlView);
+      setView(urlView);
+    } else {
+      // 2. Check sessionStorage if no URL param
+      const storedView = sessionStorage.getItem('productView');
+      if (storedView === 'womens' || storedView === 'mens') {
+        setView(storedView);
+      }
+    }
+  }, []);
+
+  return view;
+}
+
+/**
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
@@ -107,6 +136,9 @@ export default function Product() {
   const magnifierRef = useRef(null);
   const {product, recs, compliments} = useLoaderData();
 
+  // Get the gender view context
+  const genderView = useGenderView();
+
   const {isDev} = useRouteLoaderData('root');
 
   const selectedVariant = useOptimisticVariant(
@@ -123,13 +155,71 @@ export default function Product() {
 
   const {title, descriptionHtml} = product;
 
-  const isThereAMatchingImage = product.images.edges.find((img) =>
+  // Parse gender-specific galleries from metafields
+  const rawMetafields = Array.isArray(product.metafields)
+    ? product.metafields
+    : [];
+  const metafields = rawMetafields.filter(Boolean);
+
+  const mensGalleryMetafield = metafields.find(
+    (m) => m.namespace === 'custom' && m.key === 'mens_gallery',
+  );
+
+  const womensGalleryMetafield = metafields.find(
+    (m) => m.namespace === 'custom' && m.key === 'womens_gallery',
+  );
+
+  // Parse the gallery references (they should be file references)
+  const mensGalleryRefs = mensGalleryMetafield?.references?.nodes || [];
+  const womensGalleryRefs = womensGalleryMetafield?.references?.nodes || [];
+
+  /**
+   * Determine which images to show based on:
+   * 1. Gender view context (from URL/sessionStorage)
+   * 2. Available gender-specific galleries
+   * 3. Fallback to default behavior
+   */
+  const getImagesToDisplay = () => {
+    // If we have a gender view and corresponding gallery, use it
+    if (genderView === 'mens' && mensGalleryRefs.length > 0) {
+      // Convert metafield references to the same structure as product.images.edges
+      return mensGalleryRefs.map((ref) => ({
+        node: {
+          id: ref.id,
+          url: ref.image.url,
+          altText: ref.image.altText,
+          width: ref.image.width,
+          height: ref.image.height,
+        },
+      }));
+    }
+
+    if (genderView === 'womens' && womensGalleryRefs.length > 0) {
+      return womensGalleryRefs.map((ref) => ({
+        node: {
+          id: ref.id,
+          url: ref.image.url,
+          altText: ref.image.altText,
+          width: ref.image.width,
+          height: ref.image.height,
+        },
+      }));
+    }
+
+    // Fallback to default behavior (all images)
+    return product.images.edges;
+  };
+
+  const imagesToDisplay = getImagesToDisplay();
+
+  // Check if there's a matching image based on selected variant
+  const isThereAMatchingImage = imagesToDisplay.find((img) =>
     selectedVariant.title
       .toLowerCase()
       .includes(img?.node?.altText?.toLowerCase()),
   );
 
-  const filteredImages = product.images.edges.filter((i) => {
+  const filteredImages = imagesToDisplay.filter((i) => {
     if (!isThereAMatchingImage || !i?.node?.altText) return true;
     else
       return selectedVariant.title
@@ -159,6 +249,7 @@ export default function Product() {
       onLeave={handleLeave}
     />
   ));
+
   const hiddenImages = product.images.edges.map((edge) => (
     <ProductImage key={edge.node.id} image={edge.node} hidden={true} />
   ));
@@ -195,12 +286,6 @@ export default function Product() {
           ></div>
         ))
       : null;
-
-  const rawMetafields = Array.isArray(product.metafields)
-    ? product.metafields
-    : [];
-
-  const metafields = rawMetafields.filter(Boolean);
 
   const storyMetafield = metafields.find(
     (m) => m.namespace === 'custom' && m.key === 'story',
@@ -528,11 +613,27 @@ const PRODUCT_FRAGMENT = `#graphql
     metafields(identifiers: [
       {namespace: "custom", key: "story"},
       {namespace: "custom", key: "details"},
-      {namespace: "custom", key: "sustainability"}
+      {namespace: "custom", key: "sustainability"},
+      {namespace: "custom", key: "mens_gallery"},
+      {namespace: "custom", key: "womens_gallery"}
     ]) {
       key
       namespace
       value
+      references(first: 20) {
+        nodes {
+          ... on MediaImage {
+            id
+            image {
+              id
+              url
+              altText
+              width
+              height
+            }
+          }
+        }
+      }
     }
     selectedOrFirstAvailableVariant(
       selectedOptions: $selectedOptions

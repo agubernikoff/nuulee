@@ -154,6 +154,7 @@ export default function Collection() {
               product={product}
               index={index}
               colorPatterns={colorPatterns}
+              collectionHandle={handle}
               key={product.id}
             />
           )}
@@ -171,9 +172,13 @@ export default function Collection() {
   );
 }
 
-export function ProductColorVariants({product, index, colorPatterns}) {
+export function ProductColorVariants({
+  product,
+  index,
+  colorPatterns,
+  collectionHandle,
+}) {
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(product);
   const colorFilter = searchParams
     .getAll('filter')
     .map((filter) => JSON.parse(filter))
@@ -236,6 +241,7 @@ export function ProductColorVariants({product, index, colorPatterns}) {
               : product
           }
           loading={index < 8 ? 'eager' : undefined}
+          collectionHandle={collectionHandle}
         />
       </div>
     );
