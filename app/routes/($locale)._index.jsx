@@ -306,7 +306,7 @@ function Section2({section}) {
       >
         <p>{section.title}</p>
         <p>{section.description}</p>
-        <NavLink to={`/pages/${section.handle}`}>learn more</NavLink>
+        <NavLink to={`/discover#${section.handle}`}>learn more</NavLink>
       </div>
       <div
         className="section-img-container"
