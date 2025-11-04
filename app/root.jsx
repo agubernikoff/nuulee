@@ -177,6 +177,7 @@ export function Layout({children}) {
   const nonce = useNonce();
   /** @type {RootLoader} */
   const data = useRouteLoaderData('root');
+  console.log(data);
 
   return (
     <html lang="en">

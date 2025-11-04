@@ -43,7 +43,11 @@ export function PageLayout({
             publicStoreDomain={publicStoreDomain}
             availableCountries={availableCountries}
           />
-          <SubMenuAside header={header} publicStoreDomain={publicStoreDomain} />
+          <SubMenuAside
+            header={header}
+            publicStoreDomain={publicStoreDomain}
+            isDev={isDev}
+          />
           <SubscribeAside />
           <LocationAside
             availableCountries={availableCountries}
@@ -250,9 +254,20 @@ function ComingSoon({video}) {
     </div>
   );
 }
+function transformPageUrlToDiscoverHash(url) {
+  if (!url.includes('/pages/')) return url;
 
-function SubMenuAside({header, publicStoreDomain}) {
+  const handle = url.split('/pages/')[1]; // "about"
+  const slug = handle.toLowerCase().replace(/\s+/g, '-');
+
+  return `/discover#${slug}`;
+}
+
+function SubMenuAside({header, publicStoreDomain, isDev}) {
   const {subType} = useAside();
+  console.log(
+    header?.menu?.items.find((item) => item.title === subType)?.items,
+  );
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
@@ -261,8 +276,14 @@ function SubMenuAside({header, publicStoreDomain}) {
           menu={{
             id: header.menu.id,
             items:
-              header?.menu?.items.find((item) => item.title === subType)
-                ?.items || [],
+              isDev && subType === 'discover'
+                ? header?.menu?.items
+                    .find((item) => item.title === subType)
+                    ?.items.map((i) => {
+                      return {...i, url: transformPageUrlToDiscoverHash(i.url)};
+                    }) || []
+                : header?.menu?.items.find((item) => item.title === subType)
+                    ?.items || [],
           }}
           viewport="mobile"
           primaryDomainUrl={header.shop.primaryDomain.url}

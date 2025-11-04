@@ -124,7 +124,13 @@ export function HeaderMenu({
             className="header-menu-item"
             end
             key={item.id}
+            preventScrollReset={
+              url.includes(pathname) &&
+              url.includes('discover') &&
+              pathname !== '/'
+            }
             onClick={(e) => {
+              console.log(url, pathname);
               if (url === pathname) {
                 e.preventDefault();
                 window.scrollTo({top: 0, left: 0, behavior: 'smooth'});

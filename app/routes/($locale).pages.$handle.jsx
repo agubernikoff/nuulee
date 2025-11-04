@@ -108,7 +108,7 @@ export default function Page() {
   );
 }
 
-function Gallery({gallery_images}) {
+export function Gallery({gallery_images}) {
   const gallery = useRef(null);
   const transitionRef = useRef(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -320,12 +320,18 @@ function Triangle() {
   );
 }
 
-function Sections({sections}) {
+export function Sections({sections, dontReplace}) {
   const mapped = sections.map((section) => {
     // console.log(section.type);
     switch (section.type) {
       case 'title_and_blurb':
-        return <TitleAndBlurb section={section} key={section.id} />;
+        return (
+          <TitleAndBlurb
+            section={section}
+            key={section.id}
+            dontReplace={dontReplace}
+          />
+        );
       case 'image_and_blurb':
         return <ImageAndBlurb section={section} key={section.id} />;
       case 'offset_images_and_blurb':
@@ -337,13 +343,13 @@ function Sections({sections}) {
   return <main>{mapped}</main>;
 }
 
-function TitleAndBlurb({section}) {
+function TitleAndBlurb({section, dontReplace = false}) {
   useEffect(() => {
     const sectionTitle = section.fields.find(
       (f) => f.type === 'single_line_text_field',
     ).value;
     const pageTitle = document.querySelector('.page-title');
-    pageTitle.innerText = sectionTitle;
+    if (!dontReplace) pageTitle.innerText = sectionTitle;
   }, []);
   return (
     <div className="title-and-blurb">
@@ -522,7 +528,7 @@ function mapRichText(richTextObject, index = 0) {
   }
 }
 
-const PAGE_QUERY = `#graphql
+export const PAGE_QUERY = `#graphql
   query Page(
     $language: LanguageCode,
     $country: CountryCode,
@@ -530,6 +536,7 @@ const PAGE_QUERY = `#graphql
   )
   @inContext(language: $language, country: $country) {
     page(handle: $handle) {
+      handle
       id
       title
       body
