@@ -71,6 +71,13 @@ function loadDeferredData({context}) {
 export default function Page() {
   /** @type {LoaderReturnData} */
   const {page, comingsoon} = useLoaderData();
+  const {isDev} = useRouteLoaderData('root');
+
+  if (!isDev && page.handle === 'about') {
+    page.sections.references.nodes = page.sections.references.nodes.filter(
+      (n) => n.type !== 'image_and_blurb',
+    );
+  }
   return (
     <div
       className={`page ${
@@ -91,7 +98,10 @@ export default function Page() {
               {page.faq && <FAQs faqs={page.faq?.references?.nodes} />}
 
               {page.sections && (
-                <Sections sections={page.sections?.references?.nodes} />
+                <Sections
+                  sections={page.sections?.references?.nodes}
+                  isDev={isDev}
+                />
               )}
               {page.gallery_images && (
                 <Gallery
@@ -320,7 +330,7 @@ function Triangle() {
   );
 }
 
-export function Sections({sections, dontReplace}) {
+export function Sections({sections, dontReplace, isDev}) {
   const mapped = sections.map((section) => {
     // console.log(section.type);
     switch (section.type) {
@@ -333,11 +343,21 @@ export function Sections({sections, dontReplace}) {
           />
         );
       case 'image_and_blurb':
-        return <ImageAndBlurb section={section} key={section.id} />;
+        return (
+          <ImageAndBlurb section={section} key={section.id} isDev={isDev} />
+        );
       case 'offset_images_and_blurb':
-        return <OffsetImagesAndBlurb section={section} key={section.id} />;
+        return (
+          <OffsetImagesAndBlurb
+            section={section}
+            key={section.id}
+            isDev={isDev}
+          />
+        );
       case 'translations':
-        return <Translations section={section} key={section.id} />;
+        return (
+          <Translations section={section} key={section.id} isDev={isDev} />
+        );
     }
   });
   return <main>{mapped}</main>;
@@ -402,9 +422,7 @@ function ImageAndBlurb({section}) {
   );
 }
 
-function OffsetImagesAndBlurb({section}) {
-  console.log(section);
-  const {isDev} = useRouteLoaderData('root');
+function OffsetImagesAndBlurb({section, isDev}) {
   const images = section.fields
     .find((f) => f.type === 'list.metaobject_reference')
     .references.nodes.map((node) => {
@@ -442,6 +460,7 @@ function OffsetImagesAndBlurb({section}) {
           <div className="section-img-container">
             {images.map((img) => (
               <Image
+                key={img.image.id}
                 alt={img.image.altText}
                 aspectRatio={`${img.image.width}/${img.image.height}`}
                 data={img.image}
@@ -486,11 +505,13 @@ function OffsetImagesAndBlurb({section}) {
 }
 
 function Translations({section}) {
-  const mapped = section.fields[0]?.references?.nodes?.map((t) => (
-    <div key={t.id} className="translation">
-      {mapRichText(JSON.parse(t.fields[0].value), 'translations')}
-    </div>
-  ));
+  const mapped = section.fields
+    .find((f) => f.key === 'translation')
+    ?.references?.nodes?.map((t) => (
+      <div key={t.id} className="translation">
+        {mapRichText(JSON.parse(t.fields[0].value), 'translations')}
+      </div>
+    ));
   return <div className="translations">{mapped}</div>;
 }
 
