@@ -140,7 +140,7 @@ aside#cart {
   /* top: calc(var(--header-height) + 20px); */
   top: calc(var(--header-height));
   /* height: calc(100dvh - var(--header-height) - 20px); */
-  /* border-top: 1px solid var(--color-dimmer); */
+  border-top: 1px solid var(--color-dimmer);
 }
 
 aside header {
