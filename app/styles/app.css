@@ -143,6 +143,9 @@ aside#cart {
   height: calc(100dvh - var(--header-height));
   border-top: 1px solid var(--color-dimmer);
 }
+aside#cart main {
+  margin-top: 0 !important;
+}
 
 aside header {
   align-items: center;
