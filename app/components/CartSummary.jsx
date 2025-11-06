@@ -81,7 +81,7 @@ function CartCheckoutActions({checkoutUrl, layout}) {
 
   return (
     <div>
-      {layout === 'aside' && (
+      {/* {layout === 'aside' && (
         <NavLink
           to="/cart"
           target="_self"
@@ -90,7 +90,7 @@ function CartCheckoutActions({checkoutUrl, layout}) {
         >
           view cart
         </NavLink>
-      )}
+      )} */}
       <a href={checkoutUrl} target="_self" className="checkout-button">
         continue to checkout
       </a>
