@@ -69,7 +69,11 @@ export function CartLineItem({layout, line}) {
         {/* Subtotal column (price + remove button) */}
         <div className="cart-line-subtotal-column">
           <ProductPrice price={line?.cost?.totalAmount} />
-          <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} />
+          <CartLineRemoveButton
+            lineIds={[lineId]}
+            disabled={!!isOptimistic}
+            layout={layout}
+          />
         </div>
       </li>
     );
@@ -91,17 +95,24 @@ export function CartLineItem({layout, line}) {
 
       <div className="cart-product-details">
         <div>
-          <Link
-            prefetch="intent"
-            to={lineItemUrl}
-            onClick={() => {
-              if (layout === 'aside') {
-                close();
-              }
-            }}
-          >
-            <p>{product.title}</p>
-          </Link>
+          <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <Link
+              prefetch="intent"
+              to={lineItemUrl}
+              onClick={() => {
+                if (layout === 'aside') {
+                  close();
+                }
+              }}
+            >
+              <p>{product.title}</p>
+            </Link>
+            <CartLineRemoveButton
+              lineIds={[lineId]}
+              disabled={!!isOptimistic}
+              layout={layout}
+            />
+          </div>
           <ProductPrice price={line?.cost?.amountPerQuantity} />
           <div className="cart-middle-details">
             {selectedOptions.map((option) => (
@@ -115,7 +126,7 @@ export function CartLineItem({layout, line}) {
           <CartLineQuantity line={line} />
         </div>
 
-        <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} />
+        {/* <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} /> */}
       </div>
     </li>
   );
@@ -173,7 +184,7 @@ function CartLineQuantity({line}) {
  *   disabled: boolean;
  * }}
  */
-function CartLineRemoveButton({lineIds, disabled}) {
+function CartLineRemoveButton({lineIds, disabled, layout}) {
   return (
     <CartForm
       route="/cart"
@@ -185,7 +196,32 @@ function CartLineRemoveButton({lineIds, disabled}) {
         type="submit"
         className="cart-line-remove-button"
       >
-        remove
+        remove{' '}
+        {layout === 'aside' && (
+          <svg
+            width="10"
+            height="8"
+            viewBox="0 0 8.9 7.7"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <line
+              x1="-3"
+              y1="-4"
+              x2="10"
+              y2="10"
+              stroke="black"
+              strokeWidth="1"
+            />
+            <line
+              x1="-3"
+              y1="12"
+              x2="10"
+              y2="-2"
+              stroke="black"
+              strokeWidth="1"
+            />
+          </svg>
+        )}
       </button>
     </CartForm>
   );
