@@ -184,6 +184,39 @@ export function ProductColorVariants({
     .map((filter) => JSON.parse(filter))
     .filter((filter) => filter.taxonomyMetafield?.key === 'color-pattern');
 
+  // Determine if this is a gendered collection
+  const isWomensCollection = collectionHandle?.toLowerCase().includes('women');
+  const isMensCollection =
+    collectionHandle?.toLowerCase().includes('men') &&
+    !collectionHandle?.toLowerCase().includes('women');
+
+  // Get gender-specific galleries from metafields
+  const mensGalleryRefs = product.mensGallery?.references?.nodes || [];
+  const womensGalleryRefs = product.womensGallery?.references?.nodes || [];
+
+  // Determine which images to use
+  let imagesToUse = product.images.nodes;
+
+  if (isWomensCollection && womensGalleryRefs.length > 0) {
+    // Use women's gallery images
+    imagesToUse = womensGalleryRefs.map((ref) => ({
+      id: ref.id,
+      url: ref.image.url,
+      altText: ref.image.altText,
+      width: ref.image.width,
+      height: ref.image.height,
+    }));
+  } else if (isMensCollection && mensGalleryRefs.length > 0) {
+    // Use men's gallery images
+    imagesToUse = mensGalleryRefs.map((ref) => ({
+      id: ref.id,
+      url: ref.image.url,
+      altText: ref.image.altText,
+      width: ref.image.width,
+      height: ref.image.height,
+    }));
+  }
+
   const colors = product.options
     .find((o) => o.name === 'Color')
     ?.optionValues?.map((v) => {
@@ -218,6 +251,11 @@ export function ProductColorVariants({
       .map((o) => `${o.name}=${o.optionValues[0].name}`)
       .join('&')}&Color=${color.name}`;
 
+    // Filter images for this color from the gender-appropriate gallery
+    const colorImages = imagesToUse.filter(
+      (n) => n?.altText?.toLowerCase() === color.name.toLowerCase(),
+    );
+
     return (
       <div
         key={`${product.id}-${color.name.replace(' ', '-').replace('/', '-')}`}
@@ -225,20 +263,15 @@ export function ProductColorVariants({
       >
         <ProductGridItem
           product={
-            product.images.nodes.find(
-              (n) => n?.altText?.toLowerCase() === color.name.toLowerCase(),
-            )
+            colorImages.length > 0
               ? {
                   ...product,
                   images: {
-                    nodes: product.images.nodes.filter(
-                      (n) =>
-                        n?.altText?.toLowerCase() === color.name.toLowerCase(),
-                    ),
+                    nodes: colorImages,
                   },
                   handle: newHandle,
                 }
-              : product
+              : {...product, handle: newHandle}
           }
           loading={index < 8 ? 'eager' : undefined}
           collectionHandle={collectionHandle}
@@ -639,6 +672,38 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
         name
         swatch{
           color
+        }
+      }
+    }
+    mensGallery: metafield(namespace: "custom", key: "mens_gallery") {
+      references(first: 20) {
+        nodes {
+          ... on MediaImage {
+            id
+            image {
+              id
+              url
+              altText
+              width
+              height
+            }
+          }
+        }
+      }
+    }
+    womensGallery: metafield(namespace: "custom", key: "womens_gallery") {
+      references(first: 20) {
+        nodes {
+          ... on MediaImage {
+            id
+            image {
+              id
+              url
+              altText
+              width
+              height
+            }
+          }
         }
       }
     }
