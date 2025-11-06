@@ -1380,7 +1380,7 @@ aside#submenu .header-menu-item:hover {
   width: 45%;
 }
 .isDev > .section-img-container:has(> img + img) > img {
-  width: 45%;
+  width: 45% !important;
 }
 .section-text-container:has(img) {
   width: 45%;
@@ -1971,6 +1971,12 @@ aside#submenu .header-menu-item:hover {
 .translations {
   margin-bottom: 200px;
 }
+.discover-page .title-and-blurb,
+.discover-page .image-and-blurb,
+.discover-page .section-container,
+.discover-page .translations {
+  margin-bottom: 2rem;
+}
 .page > main > div:last-of-type {
   margin-bottom: auto;
 }
@@ -1980,6 +1986,9 @@ aside#submenu .header-menu-item:hover {
 .title-and-blurb,
 .translations {
   width: 45%;
+}
+.discover-page .title-and-blurb {
+  width: 100%;
 }
 .image-and-blurb > * {
   width: 100%;
@@ -2005,13 +2014,31 @@ aside#submenu .header-menu-item:hover {
 .page .section-text-container > p:first-of-type {
   font-family: 'regular';
 }
-
 .page .section-text-container > div {
   margin-top: 1rem;
 }
-
 .page .section-text-container ol {
   margin-block: 1rem;
+}
+.discover-page .section-container.isDev {
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.discover-page .section-container.isDev > .section-text-container {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+.discover-page .section-container.isDev > .section-text-container:has(> ol) {
+  display: flex;
+  align-items: center;
+}
+.discover-page .section-text-container ol {
+  text-align: left;
+}
+.discover-page .section-container.isDev > .section-img-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 .translation {
   border: 1px solid var(--color-stroke-color);

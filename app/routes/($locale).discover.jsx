@@ -75,7 +75,7 @@ export default function Discover() {
     acc[handle] = useRef(null);
     return acc;
   }, {});
-
+  console.log(pages);
   return (
     <div className="discover-page page discover">
       <ScrollToHashEffect refsMap={refsMap} />

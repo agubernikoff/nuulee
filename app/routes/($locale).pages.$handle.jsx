@@ -1,4 +1,4 @@
-import {useLoaderData} from '@remix-run/react';
+import {useLoaderData, useRouteLoaderData} from '@remix-run/react';
 import React, {useState, useEffect, useRef} from 'react';
 import {motion} from 'motion/react';
 import {Image} from '@shopify/hydrogen';
@@ -404,6 +404,7 @@ function ImageAndBlurb({section}) {
 
 function OffsetImagesAndBlurb({section}) {
   console.log(section);
+  const {isDev} = useRouteLoaderData('root');
   const images = section.fields
     .find((f) => f.type === 'list.metaobject_reference')
     .references.nodes.map((node) => {
@@ -421,39 +422,65 @@ function OffsetImagesAndBlurb({section}) {
 
   return (
     <div
-      className="section-container"
+      className={`section-container ${isDev ? 'isDev' : ''}`}
       style={
-        section?.fields?.find((f) => f.type === 'boolean')?.value
+        section?.fields?.find((f) => f.type === 'boolean')?.value && !isDev
           ? {flexDirection: 'row-reverse'}
           : null
       }
     >
-      <div className="section-text-container">
-        {mapRichText(
-          JSON.parse(
-            section.fields.find((f) => f.type === 'rich_text_field').value,
-          ),
-          'offset-images-and-blurb',
-        )}
-        <div>
-          <Image
-            alt={images[1].image.altText}
-            aspectRatio={`${images[1].image.width}/${images[1].image.height}`}
-            data={images[1].image}
-            loading={'eager'}
-            sizes="(min-width: 45em) 400px, 100vw"
-          />
-        </div>
-      </div>
-      <div className="section-img-container">
-        <Image
-          alt={images[0].image.altText}
-          aspectRatio={`${images[0].image.width}/${images[0].image.height}`}
-          data={images[0].image}
-          loading={'eager'}
-          sizes="(min-width: 45em) 400px, 100vw"
-        />
-      </div>
+      {isDev ? (
+        <>
+          <div className="section-text-container">
+            {mapRichText(
+              JSON.parse(
+                section.fields.find((f) => f.type === 'rich_text_field').value,
+              ),
+              'offset-images-and-blurb',
+            )}
+          </div>
+          <div className="section-img-container">
+            {images.map((img) => (
+              <Image
+                alt={img.image.altText}
+                aspectRatio={`${img.image.width}/${img.image.height}`}
+                data={img.image}
+                loading={'eager'}
+                sizes="(min-width: 45em) 400px, 100vw"
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="section-text-container">
+            {mapRichText(
+              JSON.parse(
+                section.fields.find((f) => f.type === 'rich_text_field').value,
+              ),
+              'offset-images-and-blurb',
+            )}
+            <div>
+              <Image
+                alt={images[1].image.altText}
+                aspectRatio={`${images[1].image.width}/${images[1].image.height}`}
+                data={images[1].image}
+                loading={'eager'}
+                sizes="(min-width: 45em) 400px, 100vw"
+              />
+            </div>
+          </div>
+          <div className="section-img-container">
+            <Image
+              alt={images[0].image.altText}
+              aspectRatio={`${images[0].image.width}/${images[0].image.height}`}
+              data={images[0].image}
+              loading={'eager'}
+              sizes="(min-width: 45em) 400px, 100vw"
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }
