@@ -72,7 +72,6 @@ export default function Page() {
   /** @type {LoaderReturnData} */
   const {page, comingsoon} = useLoaderData();
   const {isDev} = useRouteLoaderData('root');
-
   if (!isDev && page.handle === 'about') {
     page.sections.references.nodes = page.sections.references.nodes.filter(
       (n) => n.type !== 'image_and_blurb',
@@ -340,6 +339,7 @@ export function Sections({sections, dontReplace, isDev}) {
             section={section}
             key={section.id}
             dontReplace={dontReplace}
+            isDev={isDev}
           />
         );
       case 'image_and_blurb':
@@ -363,21 +363,45 @@ export function Sections({sections, dontReplace, isDev}) {
   return <main>{mapped}</main>;
 }
 
-function TitleAndBlurb({section, dontReplace = false}) {
+function TitleAndBlurb({section, dontReplace = false, isDev}) {
+  const sectionTitle = section.fields.find(
+    (f) => f.type === 'single_line_text_field',
+  ).value;
   useEffect(() => {
-    const sectionTitle = section.fields.find(
-      (f) => f.type === 'single_line_text_field',
-    ).value;
     const pageTitle = document.querySelector('.page-title');
     if (!dontReplace) pageTitle.innerText = sectionTitle;
   }, []);
+
+  const image = section.fields.find((f) => f.type === 'file_reference')
+    ?.reference?.image;
   return (
     <div className="title-and-blurb">
-      {mapRichText(
-        JSON.parse(
-          section.fields.find((f) => f.type === 'rich_text_field').value,
-        ),
-        'title-and-blurb',
+      <div>
+        {isDev && image && (
+          <header>
+            <p className="page-title">{sectionTitle}</p>
+          </header>
+        )}
+        <div className="title-blurb">
+          {mapRichText(
+            JSON.parse(
+              section.fields.find((f) => f.type === 'rich_text_field').value,
+            ),
+            'title-and-blurb',
+          )}
+        </div>
+      </div>
+      {isDev && image && (
+        <div className="title-image-div">
+          <Image
+            alt={image.altText}
+            aspectRatio={`${image.width}/${image.height}`}
+            data={image}
+            loading={'eager'}
+            width={image.width}
+            sizes="100vw"
+          />
+        </div>
       )}
     </div>
   );
@@ -391,9 +415,21 @@ function ImageAndBlurb({section}) {
   );
   const blurb = section.fields.find((f) => f.key === 'blurb');
   const blurbWidth = section.fields.find((f) => f.key === 'blurb_width');
+  const isTwoColumns = section.fields.find((f) => f.key === 'is_two_column');
+  const reverse = section.fields.find((f) => f.key === 'reverse');
+
   return (
-    <div className="image-and-blurb">
-      <div style={{width: `${photoWidth?.value}%` || '100%', margin: 'auto'}}>
+    <div
+      className={`image-and-blurb ${isTwoColumns ? 'two-columns' : ''} ${
+        reverse ? 'reverse' : ''
+      }`}
+    >
+      <div
+        style={{
+          width: `${photoWidth?.value}%` || '100%',
+          margin: isTwoColumns ? '' : 'auto',
+        }}
+      >
         <Image
           alt={photo.reference.image.altText}
           aspectRatio={`${photo.reference.image.width}/${photo.reference.image.height}`}
@@ -414,7 +450,12 @@ function ImageAndBlurb({section}) {
         ) : null}
       </div>
       {blurb ? (
-        <div style={{width: `${blurbWidth?.value}%` || '100%', margin: 'auto'}}>
+        <div
+          style={{
+            width: `${blurbWidth?.value}%` || '100%',
+            margin: isTwoColumns ? '' : 'auto',
+          }}
+        >
           {mapRichText(JSON.parse(blurb.value), 'image-and-blurb')}
         </div>
       ) : null}
@@ -504,7 +545,7 @@ function OffsetImagesAndBlurb({section, isDev}) {
   );
 }
 
-function Translations({section}) {
+function Translations({section, isDev}) {
   const mapped = section.fields
     .find((f) => f.key === 'translation')
     ?.references?.nodes?.map((t) => (
@@ -512,7 +553,26 @@ function Translations({section}) {
         {mapRichText(JSON.parse(t.fields[0].value), 'translations')}
       </div>
     ));
-  return <div className="translations">{mapped}</div>;
+  const image = section.fields.find((f) => f.type === 'file_reference')
+    ?.reference?.image;
+  const reverse = section.fields.find((f) => f.key === 'reverse')?.value;
+  return (
+    <div className={`translations ${reverse ? 'reverse' : ''}`}>
+      <div className="translations-text">{mapped}</div>
+      {isDev && image && (
+        <div className="title-image-div">
+          <Image
+            alt={image.altText}
+            aspectRatio={`${image.width}/${image.height}`}
+            data={image}
+            loading={'eager'}
+            width={image.width}
+            sizes="100vw"
+          />
+        </div>
+      )}
+    </div>
+  );
 }
 
 function mapRichText(richTextObject, index = 0) {

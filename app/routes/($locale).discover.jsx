@@ -75,7 +75,7 @@ export default function Discover() {
     acc[handle] = useRef(null);
     return acc;
   }, {});
-  console.log(pages);
+
   return (
     <div className="discover-page page discover">
       <ScrollToHashEffect refsMap={refsMap} />
@@ -97,12 +97,26 @@ export default function Discover() {
  */
 const Section = React.forwardRef(({title, page, first}, ref) => (
   <section ref={ref} className={`discover-section ${first ? 'first' : ''}`}>
-    <header>
-      <p className="page-title">{title}</p>
-    </header>
+    {!page.sections?.references?.nodes
+      .find((f) => f.type === 'title_and_blurb')
+      .fields.find((f) => f.type === 'file_reference') && (
+      <header>
+        <p className="page-title">{title}</p>
+      </header>
+    )}
     <div className="section-body">
       {page.sections && (
-        <Sections sections={page.sections?.references?.nodes} dontReplace />
+        <Sections
+          sections={
+            page.handle === 'about'
+              ? page.sections.references.nodes.filter(
+                  (n) => n.type !== 'offset_images_and_blurb',
+                )
+              : page.sections?.references?.nodes
+          }
+          dontReplace
+          isDev
+        />
       )}
       {page.gallery_images && (
         <Gallery gallery_images={page.gallery_images?.references?.nodes} />

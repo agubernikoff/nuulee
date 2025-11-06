@@ -1987,10 +1987,24 @@ aside#submenu .header-menu-item:hover {
 .translations {
   width: 45%;
 }
-.discover-page .title-and-blurb {
+.image-and-blurb > * {
   width: 100%;
 }
-.image-and-blurb > * {
+.title-and-blurb:has(> .title-image-div),
+.translations:has(> .title-image-div),
+.two-columns {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.title-and-blurb:has(> .title-image-div) > div,
+.translations:has(> .title-image-div) > div,
+.two-columns > * {
+  width: 45%;
+}
+
+.discover-page .title-and-blurb {
   width: 100%;
 }
 .alt-mobile-photo {
@@ -2007,9 +2021,16 @@ aside#submenu .header-menu-item:hover {
   margin-bottom: 2rem;
 }
 .image-and-blurb img,
-.page .section-container img {
+.page .section-container img,
+.title-image-div > img {
   height: auto;
   width: 100%;
+}
+.two-columns {
+  flex-direction: row;
+}
+.reverse {
+  flex-direction: row-reverse;
 }
 .page .section-text-container > p:first-of-type {
   font-family: 'regular';
@@ -2045,6 +2066,9 @@ aside#submenu .header-menu-item:hover {
   margin-bottom: 1rem;
   padding-inline: 1rem;
   padding-top: 0.5rem;
+}
+.discover-page .translation {
+  border: none;
 }
 .translations .translation:last-of-type {
   margin-bottom: 0;
