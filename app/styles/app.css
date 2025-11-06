@@ -357,7 +357,7 @@ input[type='checkbox']:checked {
   width: auto;
   flex: 1;
   background: transparent;
-  color: white;
+  color: white !important;
 }
 .comingsoon .email-input-container button,
 .comingsoon .email-input-container input {
@@ -373,7 +373,7 @@ input[type='checkbox']:checked {
   color: var(--color-hover);
 }
 .comingsoon .email-input-container input::placeholder {
-  color: white;
+  color: white !important;
   opacity: 0.5;
 }
 .email-input-container button {
@@ -381,7 +381,7 @@ input[type='checkbox']:checked {
   color: #2a0e39;
 }
 .comingsoon .email-input-container button {
-  color: white;
+  color: white !important;
 }
 .comingsoon .email-input-container button:hover {
   text-decoration: none !important;
@@ -422,7 +422,7 @@ input[type='checkbox']:checked {
   z-index: 1;
   width: 100%;
   padding-block: 0.25rem;
-  background: white;
+  background: white !important;
   max-height: 300px;
   overflow-y: auto;
 }
@@ -536,7 +536,7 @@ aside#mobile .predictive-search-form > div > input {
   width: 95%;
   border: none;
   margin: 0;
-  background-color: white;
+  background-color: white !important;
 }
 aside#mobile .predictive-search-form > div > input:focus-visible {
   outline: none;
@@ -655,7 +655,7 @@ aside#submenu .header-menu-item:hover {
   border-block: 1px solid var(--color-dimmer);
   width: 100vw;
   padding: 1rem 1.7rem;
-  background: white;
+  background: white !important;
   overflow: scroll;
   box-sizing: border-box;
 }
@@ -743,7 +743,7 @@ aside#submenu .header-menu-item:hover {
   width: 26px;
   height: 26px;
   border: none;
-  background: white;
+  background: white !important;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -768,7 +768,7 @@ aside#submenu .header-menu-item:hover {
   justify-content: center;
   border-left: 1px solid #2a0e39;
   border-right: 1px solid #2a0e39;
-  background: white;
+  background: white !important;
   flex-shrink: 0;
 }
 
@@ -794,7 +794,7 @@ aside#submenu .header-menu-item:hover {
 }
 
 .cart-summary-aside {
-  background: white;
+  background: white !important;
   border-top: 1px solid var(--color-dark);
   bottom: 0;
   padding-top: 0.75rem;
@@ -1050,7 +1050,7 @@ aside#submenu .header-menu-item:hover {
 /* Cart Summary for page layout - with border */
 .cart-dedicated .cart-summary-page {
   position: static;
-  background: white;
+  background: white !important;
   border: 1px solid #e5e5e5;
   padding: 30px;
   margin: 0;
@@ -1293,7 +1293,7 @@ aside#submenu .header-menu-item:hover {
   top: calc(100% - var(--header-height));
   margin-left: 1.3rem;
   font-size: var(--font-size);
-  color: white;
+  color: white !important;
 }
 
 .featured-collection-image {
@@ -1414,7 +1414,7 @@ aside#submenu .header-menu-item:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: white;
+  background: white !important;
 }
 .null > .coming-soon-container {
   margin-top: calc(-2.25 * var(--header-height));
@@ -1753,7 +1753,7 @@ aside#submenu .header-menu-item:hover {
 }
 .add-to-cart-form-pdp:hover {
   background: #2a0e39;
-  color: white;
+  color: white !important;
 }
 .add-to-cart-form-pdp:disabled,
 .add-to-cart-form-pdp:disabled:hover {
