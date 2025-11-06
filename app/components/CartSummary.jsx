@@ -1,5 +1,7 @@
 import {CartForm, Money} from '@shopify/hydrogen';
 import {useRef} from 'react';
+import NavLink from './NavLink';
+import {useAside} from './Aside';
 
 /**
  * @param {CartSummaryProps}
@@ -45,7 +47,7 @@ export function CartSummary({cart, layout}) {
           </div>
         </div>
 
-        <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
+        <CartCheckoutActions checkoutUrl={cart.checkoutUrl} layout={layout} />
       </div>
     );
   }
@@ -64,19 +66,31 @@ export function CartSummary({cart, layout}) {
         </dd>
       </dl>
       <p>shipping,taxes, and discount codes are calculated at checkout.</p>
-      <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
+      <CartCheckoutActions checkoutUrl={cart.checkoutUrl} layout={layout} />
     </div>
   );
 }
 
 /**
- * @param {{checkoutUrl?: string}}
+ * @param {{checkoutUrl?: string; layout: string}}
  */
-function CartCheckoutActions({checkoutUrl}) {
+function CartCheckoutActions({checkoutUrl, layout}) {
+  const {close} = useAside();
+
   if (!checkoutUrl) return null;
 
   return (
     <div>
+      {layout === 'aside' && (
+        <NavLink
+          to="/cart"
+          target="_self"
+          className="checkout-button-cart"
+          onClick={close}
+        >
+          view cart
+        </NavLink>
+      )}
       <a href={checkoutUrl} target="_self" className="checkout-button">
         continue to checkout
       </a>

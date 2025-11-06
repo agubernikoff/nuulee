@@ -816,7 +816,7 @@ aside#submenu .header-menu-item:hover {
   font-family: 'medium';
   text-transform: lowercase;
 }
-.checkout-button {
+.checkout-button-cart {
   display: block;
   width: 100%;
   padding-top: 0.75rem;
@@ -830,6 +830,22 @@ aside#submenu .header-menu-item:hover {
   color: #2a0e39;
   cursor: pointer;
   margin-top: 1rem;
+}
+
+.checkout-button {
+  display: block;
+  width: 100%;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  text-align: center;
+  font-family: 'regular';
+  text-transform: lowercase;
+  text-decoration: none;
+  background: #2a0e39;
+  color: white !important;
+  border: 1px solid #2a0e39;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
 .cart-container {
