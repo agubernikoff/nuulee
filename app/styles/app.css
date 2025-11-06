@@ -2085,6 +2085,7 @@ aside#submenu .header-menu-item:hover {
   height: 100%;
   overflow: hidden;
   margin-left: -10vw;
+  cursor: pointer;
 }
 .gallery {
   display: flex;
