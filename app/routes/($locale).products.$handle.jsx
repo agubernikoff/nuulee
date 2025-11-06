@@ -372,12 +372,11 @@ export default function Product() {
 
           <div className="dropdown-container">
             {[
-              isDev
-                ? {
-                    title: 'story',
-                    details: storyMetafield?.value?.trim() || '',
-                  }
-                : null,
+              {
+                title: 'story',
+                details: storyMetafield?.value?.trim() || '',
+              },
+
               {
                 title: 'details',
                 details:
