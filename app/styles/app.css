@@ -311,7 +311,7 @@ input[type='checkbox'] {
   -webkit-appearance: none;
   width: 9px;
   height: 9px;
-  border: 1px solid black;
+  border: 1px solid #2a0e39;
   cursor: pointer;
   margin-right: 8px;
   vertical-align: middle;
@@ -322,12 +322,12 @@ input[type='checkbox'] {
   transition: background-color 200ms ease-in-out;
 }
 input[type='checkbox']:checked {
-  background-color: black !important;
-  border-color: black;
+  background-color: #2a0e39 !important;
+  border-color: #2a0e39;
 }
 
 .email-input-container {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #2a0e39;
   display: flex;
   justify-content: space-between;
   margin-block: 2rem;
@@ -351,7 +351,7 @@ input[type='checkbox']:checked {
   padding: 0;
   padding-left: 10px;
   width: 100%;
-  color: black;
+  color: #2a0e39;
 }
 .comingsoon .email-input-container input {
   width: auto;
@@ -378,7 +378,7 @@ input[type='checkbox']:checked {
 }
 .email-input-container button {
   padding: 0;
-  color: black;
+  color: #2a0e39;
 }
 .comingsoon .email-input-container button {
   color: white;
@@ -411,7 +411,7 @@ input[type='checkbox']:checked {
   align-items: center;
   background: #f3f3f3;
   padding-inline: 0.5rem;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #2a0e39;
 }
 
 .country-dropdown-content {
@@ -517,7 +517,7 @@ button.reset:hover:not(:has(> *)) {
   cursor: pointer;
   padding-block: 0;
   display: block;
-  color: black;
+  color: #2a0e39;
 }
 .predictive-search-form > .mobile-menu-btn {
   display: inline;
@@ -525,7 +525,7 @@ button.reset:hover:not(:has(> *)) {
 aside#mobile .predictive-search-form {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #2a0e39;
 }
 aside#mobile .predictive-search-form > div {
   width: 100%;
@@ -556,7 +556,7 @@ aside#mobile .header-menu-item,
   align-items: center;
   gap: 0.25rem;
   margin-bottom: 0.5rem;
-  color: black;
+  color: #2a0e39;
 }
 
 .header-menu-mobile {
@@ -766,8 +766,8 @@ aside#submenu .header-menu-item:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  border-left: 1px solid #2a0e39;
+  border-right: 1px solid #2a0e39;
   background: white;
   flex-shrink: 0;
 }
@@ -775,7 +775,7 @@ aside#submenu .header-menu-item:hover {
 .cart-product-details > form:last-of-type > button,
 .cart-line-remove-button {
   all: unset;
-  color: black;
+  color: #2a0e39;
   /* text-decoration: underline; */
   text-transform: lowercase;
   cursor: pointer;
@@ -825,9 +825,9 @@ aside#submenu .header-menu-item:hover {
   font-family: 'regular';
   text-transform: lowercase;
   text-decoration: none;
-  border: 1px solid black;
+  border: 1px solid #2a0e39;
   background: none;
-  color: black;
+  color: #2a0e39;
   cursor: pointer;
   margin-top: 1rem;
 }
@@ -844,7 +844,7 @@ aside#submenu .header-menu-item:hover {
   font-size: 8px;
   font-weight: bold;
   margin-top: 0.25rem;
-  color: black; /* Adjust color as needed */
+  color: #2a0e39; /* Adjust color as needed */
 }
 
 .empty-cart-div {
@@ -1011,7 +1011,7 @@ aside#submenu .header-menu-item:hover {
 .cart-dedicated .cart-line-quantity {
   display: flex;
   align-items: stretch;
-  border: 1px solid black;
+  border: 1px solid #2a0e39;
   width: fit-content;
   margin-top: 0.5rem;
 }
@@ -1019,7 +1019,7 @@ aside#submenu .header-menu-item:hover {
 /* Remove button - now in subtotal column */
 .cart-dedicated .cart-line-remove-button {
   all: unset;
-  color: black;
+  color: #2a0e39;
   text-decoration: underline;
   text-transform: lowercase;
   cursor: pointer;
@@ -1538,7 +1538,7 @@ aside#submenu .header-menu-item:hover {
   background-color: transparent;
 }
 .filter-column input:hover {
-  background: black;
+  background: #2a0e39;
 }
 .filter-column > div {
   margin-bottom: 0.25rem;
@@ -1746,13 +1746,13 @@ aside#submenu .header-menu-item:hover {
   width: 100%;
   padding: 0.65rem 0.5rem;
   background: transparent;
-  border: 1px solid black;
+  border: 1px solid #2a0e39;
   transition: all 200ms ease-in-out;
   cursor: pointer;
-  color: black;
+  color: #2a0e39;
 }
 .add-to-cart-form-pdp:hover {
-  background: black;
+  background: #2a0e39;
   color: white;
 }
 .add-to-cart-form-pdp:disabled,
@@ -1818,7 +1818,7 @@ aside#submenu .header-menu-item:hover {
 .size-guide-table,
 .size-guide-table th,
 .size-guide-table td {
-  border: 1px solid black;
+  border: 1px solid #2a0e39;
   border-collapse: collapse;
 }
 .size-guide-table {
@@ -1917,7 +1917,7 @@ aside#submenu .header-menu-item:hover {
 }
 .page th,
 .page td {
-  border: 1px solid black; /* Adds an outline to each cell */
+  border: 1px solid #2a0e39; /* Adds an outline to each cell */
   padding: 8px; /* Adds spacing inside cells */
   text-align: center;
   width: 50%;
@@ -2161,8 +2161,8 @@ aside#submenu .header-menu-item:hover {
 
 /* Right-side (accept all) */
 #shopify-pc__banner__btn-accept {
-  background: black;
-  color: white;
+  background: #2a0e39;
+  color: white !important;
   font-size: 11px;
   border-radius: 0;
 }
@@ -2212,7 +2212,7 @@ MEDIA QUIERIES
   }
   #shopify-pc__banner__btn-accept {
     background: #000;
-    color: #fff;
+    color: #fff !important;
     font-size: 11px;
     padding: 0.6rem 1.5rem;
     white-space: nowrap;
@@ -2231,7 +2231,7 @@ MEDIA QUIERIES
   }
   #shopify-pc__banner__btn-accept {
     background: #000;
-    color: #fff;
+    color: #fff !important;
     font-size: 11px;
     padding: 0.6rem 1.5rem;
     white-space: nowrap;
@@ -2258,7 +2258,7 @@ MEDIA QUIERIES
     font-size: 12px !important;
   }
   .product-form > form > button {
-    color: black;
+    color: #2a0e39;
     font-family: 'regular';
     font-size: var(--font-size) !important;
     font-weight: normal !important;
@@ -2318,6 +2318,7 @@ MEDIA QUIERIES
     width: 100%;
     order: 3;
     flex-basis: 100%;
+    color: white !important;
   }
 
   .shopify-pc__banner__btns.shopify-pc__banner__btns-granular {
@@ -2436,11 +2437,11 @@ MEDIA QUIERIES
     padding: 0;
   }
   .product-options-grid > button {
-    color: black !important;
+    color: #2a0e39 !important;
     font-size: var(--font-size) !important;
   }
   .product-options-title-container > button {
-    color: black !important;
+    color: #2a0e39 !important;
     font-size: var(--font-size) !important;
   }
   .product-item > div:last-of-type {
