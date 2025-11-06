@@ -33,6 +33,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain, isDev}) {
         viewport="desktop"
         primaryDomainUrl={header.shop.primaryDomain.url}
         publicStoreDomain={publicStoreDomain}
+        isDev={isDev}
       />
       <HeaderMenuMobileToggle />
       <NavLink
@@ -67,6 +68,7 @@ export function HeaderMenu({
   viewport,
   publicStoreDomain,
   displayBackButton,
+  isDev,
 }) {
   const className = `header-menu-${viewport}`;
   const {close, open} = useAside();
@@ -130,7 +132,6 @@ export function HeaderMenu({
               pathname !== '/'
             }
             onClick={(e) => {
-              console.log(url, pathname);
               if (url === pathname) {
                 e.preventDefault();
                 window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
@@ -138,16 +139,10 @@ export function HeaderMenu({
 
               // Handle submenu logic differently depending on viewport and isDev
               if (item.items && item.items.length > 0) {
-                if (viewport === 'mobile' || isDev) {
-                  e.preventDefault();
-                  open('mobile', item.title);
-                } else {
-                  // Allow normal navigation on desktop unless in dev mode
-                  close();
-                }
-              } else {
-                close();
-              }
+                if (!isDev) e.preventDefault();
+                if (viewport === 'mobile') open('mobile', item.title);
+                if (viewport === 'desktop' && isDev) close();
+              } else close();
             }}
             prefetch="intent"
             // style={activeLinkStyle}
