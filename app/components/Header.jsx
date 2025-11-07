@@ -16,7 +16,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain, isDev}) {
   const {shop, menu} = header;
   const {close, type} = useAside();
   const {pathname} = useLocation();
-  console.log(pathname);
+  // console.log(pathname);
   return (
     <AnimatedHeader isDev={isDev} asideOpen={type !== 'closed'}>
       <HeaderMenu

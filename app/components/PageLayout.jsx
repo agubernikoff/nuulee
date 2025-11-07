@@ -266,9 +266,9 @@ function transformPageUrlToDiscoverHash(url) {
 
 function SubMenuAside({header, publicStoreDomain, isDev}) {
   const {subType} = useAside();
-  console.log(
-    header?.menu?.items.find((item) => item.title === subType)?.items,
-  );
+  // console.log(
+  //   header?.menu?.items.find((item) => item.title === subType)?.items,
+  // );
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (

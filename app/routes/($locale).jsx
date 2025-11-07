@@ -3,7 +3,7 @@ import {redirect} from '@shopify/remix-oxygen';
 export async function action({request, context}) {
   const {session} = context;
   const formData = await request.formData();
-  console.log(formData);
+  // console.log(formData);
 
   // Make sure the form request is valid
   const languageCode = formData.get('language');
@@ -26,11 +26,11 @@ export async function action({request, context}) {
     });
   }
 
-  console.log('cc ', countryCode);
+  // console.log('cc ', countryCode);
 
-  console.log('path ', path);
+  // console.log('path ', path);
   const redirectUrl = `/EN-${countryCode}${path}`;
-  console.log(redirectUrl);
+  // console.log(redirectUrl);
   return redirect(redirectUrl, 302);
 }
 

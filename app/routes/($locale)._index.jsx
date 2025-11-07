@@ -81,7 +81,7 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
-  console.log(data);
+  // console.log(data);
   const {isDev} = useRouteLoaderData('root');
   return (
     <div className="home">

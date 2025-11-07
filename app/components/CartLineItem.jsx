@@ -23,7 +23,7 @@ export function CartLineItem({layout, line}) {
   const prevQuantity = Number(Math.max(0, quantity - 1).toFixed(0));
   const nextQuantity = Number((quantity + 1).toFixed(0));
 
-  console.log(line);
+  // console.log(line);
 
   // Page layout (grid with image, item, and subtotal columns)
   if (layout === 'page') {
