@@ -1598,6 +1598,16 @@ aside#submenu .header-menu-item:hover {
     grid-template-columns: repeat(3, minmax(var(--grid-item-width), 1fr));
   }
 }
+@media (min-width: 962px) {
+  main:has(.product .isDev) .products-grid {
+    grid-template-columns: repeat(3, minmax(var(--grid-item-width), 1fr));
+  }
+  main:has(.product .isDev)
+    .you-may-also-like-container
+    .product-item:last-of-type {
+    display: none;
+  }
+}
 
 .product-item {
   position: relative;
