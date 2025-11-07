@@ -2596,6 +2596,7 @@ MEDIA QUIERIES
   }
   .product-image img {
     width: calc(100vw - 2.6rem) !important;
+    /* isDev^^ */
     max-width: calc(999px * 0.5 + 2rem);
     aspect-ratio: auto !important;
     height: auto !important;
