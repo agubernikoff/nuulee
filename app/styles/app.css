@@ -1722,6 +1722,9 @@ aside#submenu .header-menu-item:hover {
   font-family: 'regular' !important;
   font-size: var(--font-size);
 }
+.product-price > div {
+  font-size: calc(var(--font-size) - 1px);
+}
 
 .product-price-on-sale {
   display: flex;
