@@ -20,13 +20,12 @@ export function CartSummary({cart, layout}) {
           style={{marginBottom: '0px'}}
         >
           <p>total</p>
-          <p>
-            {cart.cost?.subtotalAmount?.amount ? (
-              <Money data={cart.cost?.subtotalAmount} />
-            ) : (
-              '-'
-            )}
-          </p>
+
+          {cart.cost?.subtotalAmount?.amount ? (
+            <Money data={cart.cost?.subtotalAmount} />
+          ) : (
+            '-'
+          )}
         </div>
 
         {/* Tax and shipping info */}
@@ -81,7 +80,7 @@ function CartCheckoutActions({checkoutUrl, layout}) {
 
   return (
     <div>
-      {/* {layout === 'aside' && (
+      {layout === 'aside' && (
         <NavLink
           to="/cart"
           target="_self"
@@ -90,7 +89,7 @@ function CartCheckoutActions({checkoutUrl, layout}) {
         >
           view cart
         </NavLink>
-      )} */}
+      )}
       <a href={checkoutUrl} target="_self" className="checkout-button">
         continue to checkout
       </a>

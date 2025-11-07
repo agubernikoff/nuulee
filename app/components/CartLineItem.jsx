@@ -117,9 +117,7 @@ export function CartLineItem({layout, line}) {
           <div className="cart-middle-details">
             {selectedOptions.map((option) => (
               <p key={option.name}>
-                <p>
-                  {option.name}: {option.value}
-                </p>
+                {option.name}: {option.value}
               </p>
             ))}
           </div>

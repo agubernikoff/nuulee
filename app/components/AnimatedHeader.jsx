@@ -14,6 +14,7 @@ export function AnimatedHeader({
         {children}
       </header>
     );
+
   const {scrollY} = useScroll();
   const [isVisible, setIsVisible] = useState(false);
   const {pathname} = useLocation();
@@ -22,18 +23,28 @@ export function AnimatedHeader({
   useEffect(() => {
     if (pathname !== '/') {
       setIsVisible(true);
-    } else setIsVisible(false);
+    } else {
+      setIsVisible(false);
+    }
   }, [pathname]);
 
   // ✅ Effect 2: Only listen to scroll on the homepage
   useEffect(() => {
-    if (!asideOpen && scrollY.current === 0) setIsVisible(false);
-    if (pathname !== '/') return; // <-- skip scroll listener
+    if (pathname !== '/') {
+      setIsVisible(true);
+      return;
+    }
 
-    return scrollY.on('change', (y) => {
+    if (!asideOpen && scrollY.current === 0) {
+      setIsVisible(false);
+    }
+
+    const unsubscribe = scrollY.on('change', (y) => {
       if (y > 1) setIsVisible(true);
       else if (!forceVisible && !asideOpen) setIsVisible(false);
     });
+
+    return () => unsubscribe(); // cleanup listener
   }, [scrollY, forceVisible, pathname, asideOpen]);
 
   const baseStyle = {
@@ -61,7 +72,7 @@ export function AnimatedHeader({
           color: '#2a0e39',
         },
       }}
-      transition={{duration: 0.4, ease: 'easeInOut'}}
+      transition={{duration: 0.2, ease: 'easeInOut'}}
       style={baseStyle}
       onMouseEnter={() => setIsVisible(true)}
       onMouseMove={() => setIsVisible(true)}
