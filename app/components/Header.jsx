@@ -18,7 +18,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain, isDev}) {
   const {pathname} = useLocation();
   console.log(pathname);
   return (
-    <AnimatedHeader>
+    <AnimatedHeader isDev={isDev} asideOpen={type !== 'closed'}>
       <HeaderMenu
         menu={menu}
         viewport="desktop"

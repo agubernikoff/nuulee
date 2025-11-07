@@ -2,7 +2,13 @@ import {motion, useScroll} from 'framer-motion';
 import {useLocation} from '@remix-run/react';
 import {useEffect, useState} from 'react';
 
-export function AnimatedHeader({children, forceVisible = false}) {
+export function AnimatedHeader({
+  children,
+  forceVisible = false,
+  isDev,
+  asideOpen = false,
+}) {
+  if (!isDev) return <header className="header">{children}</header>;
   const {scrollY} = useScroll();
   const [isVisible, setIsVisible] = useState(false);
   const {pathname} = useLocation();
@@ -16,13 +22,14 @@ export function AnimatedHeader({children, forceVisible = false}) {
 
   // ✅ Effect 2: Only listen to scroll on the homepage
   useEffect(() => {
+    if (!asideOpen && scrollY.current === 0) setIsVisible(false);
     if (pathname !== '/') return; // <-- skip scroll listener
 
     return scrollY.on('change', (y) => {
       if (y > 1) setIsVisible(true);
-      else if (!forceVisible) setIsVisible(false);
+      else if (!forceVisible && !asideOpen) setIsVisible(false);
     });
-  }, [scrollY, forceVisible, pathname]);
+  }, [scrollY, forceVisible, pathname, asideOpen]);
 
   const baseStyle = {
     display: 'flex',
