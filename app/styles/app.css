@@ -1657,6 +1657,11 @@ aside#submenu .header-menu-item:hover {
   gap: 2rem;
   margin-bottom: 4.5rem;
 }
+@media (min-width: 556px) {
+  .product > div {
+    max-width: 69vw;
+  }
+}
 
 .product h1 {
   margin-top: 0;
@@ -2420,6 +2425,9 @@ MEDIA QUIERIES
 }
 
 @media (max-width: 499px) {
+  :root {
+    --font-size: 13px;
+  }
   .checkout-button-cart {
     display: none;
   }
@@ -2587,7 +2595,7 @@ MEDIA QUIERIES
     opacity: 0 !important;
   }
   .product-image img {
-    width: calc(100vw - 2.6rem) !important;
+    /* width: calc(100vw - 2.6rem) !important; */
     max-width: calc(999px * 0.5 + 2rem);
     aspect-ratio: auto !important;
     height: auto !important;
