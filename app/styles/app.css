@@ -472,7 +472,7 @@ button.reset:hover:not(:has(> *)) {
 */
 .header {
   align-items: center;
-  background: #fff;
+  /* background: #fff; */
   display: flex;
   height: var(--header-height);
   padding: 0 1.3rem;
@@ -578,6 +578,21 @@ aside#mobile .header-menu-item,
   cursor: pointer;
   font-size: var(--font-size);
   padding-inline: 6px;
+}
+.header .header-menu-item,
+.header .cart-link {
+  color: inherit !important;
+}
+.header-menu-item > svg,
+.header-menu-item > svg * {
+  fill: currentColor;
+}
+.header-ctas .header-menu-item > svg *,
+.header .cart-link svg > * {
+  stroke: currentColor;
+}
+.header-ctas .header-menu-item > svg > circle {
+  fill: transparent;
 }
 aside#submenu .header-menu-item:hover {
   color: var(--color-hover);
@@ -860,7 +875,7 @@ aside#submenu .header-menu-item:hover {
   font-size: 8px;
   font-weight: bold;
   margin-top: 0.25rem;
-  color: #2a0e39; /* Adjust color as needed */
+  color: inherit;
 }
 
 .empty-cart-div {

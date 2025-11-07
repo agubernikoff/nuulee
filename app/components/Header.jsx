@@ -7,27 +7,18 @@ import {useEffect} from 'react';
 import mobilemenu from '../assets/mobile-menu.png';
 import x from '../assets/x.png';
 import NavLink from './NavLink';
+import {AnimatedHeader} from './AnimatedHeader';
 
 /**
  * @param {HeaderProps}
  */
 export function Header({header, isLoggedIn, cart, publicStoreDomain, isDev}) {
   const {shop, menu} = header;
-  const {close} = useAside();
+  const {close, type} = useAside();
+  const {pathname} = useLocation();
+  console.log(pathname);
   return (
-    <header
-      className="header"
-      style={
-        isDev
-          ? {
-              display: 'flex',
-              alignItems: 'flex-end',
-              paddingTop: '10px',
-              paddingBottom: '10px',
-            }
-          : {}
-      }
-    >
+    <AnimatedHeader>
       <HeaderMenu
         menu={menu}
         viewport="desktop"
@@ -46,11 +37,12 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain, isDev}) {
         }}
         end
         onClick={close}
+        className="header-menu-item"
       >
         <Logo isDev={isDev} />
       </NavLink>
       <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
-    </header>
+    </AnimatedHeader>
   );
 }
 
