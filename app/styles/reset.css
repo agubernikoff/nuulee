@@ -78,6 +78,9 @@ body > main {
   margin: 0 10vw 8rem 10vw;
   min-height: calc(100vh - var(--header-height) - 8rem);
 }
+/* body > main:has(> div > .product) {
+  margin: 0 1.3rem 8rem 1.3rem;
+} */
 
 section {
   padding: 1rem 0;

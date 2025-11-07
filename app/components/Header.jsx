@@ -176,7 +176,7 @@ function HeaderMenuMobileToggle() {
     <button
       className="header-menu-mobile-toggle reset"
       onClick={() => (isOpen ? close() : open('mobile'))}
-      style={{display: 'flex'}}
+      // style={{display: 'flex'}}
     >
       {/* <img
         className="header-image"

@@ -159,6 +159,8 @@ export function ProductForm({
                         outline:
                           selected && option.name === 'Color'
                             ? '1px solid black'
+                            : option.name === 'Color'
+                            ? '1px solid var(--color-stroke-color)'
                             : '1px solid transparent',
                         opacity: available ? 1 : 0.3,
                         textDecoration:
