@@ -327,7 +327,7 @@ export default function Product() {
   return (
     <div>
       <div className="product">
-        <div style={{position: 'relative'}}>
+        <div style={{position: 'relative', width: '100%', maxWidth: '69vw'}}>
           {hiddenImages}
           {hoveredImg && isDev && (
             <Magnifier
