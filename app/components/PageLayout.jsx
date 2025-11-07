@@ -42,6 +42,7 @@ export function PageLayout({
             header={header}
             publicStoreDomain={publicStoreDomain}
             availableCountries={availableCountries}
+            isDev={isDev}
           />
           <SubMenuAside
             header={header}
@@ -600,7 +601,12 @@ function SearchAside() {
  *   publicStoreDomain: PageLayoutProps['publicStoreDomain'];
  * }}
  */
-function MobileMenuAside({header, publicStoreDomain, availableCountries}) {
+function MobileMenuAside({
+  header,
+  publicStoreDomain,
+  availableCountries,
+  isDev,
+}) {
   const {subType, open} = useAside();
   const queriesDatalistId = useId();
 
@@ -635,8 +641,17 @@ function MobileMenuAside({header, publicStoreDomain, availableCountries}) {
               menu={{
                 id: header.menu.id,
                 items: subType
-                  ? header?.menu?.items.find((item) => item.title === subType)
-                      ?.items
+                  ? isDev && subType === 'discover'
+                    ? header?.menu?.items
+                        .find((item) => item.title === subType)
+                        ?.items.map((i) => {
+                          return {
+                            ...i,
+                            url: transformPageUrlToDiscoverHash(i.url),
+                          };
+                        }) || []
+                    : header?.menu?.items.find((item) => item.title === subType)
+                        ?.items || []
                   : header.menu.items,
               }}
               viewport="mobile"

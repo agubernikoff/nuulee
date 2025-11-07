@@ -1380,7 +1380,7 @@ aside#submenu .header-menu-item:hover {
   width: 45%;
 }
 .isDev > .section-img-container:has(> img + img) > img {
-  width: 45% !important;
+  width: 45%;
 }
 .section-text-container:has(img) {
   width: 45%;
@@ -2041,22 +2041,22 @@ aside#submenu .header-menu-item:hover {
 .page .section-text-container ol {
   margin-block: 1rem;
 }
-.discover-page .section-container.isDev {
+.discover-page .section-container {
   flex-wrap: wrap;
   margin-bottom: 2rem;
 }
-.discover-page .section-container.isDev > .section-text-container {
+.discover-page .section-container > .section-text-container {
   width: 100%;
   margin-bottom: 2rem;
 }
-.discover-page .section-container.isDev > .section-text-container:has(> ol) {
+.discover-page .section-container > .section-text-container:has(> ol) {
   display: flex;
   align-items: center;
 }
 .discover-page .section-text-container ol {
   text-align: left;
 }
-.discover-page .section-container.isDev > .section-img-container {
+.discover-page .section-container > .section-img-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -2452,9 +2452,28 @@ MEDIA QUIERIES
     flex-direction: column-reverse;
     margin-bottom: 4rem;
   }
+  .home .isDev.section-container {
+    margin-top: 4rem;
+  }
+  .home .isDev.section-container:last-of-type {
+    margin-top: 0;
+  }
+  .home .isDev.section-container .section-text-container:first-of-type {
+    margin-bottom: 0 !important;
+  }
+  .home .isDev.section-container .section-text-container {
+    margin-bottom: 1rem;
+  }
+  .isDev.section-container .section-img-container img {
+    width: 100%;
+    display: none;
+  }
+  .isDev.section-container .section-img-container img:first-of-type {
+    display: block;
+  }
   .section-text-container {
     margin-top: 1rem;
-    width: 100%;
+    width: 100% !important;
   }
   .section-text-container > div {
     display: none;
@@ -2542,9 +2561,28 @@ MEDIA QUIERIES
     margin-bottom: 4rem;
     width: 100%;
   }
+  .title-image-div {
+    display: flex;
+  }
+  .title-and-blurb:has(> .title-image-div),
+  .translations:has(> .title-image-div) {
+    flex-direction: column;
+  }
+
+  .title-and-blurb:has(> .title-image-div) > div,
+  .translations:has(> .title-image-div) > div,
+  .two-columns > * {
+    width: 100%;
+  }
+  .translations > .title-image-div {
+    display: none;
+  }
   .image-and-blurb {
     flex-direction: column;
     gap: 2rem;
+  }
+  .discover-page .image-and-blurb {
+    gap: 1rem;
   }
   .alt-mobile-photo {
     display: block;
@@ -2571,6 +2609,40 @@ MEDIA QUIERIES
   }
   .gallery-image > button {
     display: none;
+  }
+  .discover-page section {
+    padding: 2rem 0;
+  }
+  .discover-page section.first {
+    padding-top: 1rem;
+  }
+  .discover-page section main,
+  .discover-page .section-container,
+  .title-and-blurb:has(> .title-image-div),
+  .translations:has(> .title-image-div),
+  .translation-text {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+  }
+  .discover-page section main > div {
+    margin: 0 !important;
+  }
+  .discover-page p:has(strong) {
+    padding: 0;
+  }
+  .discover-page .section-container > .section-text-container {
+    margin: 0;
+  }
+  .discover-page p:last-of-type {
+    margin-bottom: 0;
+  }
+  .discover-page .section-text-container ol {
+    margin: 0;
+  }
+  .discover-page .translation {
+    margin-block: 0;
+    padding-block: 0;
   }
 
   .footer {

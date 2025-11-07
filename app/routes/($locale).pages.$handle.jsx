@@ -219,7 +219,7 @@ export function Gallery({gallery_images}) {
       />
     </motion.div>
   ));
-
+  console.log(isMobile);
   return (
     <div className="gallery-container" onClick={handleClick}>
       <div
