@@ -581,15 +581,20 @@ aside#mobile .header-menu-item,
   padding-inline: 6px;
 }
 .header .header-menu-item,
-.header .cart-link {
+.header .cart-link,
+.header-menu-mobile-toggle {
   color: inherit !important;
 }
 .header-menu-item > svg,
-.header-menu-item > svg * {
+.header-menu-item > svg *,
+.header-menu-mobile-toggle > svg,
+.header-menu-mobile-toggle > svg * {
   fill: currentColor;
 }
 .header-ctas .header-menu-item > svg *,
-.header .cart-link svg > * {
+.header .cart-link svg > *,
+.header-menu-mobile-toggle > svg,
+.header-menu-mobile-toggle > svg * {
   stroke: currentColor;
 }
 .header-ctas .header-menu-item > svg > circle {
@@ -1396,7 +1401,7 @@ aside#submenu .header-menu-item:hover {
   width: 45%;
 }
 .isDev > .section-img-container:has(> img + img) > img {
-  width: 45%;
+  width: 45% !important;
 }
 .section-text-container:has(img) {
   width: 45%;
@@ -2493,7 +2498,7 @@ MEDIA QUIERIES
     margin-bottom: 1rem;
   }
   .isDev.section-container .section-img-container img {
-    width: 100%;
+    width: 100% !important;
     display: none;
   }
   .isDev.section-container .section-img-container img:first-of-type {

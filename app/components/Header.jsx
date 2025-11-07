@@ -178,12 +178,48 @@ function HeaderMenuMobileToggle() {
       onClick={() => (isOpen ? close() : open('mobile'))}
       style={{display: 'flex'}}
     >
-      <img
+      {/* <img
         className="header-image"
         style={{width: '30%'}}
         src={isOpen ? x : mobilemenu}
         alt="Menu"
-      />
+      /> */}
+      {isOpen ? (
+        <svg
+          width="20"
+          height="15"
+          viewBox="0 0 20 15"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line
+            x1="3.28324"
+            y1="0.353966"
+            x2="17.4254"
+            y2="14.4961"
+            stroke="black"
+          />
+          <line
+            x1="2.57613"
+            y1="14.4956"
+            x2="16.7183"
+            y2="0.353432"
+            stroke="black"
+          />
+        </svg>
+      ) : (
+        <svg
+          width="28"
+          height="11"
+          viewBox="0 0 28 11"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line x1="4" y1="0.5" x2="24" y2="0.5" stroke="black" />
+          <line x1="4" y1="5.5" x2="24" y2="5.5" stroke="black" />
+          <line x1="4" y1="10.5" x2="24" y2="10.5" stroke="black" />
+        </svg>
+      )}
     </button>
   );
 }
