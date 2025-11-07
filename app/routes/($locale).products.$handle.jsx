@@ -399,6 +399,7 @@ export default function Product() {
                   title={section.title}
                   details={section.details}
                   isFirstRender={isFirstRender}
+                  isDev={isDev}
                 />
               );
             })}
@@ -454,14 +455,17 @@ function Expandable({
   title,
   details,
   isFirstRender,
+  isDev,
 }) {
   return (
     <motion.div
       key={title}
       className="dropdown"
       layout={!isFirstRender ? 'position' : false}
-      initial={{height: '1rem'}}
-      animate={{height: openSection === title ? 'auto' : '1rem'}}
+      initial={{height: isDev ? '21px' : '1rem'}}
+      animate={{
+        height: openSection === title ? 'auto' : isDev ? '21px' : '1rem',
+      }}
       style={{overflow: 'hidden'}}
     >
       <motion.p
