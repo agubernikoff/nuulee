@@ -6,6 +6,7 @@ import {sanityClient} from '~/sanity/SanityClient';
 import NavLink from '~/components/NavLink';
 import mobileIcon from '~/assets/NL_Social-Sharing.jpg';
 import CollectionGridItem from '~/components/CollectionGridItem';
+import {optimizeImageUrl, imagePresets} from '~/sanity/imageUrlBuilder';
 
 /**
  * @type {MetaFunction}
@@ -81,27 +82,20 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
-  // console.log(data);
   const {isDev} = useRouteLoaderData('root');
   return (
     <div className="home">
       <Hero data={data.sanityData.hero} />
-      {!isDev && <RecommendedProducts products={data.featuredCollection} />}
+      {/* {!isDev && <RecommendedProducts products={data.featuredCollection} />} */}
       <CollectionLinks
         collections={[data.womenCollection, data.menCollection]}
         shopMenImage={data.sanityData.shopMensImage}
         shopWomenImage={data.sanityData.shopWomensImage}
       />
-      {isDev && (
-        <CollectionsGrid collections={data.sanityData.collectionsGrid} />
-      )}
-      {data.sanityData.sections.map((section) => {
-        return isDev ? (
-          <Section2 section={section} key={section._key} />
-        ) : (
-          <Section section={section} key={section._key} />
-        );
-      })}
+      <CollectionsGrid collections={data.sanityData.collectionsGrid} />
+      {data.sanityData.sections.map((section) => (
+        <Section2 section={section} key={section._key} />
+      ))}
     </div>
   );
 }
@@ -134,8 +128,9 @@ function Hero({data}) {
         return (
           <img
             key={mi._key}
-            src={mi.image.asset.url}
+            src={optimizeImageUrl(mi.image.asset.url, imagePresets.hero)}
             alt={mi.image.altText}
+            loading="eager"
             style={{
               width: data.mediaItems.length > 1 ? '50%' : '100%',
               height: '110vh',
@@ -198,6 +193,19 @@ function CollectionsGrid({collections}) {
 }
 
 function CollectionLinks({collections, shopMenImage, shopWomenImage}) {
+  // Optimize shop images
+  const optimizedMenImage = optimizeImageUrl(shopMenImage.image.asset.url, {
+    width: 600,
+    quality: 85,
+    format: 'webp',
+  });
+
+  const optimizedWomenImage = optimizeImageUrl(shopWomenImage.image.asset.url, {
+    width: 600,
+    quality: 85,
+    format: 'webp',
+  });
+
   return (
     <div className="collection-links-container">
       {collections.map((col) => (
@@ -213,15 +221,16 @@ function CollectionLinks({collections, shopMenImage, shopWomenImage}) {
                   ? shopMenImage.alt
                   : col.handle === 'women'
                   ? shopWomenImage.alt
-                  : null || `shop ${col.handle}`
+                  : `shop ${col.handle}`
               }
               src={
                 col.handle === 'men'
-                  ? shopMenImage.image.asset.url
+                  ? optimizedMenImage
                   : col.handle === 'women'
-                  ? shopWomenImage.image.asset.url
+                  ? optimizedWomenImage
                   : null
               }
+              loading="lazy"
               style={{width: '100%', height: '100%', objectFit: 'cover'}}
               sizes="(min-width: 45em) 400px, 100vw"
             />
@@ -234,6 +243,26 @@ function CollectionLinks({collections, shopMenImage, shopWomenImage}) {
 }
 
 function Section({section}) {
+  // Find primary and secondary images
+  const primaryImage = section.images.find((s) => s.isPrimary);
+  const secondaryImage =
+    section.images.length > 1 ? section.images[1] : section.images[0];
+
+  // Optimize URLs
+  const primaryImageUrl = primaryImage
+    ? optimizeImageUrl(primaryImage.image.asset.url, {
+        width: 600,
+        quality: 85,
+        format: 'webp',
+      })
+    : null;
+
+  const secondaryImageUrl = optimizeImageUrl(secondaryImage.image.asset.url, {
+    width: 600,
+    quality: 85,
+    format: 'webp',
+  });
+
   return (
     <div
       className="section-container"
@@ -246,14 +275,14 @@ function Section({section}) {
         <p>{section.title}</p>
         <p>{section.description}</p>
         <NavLink to={`/pages/${section.handle}`}>learn more</NavLink>
-        {section.images.length > 1 ? (
+        {section.images.length > 1 && primaryImage ? (
           <div>
             <img
-              src={section.images.find((s) => s.isPrimary).image.asset.url}
-              alt={section.images.find((s) => s.isPrimary).alt}
+              src={primaryImageUrl}
+              alt={primaryImage.alt}
+              loading="lazy"
               style={{
-                aspectRatio: section.images.find((s) => s.isPrimary).image
-                  .dimensions.aspectRatio,
+                aspectRatio: primaryImage.image.dimensions.aspectRatio,
               }}
             />
           </div>
@@ -261,21 +290,11 @@ function Section({section}) {
       </div>
       <div className="section-img-container">
         <img
-          src={
-            section.images.length > 1
-              ? section.images[1].image.asset.url
-              : section.images[0].image.asset.url
-          }
-          alt={
-            section.images.length > 1
-              ? section.images[1].alt
-              : section.images[0].alt
-          }
+          src={secondaryImageUrl}
+          alt={secondaryImage.alt}
+          loading="lazy"
           style={{
-            aspectRatio:
-              section.images.length > 1
-                ? section.images[1].image.dimensions.aspectRatio
-                : section.images[0].image.dimensions.aspectRatio,
+            aspectRatio: secondaryImage.image.dimensions.aspectRatio,
           }}
         />
       </div>
@@ -284,9 +303,19 @@ function Section({section}) {
 }
 
 function Section2({section}) {
+  // Optimize all section images
+  const optimizedImages = section.images.map((img) => ({
+    ...img,
+    optimizedUrl: optimizeImageUrl(img.image.asset.url, {
+      width: 600,
+      quality: 85,
+      format: 'webp',
+    }),
+  }));
+
   return (
     <div
-      className="section-container isDev"
+      className="section-container"
       style={{
         justifyContent:
           section.images.length === 1 ? 'center' : 'space-between',
@@ -320,10 +349,15 @@ function Section2({section}) {
             : {flexShrink: 0}
         }
       >
-        {section.images
+        {optimizedImages
           .sort((a, b) => a.isPrimary - b.isPrimary)
           .map((img) => (
-            <img src={img.image.asset.url} alt={img.alt} key={img._key} />
+            <img
+              src={img.optimizedUrl}
+              alt={img.alt}
+              key={img._key}
+              loading="lazy"
+            />
           ))}
       </div>
       {section.title2 && section.description2 && section.handle2 && (

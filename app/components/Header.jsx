@@ -131,9 +131,12 @@ export function HeaderMenu({
 
               // Handle submenu logic differently depending on viewport and isDev
               if (item.items && item.items.length > 0) {
-                if (!isDev) e.preventDefault();
-                if (viewport === 'mobile') open('mobile', item.title);
-                if (viewport === 'desktop' && isDev) close();
+                // if (!isDev) e.preventDefault();
+                if (viewport === 'mobile') {
+                  open('mobile', item.title);
+                  e.preventDefault();
+                }
+                if (viewport === 'desktop') close();
               } else close();
             }}
             prefetch="intent"
@@ -372,8 +375,8 @@ function CartBanner() {
 function Logo({isDev}) {
   return (
     <svg
-      width={isDev ? 105 : 75}
-      height={isDev ? 51 : 36}
+      width={105}
+      height={51}
       viewBox="0 0 75 36"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

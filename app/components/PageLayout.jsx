@@ -277,7 +277,7 @@ function SubMenuAside({header, publicStoreDomain, isDev}) {
           menu={{
             id: header.menu.id,
             items:
-              isDev && subType === 'discover'
+              subType === 'discover'
                 ? header?.menu?.items
                     .find((item) => item.title === subType)
                     ?.items.map((i) => {
@@ -641,7 +641,7 @@ function MobileMenuAside({
               menu={{
                 id: header.menu.id,
                 items: subType
-                  ? isDev && subType === 'discover'
+                  ? subType === 'discover'
                     ? header?.menu?.items
                         .find((item) => item.title === subType)
                         ?.items.map((i) => {

@@ -8,12 +8,12 @@ export function AnimatedHeader({
   isDev,
   asideOpen = false,
 }) {
-  if (!isDev)
-    return (
-      <header className="header" style={{background: 'white'}}>
-        {children}
-      </header>
-    );
+  // if (!isDev)
+  //   return (
+  //     <header className="header" style={{background: 'white'}}>
+  //       {children}
+  //     </header>
+  //   );
 
   const {scrollY} = useScroll();
   const [isVisible, setIsVisible] = useState(false);

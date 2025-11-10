@@ -72,11 +72,11 @@ export default function Page() {
   /** @type {LoaderReturnData} */
   const {page, comingsoon} = useLoaderData();
   const {isDev} = useRouteLoaderData('root');
-  if (!isDev && page.handle === 'about') {
-    page.sections.references.nodes = page.sections.references.nodes.filter(
-      (n) => n.type !== 'image_and_blurb',
-    );
-  }
+  // if (!isDev && page.handle === 'about') {
+  //   page.sections.references.nodes = page.sections.references.nodes.filter(
+  //     (n) => n.type !== 'image_and_blurb',
+  //   );
+  // }
   return (
     <div
       className={`page ${
@@ -377,7 +377,7 @@ function TitleAndBlurb({section, dontReplace = false, isDev}) {
   return (
     <div className="title-and-blurb">
       <div>
-        {isDev && image && (
+        {image && (
           <header>
             <p className="page-title">{sectionTitle}</p>
           </header>
@@ -391,7 +391,7 @@ function TitleAndBlurb({section, dontReplace = false, isDev}) {
           )}
         </div>
       </div>
-      {isDev && image && (
+      {image && (
         <div className="title-image-div">
           <Image
             alt={image.altText}
@@ -481,66 +481,35 @@ function OffsetImagesAndBlurb({section, isDev}) {
 
   return (
     <div
-      className={`section-container ${isDev ? 'isDev' : ''}`}
+      className="section-container"
       style={
-        section?.fields?.find((f) => f.type === 'boolean')?.value && !isDev
+        section?.fields?.find((f) => f.type === 'boolean')?.value
           ? {flexDirection: 'row-reverse'}
           : null
       }
     >
-      {isDev ? (
-        <>
-          <div className="section-text-container">
-            {mapRichText(
-              JSON.parse(
-                section.fields.find((f) => f.type === 'rich_text_field').value,
-              ),
-              'offset-images-and-blurb',
-            )}
-          </div>
-          <div className="section-img-container">
-            {images.map((img) => (
-              <Image
-                key={img.image.id}
-                alt={img.image.altText}
-                aspectRatio={`${img.image.width}/${img.image.height}`}
-                data={img.image}
-                loading={'eager'}
-                sizes="(min-width: 45em) 400px, 100vw"
-              />
-            ))}
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="section-text-container">
-            {mapRichText(
-              JSON.parse(
-                section.fields.find((f) => f.type === 'rich_text_field').value,
-              ),
-              'offset-images-and-blurb',
-            )}
-            <div>
-              <Image
-                alt={images[1].image.altText}
-                aspectRatio={`${images[1].image.width}/${images[1].image.height}`}
-                data={images[1].image}
-                loading={'eager'}
-                sizes="(min-width: 45em) 400px, 100vw"
-              />
-            </div>
-          </div>
-          <div className="section-img-container">
+      <>
+        <div className="section-text-container">
+          {mapRichText(
+            JSON.parse(
+              section.fields.find((f) => f.type === 'rich_text_field').value,
+            ),
+            'offset-images-and-blurb',
+          )}
+        </div>
+        <div className="section-img-container">
+          {images.map((img) => (
             <Image
-              alt={images[0].image.altText}
-              aspectRatio={`${images[0].image.width}/${images[0].image.height}`}
-              data={images[0].image}
+              key={img.image.id}
+              alt={img.image.altText}
+              aspectRatio={`${img.image.width}/${img.image.height}`}
+              data={img.image}
               loading={'eager'}
               sizes="(min-width: 45em) 400px, 100vw"
             />
-          </div>
-        </>
-      )}
+          ))}
+        </div>
+      </>
     </div>
   );
 }
@@ -559,7 +528,7 @@ function Translations({section, isDev}) {
   return (
     <div className={`translations ${reverse ? 'reverse' : ''}`}>
       <div className="translations-text">{mapped}</div>
-      {isDev && image && (
+      {image && (
         <div className="title-image-div">
           <Image
             alt={image.altText}

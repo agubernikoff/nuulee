@@ -228,17 +228,13 @@ export default function Product() {
   });
 
   function handleHover(imgUrl, data) {
-    if (isDev) {
-      setHoveredImg(imgUrl);
-      setImgCursorPos(data);
-    }
+    setHoveredImg(imgUrl);
+    setImgCursorPos(data);
   }
 
   function handleLeave() {
-    if (isDev) {
-      setHoveredImg(null);
-      setImgCursorPos(null);
-    }
+    setHoveredImg(null);
+    setImgCursorPos(null);
   }
 
   const productImage = filteredImages.map((edge) => (
@@ -310,7 +306,7 @@ export default function Product() {
 
   useEffect(() => {
     const container = productImages.current;
-    if (!container || !isDev) return;
+    if (!container) return;
 
     function handleMouseMove(e) {
       const rect = container.getBoundingClientRect();
@@ -329,7 +325,7 @@ export default function Product() {
       <div className="product">
         <div style={{position: 'relative', width: '100%'}}>
           {hiddenImages}
-          {hoveredImg && isDev && (
+          {hoveredImg && (
             <Magnifier
               bg={hoveredImg}
               pos={cursorPos}
@@ -338,7 +334,7 @@ export default function Product() {
             />
           )}
           <div
-            className={`product-images ${isDev ? 'isDev' : ''}`}
+            className="product-images"
             onScroll={(e) =>
               handleScroll(e.target.scrollWidth, e.target.scrollLeft)
             }
@@ -349,9 +345,7 @@ export default function Product() {
           <div className="mapped-indicators">{mappedIndicators}</div>
         </div>
         <div className="product-main">
-          <p className={isDev ? 'product-title-pdp' : ''}>
-            {title.toLowerCase()}
-          </p>
+          <p className="product-title-pdp">{title.toLowerCase()}</p>
           <ProductPrice
             price={selectedVariant?.price}
             compareAtPrice={selectedVariant?.compareAtPrice}
@@ -462,9 +456,9 @@ function Expandable({
       key={title}
       className="dropdown"
       layout={!isFirstRender ? 'position' : false}
-      initial={{height: isDev ? '21px' : '1rem'}}
+      initial={{height: '21px'}}
       animate={{
-        height: openSection === title ? 'auto' : isDev ? '21px' : '1rem',
+        height: openSection === title ? 'auto' : '21px',
       }}
       style={{overflow: 'hidden'}}
     >
