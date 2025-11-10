@@ -3,6 +3,7 @@ import {useVariantUrl} from '~/lib/variants';
 import {Link} from '@remix-run/react';
 import {ProductPrice} from './ProductPrice';
 import {useAside} from './Aside';
+import {useState, useEffect} from 'react';
 
 /**
  * A single line item in the cart. It displays the product image, title, price.
@@ -17,6 +18,16 @@ export function CartLineItem({layout, line}) {
   const {product, title, image, selectedOptions} = merchandise;
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
   const {close} = useAside();
+
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 499 : false,
+  );
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 499);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (!line || typeof line?.quantity === 'undefined') return null;
   const {id: lineId, quantity, isOptimistic} = line;
@@ -107,11 +118,13 @@ export function CartLineItem({layout, line}) {
             >
               <p>{product.title}</p>
             </Link>
-            <CartLineRemoveButton
-              lineIds={[lineId]}
-              disabled={!!isOptimistic}
-              layout={layout}
-            />
+            {isMobile ? null : (
+              <CartLineRemoveButton
+                lineIds={[lineId]}
+                disabled={!!isOptimistic}
+                layout={layout}
+              />
+            )}
           </div>
           <ProductPrice price={line?.cost?.amountPerQuantity} />
           <div className="cart-middle-details">
@@ -124,7 +137,9 @@ export function CartLineItem({layout, line}) {
           <CartLineQuantity line={line} />
         </div>
 
-        {/* <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} /> */}
+        {isMobile ? (
+          <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} />
+        ) : null}
       </div>
     </li>
   );
