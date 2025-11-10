@@ -1315,6 +1315,12 @@ aside#submenu .header-menu-item:hover {
 * routes/__index
 * --------------------------------------------------
 */
+
+.home .product-item > div > p {
+  font-family: 'medium';
+  margin-top: 0.25rem;
+}
+
 .hero-container {
   width: 100vw;
   /* height: 120vh; */

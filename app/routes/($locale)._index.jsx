@@ -148,7 +148,7 @@ function Hero({data}) {
   return (
     <div className="hero-container">
       {media}
-      <div style={{position: 'absolute', height: '100%', width: '300px'}}>
+      <div style={{position: 'absolute', height: '100%', width: '350px'}}>
         <p className="sticky-p">{data.headline}</p>
       </div>
     </div>
