@@ -6,7 +6,7 @@ import {sanityClient} from '~/sanity/SanityClient';
 import NavLink from '~/components/NavLink';
 import mobileIcon from '~/assets/NL_Social-Sharing.jpg';
 import CollectionGridItem from '~/components/CollectionGridItem';
-import {optimizeImageUrl, imagePresets} from '~/sanity/imageUrlBuilder';
+import {optimizeImageUrl, imagePresets} from '~/sanity/ImageUrlBuilder';
 
 /**
  * @type {MetaFunction}
