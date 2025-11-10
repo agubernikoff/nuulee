@@ -2440,6 +2440,10 @@ MEDIA QUIERIES
     margin-bottom: 0;
   }
 
+  .dropdown-content {
+    margin-bottom: 0.5rem;
+  }
+
   aside#cart {
     top: 0;
     border-top: none;
