@@ -92,8 +92,8 @@ aside#submenu {
   top: calc(var(--header-height) + 20px);
   /* top: var(--header-height); */
   box-shadow: none;
-  max-width: 414px;
-  min-width: 414px;
+  max-width: 490px;
+  min-width: 490px;
   /* max-width: 304px;
   min-width: 304px; */
 }
@@ -2134,20 +2134,32 @@ aside#submenu .header-menu-item:hover {
   margin-left: -10vw;
   cursor: pointer;
 }
+/* Add these rules to your .gallery-image styles - around line 2570 in your CSS */
+
+.gallery-image > img {
+  height: 100% !important;
+  width: auto !important;
+  max-width: none !important;
+  display: block;
+  object-fit: contain;
+}
+
+/* Make sure .gallery-image has explicit height */
+.gallery-image {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+/* Ensure gallery has proper height */
 .gallery {
   display: flex;
   flex-direction: row;
   gap: 1rem;
   height: calc(100vh - (3 * var(--header-height)));
   transition: transform 750ms ease-in-out;
-}
-.gallery-image {
-  position: relative;
-  display: flex;
-}
-.gallery-image > img {
-  height: 100%;
-  width: auto !important;
+  align-items: center; /* This helps Safari */
 }
 .gallery-image > button {
   position: absolute;
