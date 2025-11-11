@@ -2872,4 +2872,8 @@ MEDIA QUIERIES
   .hide-scrollbar-comingsoon::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
   }
+
+  .cart-line-remove-button {
+    text-decoration: underline !important;
+  }
 }
