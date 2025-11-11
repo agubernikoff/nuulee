@@ -2426,6 +2426,9 @@ MEDIA QUIERIES
   .cart-summary-aside {
     width: calc(var(--aside-width) - 40px);
   }
+  .hero-media {
+    object-position: center !important;
+  }
 }
 
 @media (max-width: 499px) {

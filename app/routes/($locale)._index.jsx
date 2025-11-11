@@ -101,6 +101,7 @@ export default function Homepage() {
 }
 
 function Hero({data}) {
+  console.log(data);
   const media = data.mediaItems
     .sort((a, b) => (b.isPrimary ? 1 : -1))
     .map((mi) => {
@@ -135,6 +136,11 @@ function Hero({data}) {
               width: data.mediaItems.length > 1 ? '50%' : '100%',
               height: '110vh',
               objectFit: 'cover',
+              objectPosition: mi?.image?.hotspot
+                ? `${Math.round(mi.image.hotspot.x * 100)}% ${Math.round(
+                    mi.image.hotspot.y * 100,
+                  )}%`
+                : 'center',
             }}
             className="hero-media"
           />
