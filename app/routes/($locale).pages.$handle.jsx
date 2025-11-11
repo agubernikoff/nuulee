@@ -624,7 +624,7 @@ export const PAGE_QUERY = `#graphql
         value
       }
       gallery_images: metafield(key: "gallery_images", namespace: "custom") {
-        references(first: 25) {
+        references(first: 50) {
           nodes {
             ... on MediaImage {
               id
