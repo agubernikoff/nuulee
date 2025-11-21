@@ -126,6 +126,7 @@ export default function Collection() {
   const {collection, handle, tag, colorPatterns} = useLoaderData();
 
   const {isDev} = useRouteLoaderData('root');
+  console.log(collection);
   return (
     <div className="collection">
       {!tag && collection.image ? (
@@ -230,6 +231,17 @@ export function ProductColorVariants({
         ),
       };
     });
+
+  if (!colors)
+    return (
+      <div key={product.id}>
+        <ProductGridItem
+          product={product}
+          loading={index < 8 ? 'eager' : undefined}
+          collectionHandle={collectionHandle}
+        />
+      </div>
+    );
 
   return colors?.map((color) => {
     const colorTaxonomyReferences = JSON.parse(

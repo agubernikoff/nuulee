@@ -364,41 +364,46 @@ export default function Product() {
           <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
           <div className="divider" />
 
-          <div className="dropdown-container">
-            {[
-              {
-                title: 'story',
-                details: storyMetafield?.value?.trim() || '',
-              },
+          {!product.title.toLowerCase().includes('gift card') && (
+            <>
+              <div className="dropdown-container">
+                {[
+                  {
+                    title: 'story',
+                    details: storyMetafield?.value?.trim() || '',
+                  },
 
-              {
-                title: 'details',
-                details:
-                  detailsMetafield?.value?.trim() ||
-                  'this product is made from high-quality materials and designed for durability.',
-              },
-              {
-                title: 'sustainability',
-                details:
-                  sustainabilityMetafield?.value?.trim() ||
-                  'we use eco-friendly materials and sustainable practices in our production.',
-              },
-            ].map((section) => {
-              if (!section) return null;
-              return (
-                <Expandable
-                  key={section.title}
-                  openSection={openSection}
-                  toggleSection={toggleSection}
-                  title={section.title}
-                  details={section.details}
-                  isFirstRender={isFirstRender}
-                  isDev={isDev}
-                />
-              );
-            })}
-          </div>
-          <motion.div className="divider" layout={!isFirstRender} />
+                  {
+                    title: 'details',
+                    details:
+                      detailsMetafield?.value?.trim() ||
+                      'this product is made from high-quality materials and designed for durability.',
+                  },
+                  {
+                    title: 'sustainability',
+                    details:
+                      sustainabilityMetafield?.value?.trim() ||
+                      'we use eco-friendly materials and sustainable practices in our production.',
+                  },
+                ].map((section) => {
+                  if (!section) return null;
+                  return (
+                    <Expandable
+                      key={section.title}
+                      openSection={openSection}
+                      toggleSection={toggleSection}
+                      title={section.title}
+                      details={section.details}
+                      isFirstRender={isFirstRender}
+                      isDev={isDev}
+                    />
+                  );
+                })}
+              </div>
+
+              <motion.div className="divider" layout={!isFirstRender} />
+            </>
+          )}
         </div>
         <Analytics.ProductView
           data={{

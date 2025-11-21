@@ -49,7 +49,8 @@ export function ProductForm({
   };
 
   function formatSize(abbr, optionName) {
-    if (optionName !== 'Size') return abbr;
+    if (optionName !== 'Size')
+      return optionName === 'Denominations' ? abbr.split('.')[0] : abbr;
     switch (abbr) {
       case 'os':
         return 'one size';
@@ -144,7 +145,11 @@ export function ProductForm({
                         borderRadius: '10px',
                       }}
                     >
-                      <ProductOptionSwatch swatch={swatch} name={name} />
+                      <ProductOptionSwatch
+                        swatch={swatch}
+                        name={name}
+                        optionName={option.name}
+                      />
                     </Link>
                   );
                 } else {
@@ -174,7 +179,11 @@ export function ProductForm({
                         if (!selected) onClickHandler();
                       }}
                     >
-                      <ProductOptionSwatch swatch={swatch} name={name} />
+                      <ProductOptionSwatch
+                        swatch={swatch}
+                        name={name}
+                        optionName={option.name}
+                      />
                     </button>
                   );
                 }
@@ -207,11 +216,14 @@ export function ProductForm({
   );
 }
 
-function ProductOptionSwatch({swatch, name}) {
+function ProductOptionSwatch({swatch, name, optionName}) {
   const image = swatch?.image?.previewImage?.url;
   const color = swatch?.color;
 
-  if (!image && !color) return name.toLowerCase();
+  if (!image && !color)
+    return optionName === 'Denominations'
+      ? name.split('.')[0]
+      : name.toLowerCase();
 
   return (
     <div

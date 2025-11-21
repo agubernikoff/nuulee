@@ -48,6 +48,10 @@ input[type='search' i]::-webkit-search-cancel-button {
   width: 100%;
   background: var(--color-stroke-color);
 }
+strong {
+  font-family: 'medium' !important;
+  font-weight: normal;
+}
 /*
 * --------------------------------------------------
 * Non anchor links
@@ -1728,7 +1732,7 @@ aside#submenu .header-menu-item:hover {
   font-size: 18px !important;
 }
 .product-main * {
-  font-family: 'regular' !important;
+  font-family: 'regular';
   font-size: var(--font-size);
 }
 .product-price > div {
@@ -1803,6 +1807,12 @@ aside#submenu .header-menu-item:hover {
 .product-option-label-swatch img {
   width: 100%;
 }
+
+.product-options:has(.denominations) .product-options-title > span,
+.denominations > button {
+  font-size: 90% !important;
+}
+
 .add-to-cart-form-pdp {
   font-size: var(--font-size);
   font-family: 'regular';
