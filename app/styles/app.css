@@ -2527,7 +2527,7 @@ MEDIA QUIERIES
     margin-left: -1.3rem;
     margin-bottom: 4rem;
   }
-  .media {
+  .media:has(+ .mobile-media) {
     display: none;
   }
   .hero-media,

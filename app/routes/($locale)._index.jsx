@@ -188,7 +188,9 @@ function Hero({data}) {
   return (
     <div className="hero-container">
       <div className="media">{media}</div>
-      <div className="mobile-media">{mobileMedia}</div>
+      {mobileMedia.length > 0 && (
+        <div className="mobile-media">{mobileMedia}</div>
+      )}
       <div style={{position: 'absolute', height: '100%', width: '350px'}}>
         <p className="sticky-p">{data.headline}</p>
       </div>
