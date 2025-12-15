@@ -2451,6 +2451,12 @@ MEDIA QUIERIES
   .hero-media {
     object-position: center !important;
   }
+  .media {
+    width: 100%;
+  }
+  .mobile-media {
+    display: none;
+  }
 }
 
 @media (max-width: 499px) {
@@ -2521,7 +2527,11 @@ MEDIA QUIERIES
     margin-left: -1.3rem;
     margin-bottom: 4rem;
   }
-  .hero-media {
+  .media {
+    display: none;
+  }
+  .hero-media,
+  .mobile-media {
     width: 100% !important;
     height: 75vh !important;
   }

@@ -47,7 +47,7 @@ async function loadCriticalData({context}) {
 
   const homePage = await sanityClient
     .fetch(
-      "*[_type == 'home'][0]{...,hero{...,mediaItems[]{...,video{...,asset->{url}},image{...,asset->{url},'dimensions': asset->metadata.dimensions}}},shopMensImage{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}},shopWomensImage{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}},collectionsGrid[]{...,image{...,asset->{url}}},sections[]{...,images[]{...,image{...,asset->{url},'dimensions': asset->metadata.dimensions}}}}",
+      "*[_type == 'home'][0]{..., hero{..., mediaItems[]{..., video{..., asset->{url}}, image{..., asset->{url}, 'dimensions': asset->metadata.dimensions}}, mobileMediaItems[]{..., video{..., asset->{url}}, image{..., asset->{url}, 'dimensions': asset->metadata.dimensions}}}, shopMensImage{..., image{..., asset->{url}, 'dimensions': asset->metadata.dimensions}}, shopWomensImage{..., image{..., asset->{url}, 'dimensions': asset->metadata.dimensions}}, collectionsGrid[]{..., image{..., asset->{url}}}, sections[]{..., images[]{..., image{..., asset->{url}, 'dimensions': asset->metadata.dimensions}}}}",
     )
     .then((response) => response);
 
@@ -101,54 +101,94 @@ export default function Homepage() {
 }
 
 function Hero({data}) {
-  console.log(data);
-  const media = data.mediaItems
-    .sort((a, b) => (b.isPrimary ? 1 : -1))
-    .map((mi) => {
-      if (mi.mediaType === 'video')
-        return (
-          <video
-            height={1150}
-            width={1100}
-            autoPlay
-            key={mi._key}
-            muted
-            loop
-            playsInline
-            style={{
-              width: data.mediaItems.length > 1 ? '50%' : '100%',
-              height: '110vh',
-              objectFit: 'cover',
-            }}
-            className="hero-media"
-          >
-            <source src={mi.video.asset.url} type="video/mp4" />
-          </video>
-        );
-      if (mi.mediaType === 'image')
-        return (
-          <img
-            key={mi._key}
-            src={optimizeImageUrl(mi.image.asset.url, imagePresets.hero)}
-            alt={mi.image.altText}
-            loading="eager"
-            style={{
-              width: data.mediaItems.length > 1 ? '50%' : '100%',
-              height: '110vh',
-              objectFit: 'cover',
-              objectPosition: mi?.image?.hotspot
-                ? `${Math.round(mi.image.hotspot.x * 100)}% ${Math.round(
-                    mi.image.hotspot.y * 100,
-                  )}%`
-                : 'center',
-            }}
-            className="hero-media"
-          />
-        );
-    });
+  const media = data.mediaItems.map((mi) => {
+    if (mi.mediaType === 'video')
+      return (
+        <video
+          height={1150}
+          width={1100}
+          autoPlay
+          key={mi._key}
+          muted
+          loop
+          playsInline
+          style={{
+            width: '100%',
+            height: '110vh',
+            objectFit: 'cover',
+          }}
+          className="hero-media"
+        >
+          <source src={mi.video.asset.url} type="video/mp4" />
+        </video>
+      );
+    if (mi.mediaType === 'image')
+      return (
+        <img
+          key={mi._key}
+          src={optimizeImageUrl(mi.image.asset.url, imagePresets.hero)}
+          alt={mi.image.altText}
+          loading="eager"
+          style={{
+            width: '100%',
+            height: '110vh',
+            objectFit: 'cover',
+            objectPosition: mi?.image?.hotspot
+              ? `${Math.round(mi.image.hotspot.x * 100)}% ${Math.round(
+                  mi.image.hotspot.y * 100,
+                )}%`
+              : 'center',
+          }}
+          className="hero-media"
+        />
+      );
+  });
+  const mobileMedia = data.mobileMediaItems.map((mi) => {
+    if (mi.mediaType === 'video')
+      return (
+        <video
+          height={1150}
+          width={1100}
+          autoPlay
+          key={mi._key}
+          muted
+          loop
+          playsInline
+          style={{
+            width: '100%',
+            height: '110vh',
+            objectFit: 'cover',
+          }}
+          className="hero-media"
+        >
+          <source src={mi.video.asset.url} type="video/mp4" />
+        </video>
+      );
+    if (mi.mediaType === 'image')
+      return (
+        <img
+          key={mi._key}
+          src={optimizeImageUrl(mi.image.asset.url, imagePresets.hero)}
+          alt={mi.image.altText}
+          loading="eager"
+          style={{
+            width: '100%',
+            height: '110vh',
+            objectFit: 'cover',
+            objectPosition: mi?.image?.hotspot
+              ? `${Math.round(mi.image.hotspot.x * 100)}% ${Math.round(
+                  mi.image.hotspot.y * 100,
+                )}%`
+              : 'center',
+          }}
+          className="hero-media"
+        />
+      );
+  });
   return (
     <div className="hero-container">
-      {media}
+      <div className="media">{media}</div>
+      <div className="mobile-media">{mobileMedia}</div>
       <div style={{position: 'absolute', height: '100%', width: '350px'}}>
         <p className="sticky-p">{data.headline}</p>
       </div>
