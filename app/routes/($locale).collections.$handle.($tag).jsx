@@ -227,7 +227,7 @@ export function ProductColorVariants({
         colorPattern: colorPatterns.find(
           (pat) =>
             pat.node.handle.toLowerCase() ===
-            v.name.replace(' ', '-').replace('/', '-').toLowerCase(),
+            v.name.replace(/[ /]/g, '-').toLowerCase(),
         ),
       };
     });
