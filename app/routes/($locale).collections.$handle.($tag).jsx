@@ -222,7 +222,7 @@ export function ProductColorVariants({
     .find((o) => o.name === 'Color')
     ?.optionValues?.map((v) => {
       return {
-        hex: v.swatch.color,
+        hex: v.swatch?.color,
         name: v.name,
         colorPattern: colorPatterns.find(
           (pat) =>
