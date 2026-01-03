@@ -73,7 +73,7 @@ async function loadCriticalData({context, params, request}) {
   });
   const filters = [];
   let reverse = false;
-  let sortKey = 'BEST_SELLING';
+  let sortKey = 'MANUAL';
 
   if (!handle) {
     throw redirect('/collections');
