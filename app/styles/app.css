@@ -1328,7 +1328,7 @@ aside#submenu .header-menu-item:hover {
 .hero-container {
   width: 100vw;
   /* height: 120vh; */
-  background: grey;
+  /* background: grey; */
   margin-left: -10vw;
   margin-bottom: 8rem;
   position: relative;
