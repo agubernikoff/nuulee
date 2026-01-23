@@ -3038,7 +3038,8 @@ MEDIA QUIERIES
   }
 }
 
-.cky-btn-accept {
+.cky-btn-accept,
+.cky-btn-preferences {
   background: #2a0e39 !important;
   color: #fff !important;
   border: 2px solid #2a0e39;
