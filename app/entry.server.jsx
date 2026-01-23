@@ -22,11 +22,23 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
+    scriptSrc: [
+      "'self'",
+      "'unsafe-inline'",
+      'https://www.googletagmanager.com',
+      'https://www.google-analytics.com',
+    ],
     imgSrc: [
       "'self'",
       'https://cdn.sanity.io/images/hj7h0g6k/production/',
       'https://cdn.sanity.io/files/hj7h0g6k/production/',
       'https://cdn.shopify.com/',
+      'https://www.googletagmanager.com',
+      'https://www.google-analytics.com',
+    ],
+    frameSrc: [
+      "'self'",
+      'https://www.googletagmanager.com',
     ],
     mediaSrc: [
       "'self'",
@@ -40,6 +52,9 @@ export default async function handleRequest(
       'https://cdn.shopify.com',
       'http://localhost:3000',
       'https://*.klaviyo.com/*',
+      'https://www.googletagmanager.com',
+      'https://www.google-analytics.com',
+      'https://region1.google-analytics.com',
     ],
   });
 
