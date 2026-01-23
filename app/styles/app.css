@@ -2912,3 +2912,128 @@ MEDIA QUIERIES
     text-decoration: underline !important;
   }
 }
+
+/* Image Lightbox */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  cursor: pointer;
+  z-index: 10000;
+  padding: 0.5rem;
+  display: flex;
+}
+
+.lightbox-close svg line {
+  stroke: #2a0e39;
+}
+
+.lightbox-close:hover svg line {
+  stroke: var(--color-grey);
+}
+
+.lightbox-gallery {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.lightbox-gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.lightbox-image {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.lightbox-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.lightbox-indicators {
+  position: fixed;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 10000;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 0.5rem;
+  border-radius: 16px;
+}
+
+.lightbox-pill {
+  width: 4px;
+  height: 24px;
+  border-radius: 2px;
+  background: var(--color-hover);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease;
+}
+
+.lightbox-pill:hover {
+  background: var(--color-grey);
+}
+
+.lightbox-pill.active {
+  background: #2a0e39;
+}
+
+@media (max-width: 500px) {
+  .lightbox-indicators {
+    display: none;
+  }
+}
+
+@media (max-width: 500px) {
+  .lightbox-gallery {
+    padding: 0;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .lightbox-image {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-image img {
+    height: 100vh;
+    object-fit: cover;
+  }
+
+  .lightbox-close {
+    top: 1rem;
+    right: 1rem;
+  }
+}

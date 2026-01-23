@@ -6,7 +6,7 @@ import {useRef} from 'react';
  *   image: ProductVariantFragment['image'];
  * }}
  */
-export function ProductImage({image, hidden, onHover, onLeave}) {
+export function ProductImage({image, hidden, onHover, onLeave, onClick}) {
   if (!image) {
     return <div className="product-image" />;
   }
@@ -30,10 +30,12 @@ export function ProductImage({image, hidden, onHover, onLeave}) {
         opacity: hidden ? 0 : 1,
         top: 0,
         zIndex: hidden ? '-1' : 0,
+        cursor: onClick ? 'pointer' : 'default',
       }}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseMove}
       onMouseLeave={onLeave}
+      onClick={onClick}
       ref={ref}
     >
       <Image

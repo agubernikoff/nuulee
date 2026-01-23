@@ -11,6 +11,7 @@ import {
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
+import {ImageLightbox} from '~/components/ImageLightbox';
 import {motion, AnimatePresence} from 'motion/react';
 import ProductGridItem from '~/components/ProductGridItem';
 
@@ -237,12 +238,13 @@ export default function Product() {
     setImgCursorPos(null);
   }
 
-  const productImage = filteredImages.map((edge) => (
+  const productImage = filteredImages.map((edge, index) => (
     <ProductImage
       key={edge.node.id}
       image={edge.node}
       onHover={handleHover}
       onLeave={handleLeave}
+      onClick={() => openLightbox(index)}
     />
   ));
 
@@ -257,6 +259,19 @@ export default function Product() {
   };
 
   const [imageIndex, setImageIndex] = useState(0);
+
+  // Lightbox state
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  function openLightbox(index) {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  }
+
+  function closeLightbox() {
+    setLightboxOpen(false);
+  }
 
   function handleScroll(scrollWidth, scrollLeft) {
     const widthOfAnImage = scrollWidth / filteredImages.length;
@@ -325,14 +340,14 @@ export default function Product() {
       <div className="product">
         <div style={{position: 'relative', width: '100%'}}>
           {hiddenImages}
-          {hoveredImg && (
+          {/* {hoveredImg && (
             <Magnifier
               bg={hoveredImg}
               pos={cursorPos}
               imgPos={imgCursorPos}
               ref={magnifierRef}
             />
-          )}
+          )} */}
           <div
             className="product-images"
             onScroll={(e) =>
@@ -422,6 +437,12 @@ export default function Product() {
         />
       </div>
       <YouMayAlsoLike recs={recs} compliments={compliments} />
+      <ImageLightbox
+        images={filteredImages}
+        selectedIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={closeLightbox}
+      />
     </div>
   );
 }
