@@ -3037,3 +3037,14 @@ MEDIA QUIERIES
     right: 1rem;
   }
 }
+
+.cky-btn-accept {
+  background: #2a0e39 !important;
+  color: #fff !important;
+  border: 2px solid #2a0e39;
+}
+.cky-btn-reject {
+  color: #2a0e39 !important;
+  background: #ffffff !important;
+  border: 2px solid #2a0e39 !important;
+}
