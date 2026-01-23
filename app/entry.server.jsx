@@ -27,6 +27,7 @@ export default async function handleRequest(
       "'unsafe-inline'",
       'https://www.googletagmanager.com',
       'https://www.google-analytics.com',
+      'https://cdn.shopify.com',
     ],
     imgSrc: [
       "'self'",
