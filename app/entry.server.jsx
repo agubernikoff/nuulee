@@ -41,6 +41,7 @@ export default async function handleRequest(
       'https://pagead2.googlesyndication.com',
       'https://www.google.com',
       'https://www.googleadservices.com',
+      'https://cdn-cookieyes.com',
     ],
     frameSrc: [
       "'self'",
