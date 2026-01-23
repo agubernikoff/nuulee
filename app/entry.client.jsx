@@ -18,21 +18,6 @@ if (!window.location.origin.includes('webcache.googleusercontent.com')) {
     event: 'gtm.js',
   });
 
-  // Prevent image context menu and dragging
-  document.addEventListener('contextmenu', (e) => {
-    if (e.target.tagName === 'IMG') {
-      e.preventDefault();
-      return false;
-    }
-  });
-
-  document.addEventListener('dragstart', (e) => {
-    if (e.target.tagName === 'IMG') {
-      e.preventDefault();
-      return false;
-    }
-  });
-
   startTransition(() => {
     hydrateRoot(
       document,
