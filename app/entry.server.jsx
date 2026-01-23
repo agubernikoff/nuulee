@@ -28,6 +28,8 @@ export default async function handleRequest(
       'https://www.googletagmanager.com',
       'https://www.google-analytics.com',
       'https://cdn.shopify.com',
+      'https://cdn-cookieyes.com',
+      'https://www.googleadservices.com',
     ],
     imgSrc: [
       "'self'",
@@ -36,10 +38,14 @@ export default async function handleRequest(
       'https://cdn.shopify.com/',
       'https://www.googletagmanager.com',
       'https://www.google-analytics.com',
+      'https://pagead2.googlesyndication.com',
+      'https://www.google.com',
+      'https://www.googleadservices.com',
     ],
     frameSrc: [
       "'self'",
       'https://www.googletagmanager.com',
+      'https://td.doubleclick.net',
     ],
     mediaSrc: [
       "'self'",
@@ -56,6 +62,11 @@ export default async function handleRequest(
       'https://www.googletagmanager.com',
       'https://www.google-analytics.com',
       'https://region1.google-analytics.com',
+      'https://pagead2.googlesyndication.com',
+      'https://www.google.com',
+      'https://www.googleadservices.com',
+      'https://log.cookieyes.com',
+      'https://cdn-cookieyes.com',
     ],
   });
 
