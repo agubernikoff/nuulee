@@ -210,6 +210,13 @@ export function Layout({children}) {
             cart={data.cart}
             shop={data.shop}
             consent={data.consent}
+            canTrack={() => {
+              try {
+                return window.getCkyConsent();
+              } catch (e) {
+                return false;
+              }
+            }}
           >
             <PageLayout {...data}>{children}</PageLayout>
           </Analytics.Provider>
