@@ -83,7 +83,7 @@ export function ProductForm({
                     initial={false}
                     animate={{opacity: 1}}
                     exit={{opacity: 0}}
-                    style={{display: 'inline-block', width: '6.2rem'}}
+                    style={{display: 'inline-block', width: 'fit-content'}}
                   >
                     {formatSize(
                       selectedOptions[option.name]?.toLowerCase(),

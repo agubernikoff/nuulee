@@ -31,7 +31,8 @@ export function ImageLightbox({images, selectedIndex, isOpen, onClose}) {
   // Scroll to selected image on open (desktop only)
   useEffect(() => {
     if (isOpen && galleryRef.current && !isMobile && selectedIndex > 0) {
-      const imageElements = galleryRef.current.querySelectorAll('.lightbox-image');
+      const imageElements =
+        galleryRef.current.querySelectorAll('.lightbox-image');
       if (imageElements[selectedIndex]) {
         imageElements[selectedIndex].scrollIntoView({behavior: 'instant'});
       }
@@ -42,7 +43,8 @@ export function ImageLightbox({images, selectedIndex, isOpen, onClose}) {
   useEffect(() => {
     if (!isOpen || isMobile || !galleryRef.current) return;
 
-    const imageElements = galleryRef.current.querySelectorAll('.lightbox-image');
+    const imageElements =
+      galleryRef.current.querySelectorAll('.lightbox-image');
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -58,7 +60,7 @@ export function ImageLightbox({images, selectedIndex, isOpen, onClose}) {
       {
         root: galleryRef.current,
         threshold: 0.5,
-      }
+      },
     );
 
     imageElements.forEach((el) => observer.observe(el));
@@ -99,7 +101,8 @@ export function ImageLightbox({images, selectedIndex, isOpen, onClose}) {
 
   function scrollToImage(index) {
     if (galleryRef.current) {
-      const imageElements = galleryRef.current.querySelectorAll('.lightbox-image');
+      const imageElements =
+        galleryRef.current.querySelectorAll('.lightbox-image');
       if (imageElements[index]) {
         imageElements[index].scrollIntoView({behavior: 'smooth'});
       }
@@ -113,7 +116,9 @@ export function ImageLightbox({images, selectedIndex, isOpen, onClose}) {
           {images.map((_, index) => (
             <button
               key={index}
-              className={`lightbox-pill ${index === activeIndex ? 'active' : ''}`}
+              className={`lightbox-pill ${
+                index === activeIndex ? 'active' : ''
+              }`}
               onClick={(e) => {
                 e.stopPropagation();
                 scrollToImage(index);
@@ -137,7 +142,7 @@ export function ImageLightbox({images, selectedIndex, isOpen, onClose}) {
       <div
         className="lightbox-gallery"
         ref={galleryRef}
-        onClick={(e) => e.stopPropagation()}
+        // onClick={(e) => e.stopPropagation()}
       >
         {imagesToRender.map((image, index) => (
           <div key={image.node?.id || index} className="lightbox-image">

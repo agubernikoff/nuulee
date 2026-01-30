@@ -2972,6 +2972,7 @@ MEDIA QUIERIES
   width: 100%;
   height: auto;
   display: block;
+  cursor: zoom-out;
 }
 
 .lightbox-indicators {
