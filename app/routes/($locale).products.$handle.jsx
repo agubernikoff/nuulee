@@ -716,6 +716,12 @@ $language: LanguageCode
         currencyCode
       }
     }
+    compareAtPriceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
   }
 }`;
 
@@ -739,6 +745,12 @@ $language: LanguageCode
     title
     availableForSale
     priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    compareAtPriceRange {
       minVariantPrice {
         amount
         currencyCode
