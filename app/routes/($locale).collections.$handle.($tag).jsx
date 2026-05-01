@@ -676,6 +676,11 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
         ...MoneyProductItem
       }
     }
+    compareAtPriceRange {
+      minVariantPrice {
+        ...MoneyProductItem
+      }
+    }
     options(first:30){
       id
       name

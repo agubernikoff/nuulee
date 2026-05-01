@@ -79,7 +79,24 @@ export function CartLineItem({layout, line}) {
 
         {/* Subtotal column (price + remove button) */}
         <div className="cart-line-subtotal-column">
-          <ProductPrice price={line?.cost?.totalAmount} />
+          <ProductPrice
+            price={line?.cost?.totalAmount}
+            compareAtPrice={
+              line?.cost?.compareAtAmountPerQuantity
+                ? {
+                    amount: String(
+                      (
+                        parseFloat(
+                          line.cost.compareAtAmountPerQuantity.amount,
+                        ) * quantity
+                      ).toFixed(2),
+                    ),
+                    currencyCode:
+                      line.cost.compareAtAmountPerQuantity.currencyCode,
+                  }
+                : null
+            }
+          />
           <CartLineRemoveButton
             lineIds={[lineId]}
             disabled={!!isOptimistic}
@@ -126,7 +143,10 @@ export function CartLineItem({layout, line}) {
               />
             )}
           </div>
-          <ProductPrice price={line?.cost?.amountPerQuantity} />
+          <ProductPrice
+            price={line?.cost?.amountPerQuantity}
+            compareAtPrice={line?.cost?.compareAtAmountPerQuantity}
+          />
           <div className="cart-middle-details">
             {selectedOptions.map((option) => (
               <p key={option.name}>

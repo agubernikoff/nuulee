@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {useVariantUrl} from '~/lib/variants';
 import {Link, useLocation} from '@remix-run/react';
-import {Image, Money} from '@shopify/hydrogen';
+import {Image} from '@shopify/hydrogen';
+import {ProductPrice} from './ProductPrice';
 import {motion, AnimatePresence} from 'motion/react';
 
 function ProductGridItem({product, productUrl, loading, collectionHandle}) {
@@ -66,9 +67,13 @@ function ProductGridItem({product, productUrl, loading, collectionHandle}) {
         <div className="product-item-title-price">
           <p>{product.title.toLowerCase()}</p>
           {product.availableForSale ? (
-            <Money
-              data={product.priceRange.minVariantPrice}
-              withoutTrailingZeros
+            <ProductPrice
+              price={product.priceRange.minVariantPrice}
+              compareAtPrice={
+                product.compareAtPriceRange?.minVariantPrice?.amount > 0
+                  ? product.compareAtPriceRange.minVariantPrice
+                  : null
+              }
             />
           ) : (
             <div style={{color: 'rgb(177, 177, 177)'}}>sold out</div>
