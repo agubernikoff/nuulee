@@ -265,8 +265,18 @@ export function ProductColorVariants({
 
     // Filter images for this color from the gender-appropriate gallery
     const colorImages = imagesToUse.filter(
-      (n) => n?.altText?.toLowerCase() === color.name.toLowerCase(),
+      (n) =>
+        n?.altText?.trim().toLowerCase() === color.name.trim().toLowerCase(),
     );
+
+    console.log(`=== ${product.title} - ${color.name} ===`);
+    console.log('imagesToUse count:', imagesToUse.length);
+    console.log(
+      'imagesToUse alt texts:',
+      imagesToUse.map((n) => JSON.stringify(n?.altText)),
+    );
+    console.log('color.name:', JSON.stringify(color.name));
+    console.log('colorImages found:', colorImages.length);
 
     return (
       <div
@@ -652,7 +662,7 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
     handle
     title
     availableForSale
-    images(first: 20) {
+    images(first: 50) {
       nodes {
         id
         url
@@ -693,7 +703,7 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
       }
     }
     mensGallery: metafield(namespace: "custom", key: "mens_gallery") {
-      references(first: 20) {
+      references(first: 50) {
         nodes {
           ... on MediaImage {
             id
@@ -709,7 +719,7 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
       }
     }
     womensGallery: metafield(namespace: "custom", key: "womens_gallery") {
-      references(first: 20) {
+      references(first: 50) {
         nodes {
           ... on MediaImage {
             id

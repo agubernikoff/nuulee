@@ -643,7 +643,7 @@ const PRODUCT_FRAGMENT = `#graphql
       key
       namespace
       value
-      references(first: 20) {
+      references(first: 50) {
         nodes {
           ... on MediaImage {
             id

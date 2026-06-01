@@ -95,7 +95,7 @@ fragment MoneyProductItem on MoneyV2 {
     trackingParameters
     vendor
     availableForSale
-    images(first: 20) {
+    images(first: 50) {
       nodes {
         id
         url
