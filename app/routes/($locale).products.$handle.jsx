@@ -622,7 +622,7 @@ const PRODUCT_FRAGMENT = `#graphql
       }
     }
     tags
-    images(first: 20) {
+    images(first: 50) {
       edges {
         node {
           id
