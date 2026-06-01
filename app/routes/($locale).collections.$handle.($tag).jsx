@@ -126,7 +126,6 @@ export default function Collection() {
   const {collection, handle, tag, colorPatterns} = useLoaderData();
 
   const {isDev} = useRouteLoaderData('root');
-  console.log(collection);
   return (
     <div className="collection">
       {!tag && collection.image ? (
@@ -268,15 +267,6 @@ export function ProductColorVariants({
       (n) =>
         n?.altText?.trim().toLowerCase() === color.name.trim().toLowerCase(),
     );
-
-    console.log(`=== ${product.title} - ${color.name} ===`);
-    console.log('imagesToUse count:', imagesToUse.length);
-    console.log(
-      'imagesToUse alt texts:',
-      imagesToUse.map((n) => JSON.stringify(n?.altText)),
-    );
-    console.log('color.name:', JSON.stringify(color.name));
-    console.log('colorImages found:', colorImages.length);
 
     return (
       <div
